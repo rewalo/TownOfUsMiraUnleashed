@@ -19,7 +19,8 @@ namespace MiraUnleashed.Modifiers;
 /// </summary>
 public sealed class CluelessModifier : UniversalGameModifier, IWikiDiscoverable
 {
-    public override string ModifierName => MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless", "Clueless");
+    public override string IdPrefix => "MiraUnleashed.Modifier";
+    public override string IdPart => "Clueless";
     public override string IntroInfo => MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless.IntroBlurb");
     public override LoadableAsset<Sprite> ModifierIcon => MiraUnleashedAssets.CluelessModifierIcon;
 
@@ -35,6 +36,8 @@ public sealed class CluelessModifier : UniversalGameModifier, IWikiDiscoverable
     }
 
     public override Color FreeplayFileColor => new Color32(180, 180, 180, 255);
+    public override Color GeneralColor => FreeplayFileColor;
+    public override ModifierUiConfiguration Configuration => new(FreeplayFileColor);
 
     public override ModifierFaction FactionType => ModifierFaction.UniversalPassive;
 

@@ -27,6 +27,10 @@
     <!-- Optional: set the Among Us property via the `AmongUs` environment variable,
          or create a git-ignored Directory.Build.local.props at the repo root that sets it. -->
     <AmongUs Condition="'$(AmongUs)' == ''"></AmongUs>
+
+    <!-- Path to a local TOU-Mira checkout (branch experimental, with git submodules).
+         Override via the `TouMiraSourcePath` environment variable or Directory.Build.local.props. -->
+    <TouMiraSourcePath Condition="'$(TouMiraSourcePath)' == ''">$(MSBuildThisFileDirectory)..\TOU-Mira\</TouMiraSourcePath>
   </PropertyGroup>
 
   <Import Project="Directory.Build.local.props" Condition="Exists('Directory.Build.local.props')" />

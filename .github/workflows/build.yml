@@ -18,15 +18,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Checkout TOU-Mira experimental
+        if: github.ref_name == 'experimental'
+        uses: actions/checkout@v4
+        with:
+          repository: AU-Avengers/TOU-Mira
+          ref: experimental
+          submodules: recursive
+          path: TOU-Mira
+
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
 
       - name: Restore
         run: dotnet restore
+        env:
+          TouMiraSourcePath: ${{ github.workspace }}/TOU-Mira/
 
       - name: Build
         run: dotnet build -c Release --no-restore -p:ContinuousIntegrationBuild=true
+        env:
+          TouMiraSourcePath: ${{ github.workspace }}/TOU-Mira/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

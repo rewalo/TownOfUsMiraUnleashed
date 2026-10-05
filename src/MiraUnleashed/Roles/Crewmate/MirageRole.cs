@@ -40,6 +40,16 @@ public sealed class MirageRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnlea
                 MiraUnleashedCrewAssets.DecoyButtonSprite)
         ];
 
+    [HideFromIl2Cpp]
+    public List<AdvancedWikiAbilityDescription> WikiAbilities =>
+        [
+            new(
+                MiraLocaleManager.Get("MiraUnleashed.Role.MirageDecoy", "Decoy"),
+                MiraLocaleManager.Get("MiraApi.AbilityType.Basic"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.MirageDecoy.WikiDescription"),
+                MiraUnleashedCrewAssets.DecoyButtonSprite)
+        ];
+
     public Color RoleColor => MiraUnleashedColors.Mirage;
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
     public RoleAlignment RoleAlignment => RoleAlignment.CrewmateSupport;

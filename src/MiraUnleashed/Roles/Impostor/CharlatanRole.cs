@@ -47,6 +47,21 @@ public sealed class CharlatanRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUn
                 MiraUnleashedImpAssets.ConcealButtonSprite)
         ];
 
+    [HideFromIl2Cpp]
+    public List<AdvancedWikiAbilityDescription> WikiAbilities =>
+        [
+            new(
+                MiraLocaleManager.Get("MiraUnleashed.Role.CharlatanDeceive", "Deceive"),
+                MiraLocaleManager.Get("MiraApi.AbilityType.Indirect"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.CharlatanDeceive.WikiDescription"),
+                MiraUnleashedImpAssets.DeceiveButtonSprite),
+            new(
+                MiraLocaleManager.Get("MiraUnleashed.Role.CharlatanConceal", "Conceal"),
+                MiraLocaleManager.Get("MiraApi.AbilityType.Interaction"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.CharlatanConceal.WikiDescription"),
+                MiraUnleashedImpAssets.ConcealButtonSprite)
+        ];
+
     public void LobbyStart()
     {
         CharlatanBodySystem.ClearAll();

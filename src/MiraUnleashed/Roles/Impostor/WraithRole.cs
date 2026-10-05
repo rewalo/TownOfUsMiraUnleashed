@@ -50,6 +50,21 @@ public sealed class WraithRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnlea
                 MiraUnleashedImpAssets.LanternButtonSprite)
         ];
 
+    [HideFromIl2Cpp]
+    public List<AdvancedWikiAbilityDescription> WikiAbilities =>
+        [
+            new(
+                MiraLocaleManager.Get("MiraUnleashed.Role.WraithDash", "Dash"),
+                MiraLocaleManager.Get("MiraApi.AbilityType.Basic"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.WraithDash.WikiDescription"),
+                TouImpAssets.SprintSprite),
+            new(
+                MiraLocaleManager.Get("MiraUnleashed.Role.WraithLantern", "Lantern"),
+                MiraLocaleManager.Get("MiraApi.AbilityType.Radius"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.WraithLantern.WikiDescription"),
+                MiraUnleashedImpAssets.LanternButtonSprite)
+        ];
+
     public override void Initialize(PlayerControl player)
     {
         RoleBehaviourStubs.Initialize(this, player);

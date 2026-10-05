@@ -4,12 +4,23 @@
     <Description>Mira Unleashed - an add-on mod for Town of Us: Mira.</Description>
   </PropertyGroup>
 
+  <Target Name="CheckTouMiraSource" BeforeTargets="ResolveReferences"
+          Condition="!Exists('$(TouMiraSourcePath)TownOfUs\TownOfUsMira.csproj')">
+    <Error Text="TOU-Mira sources not found at '$(TouMiraSourcePath)'. Clone https://github.com/AU-Avengers/TOU-Mira (branch experimental, --recurse-submodules) next to this repository, or set the TouMiraSourcePath environment variable/property." />
+  </Target>
+
   <ItemGroup>
-    <PackageReference Include="TownOfUsMira" Version="1.7.3" />
-    <PackageReference Include="AllOfUs.MiraAPI" Version="0.5.0" />
+    <!-- Builds against a local TOU-Mira experimental checkout. MiraAPI and AchievementsAPI come
+         transitively as project references. Private=false keeps referenced DLLs out of our output;
+         GlobalPropertiesToRemove=AmongUs prevents TOU-Mira's own Copy target from overwriting the
+         installed TownOfUsMira.dll in the plugins folder. -->
+    <ProjectReference Include="$(TouMiraSourcePath)TownOfUs\TownOfUsMira.csproj"
+                      ReferenceOutputAssembly="true" PrivateAssets="all" Private="false"
+                      GlobalPropertiesToRemove="AmongUs"
+                      AdditionalProperties="GeneratePackageOnBuild=false" />
     <PackageReference Include="Reactor" Version="2.5.0-ci.371" />
     <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.735" Private="false" ExcludeAssets="runtime;native" />
-    <PackageReference Include="AmongUs.GameLibs.Steam" Version="2026.8.18" PrivateAssets="all" />
+    <PackageReference Include="AmongUs.GameLibs.Steam" Version="2026.9.29" PrivateAssets="all" />
     <PackageReference Include="BepInEx.AutoPlugin" Version="1.1.0" PrivateAssets="all" />
     <PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="2.1.0-rc.1" PrivateAssets="all" ExcludeAssets="runtime" />
   </ItemGroup>
@@ -17,5 +28,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\**\*" />
   </ItemGroup>
+
+  <!-- Transitive project outputs (MiraAPI, AchievementsAPI) would otherwise be copied
+       into our bin folder. This mod ships MiraUnleashed.dll only. -->
+  <Target Name="StripDependencyOutputs" AfterTargets="ResolveReferences">
+    <ItemGroup>
+      <_DependencyOutputs Include="@(ReferenceCopyLocalPaths)"
+                          Condition="'%(FileName)' != '$(AssemblyName)'" />
+      <ReferenceCopyLocalPaths Remove="@(_DependencyOutputs)" />
+    </ItemGroup>
+  </Target>
 
 </Project>

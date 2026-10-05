@@ -48,6 +48,16 @@ public sealed class WitchRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnleas
                 MiraUnleashedImpAssets.SpellButtonSprite)
         ];
 
+    [HideFromIl2Cpp]
+    public List<AdvancedWikiAbilityDescription> WikiAbilities =>
+        [
+            new(
+                MiraLocaleManager.Get("MiraUnleashed.Role.WitchSpell", "Spell"),
+                MiraLocaleManager.Get("MiraApi.AbilityType.Interaction"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.WitchSpell.WikiDescription"),
+                MiraUnleashedImpAssets.SpellButtonSprite)
+        ];
+
     public override void Initialize(PlayerControl player)
     {
         RoleBehaviourStubs.Initialize(this, player);
