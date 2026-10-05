@@ -5,6 +5,7 @@
 - [Configuration](Configuration)
 - [Building](Building)
 - [Testing](Testing)
+- [Voice Chat](Voice-Chat)
 
 **Crewmate**
 - [Forestaller](Forestaller)

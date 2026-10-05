@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For releases before 2.0.0, see the [old repository's release history](https://github.com/rewalo/TownOfUsMiraUnleashed/releases).
 
-## [2.0.0] - Unreleased
+## [2.1.0] - Unreleased
+
+### Added
+
+- Optional Perfect Comms voice chat integration — when Perfect Comms is installed, four host toggles appear in its host panel under the "Mira Unleashed" tab (all on by default):
+  - **Wraith: Mute While Invisible** — an invisible Wraith cannot transmit voice until the Lantern invisibility ends.
+  - **Hacker: Jam Disrupts Voice** — everyone's voice is muted during tasks while a Jam is active, like a comms sabotage.
+  - **Injector: Muffle Injected Hearing** — muffles incoming voice during tasks for players injected with Low Vision, Very Low Vision, Confusion or Nausea.
+  - **Team Radio - Lawyer** — a private managed Team Radio channel between a Lawyer and their client when Team Radio is on.
+
+### Changed
+
+- Wiki home page redesigned as an icon table.
+
+## [2.0.0] - 2026-10-05
 
 ### Added
 

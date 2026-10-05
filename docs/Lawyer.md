@@ -39,3 +39,4 @@ The Lawyer is a Neutral Benign role that wins by keeping their assigned client f
 - An Amnesiac who remembers a dead Lawyer inherits the remembered Lawyer's client.
 - If the client dies (or is voted out without the voted-out option), the Lawyer either dies or becomes the configured role.
 - Objections cannot be used in the last 20 seconds of voting.
+- With [Perfect Comms](Voice-Chat) installed, the Lawyer and client get a private Team Radio channel when Team Radio is on — like the private chat, the client learns who their Lawyer is.

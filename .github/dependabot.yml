@@ -2,5 +2,22 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
+    target-branch: dev
     schedule:
       interval: weekly
+    groups:
+      github-actions:
+        patterns: ["*"]
+
+  - package-ecosystem: nuget
+    directory: /src/MiraUnleashed
+    target-branch: dev
+    schedule:
+      interval: weekly
+    ignore:
+      # Game-API pins are chosen deliberately to match the targeted TOU-Mira release.
+      - dependency-name: TownOfUsMira
+      - dependency-name: AllOfUs.MiraAPI
+      - dependency-name: Reactor
+      - dependency-name: AmongUs.GameLibs.Steam
+      - dependency-name: BepInEx.*

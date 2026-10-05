@@ -38,3 +38,4 @@ Per-effect default chances: Inverted Controls 30 %, Low Vision 30 %, Slowness 30
 - When the effect kicks in, the victim gets a message saying which effect they have, what it does, and how long it lasts. The effect also appears in the modifier panel with its remaining time ("Xs left", "Until the next meeting", or "For the rest of the game").
 - Nausea shakes the victim's camera; affected players can disable the shake in the local Mira Unleashed settings tab.
 - Positive effects (Speed Boost, Vision Boost, Regeneration) can be disabled entirely with "Positive Effects Enabled".
+- With [Perfect Comms](Voice-Chat) installed, victims injected with Low Vision, Very Low Vision, Confusion or Nausea hear muffled voice during tasks.

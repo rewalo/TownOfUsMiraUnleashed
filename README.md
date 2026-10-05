@@ -79,11 +79,14 @@ Click a role for its abilities, options and interactions, or browse the [wiki](h
 
 | Mira Unleashed | Town of Us: Mira | MiraAPI | Reactor |
 | --- | --- | --- | --- |
+| 2.1.0 | 1.7.3 | 0.5.0 | 2.5.0 |
 | 2.0.0 | 1.7.3 | 0.5.0 | 2.5.0 |
 
 The table is updated with every release; the latest row applies to the newest release.
 
 The `experimental` branch of this repo tracks TOU-Mira's experimental branch and may target unreleased TOU-Mira builds.
+
+Mira Unleashed also integrates with [Perfect Comms](https://github.com/artriy/Perfect-Comms) for optional proximity voice chat features — see the [Voice Chat](https://github.com/rewalo/TownOfUsMiraUnleashed/wiki/Voice-Chat) wiki page.
 
 -----------------------
 

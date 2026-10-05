@@ -27,3 +27,7 @@ The Wraith is an Impostor Power role focused on fast, unpredictable movement. Da
 | Lantern Cooldown | 5 – 60 s | 37.5 s |
 | Lantern Duration | 1 – 20 s | 10 s |
 | Invisible Duration | 0 – 5 s | 2.5 s |
+
+## Interactions & notes
+
+- With [Perfect Comms](Voice-Chat) installed, an invisible Wraith is muted and hidden from the voice overlay until the invisibility ends.
