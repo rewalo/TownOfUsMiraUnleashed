@@ -86,4 +86,19 @@
     <string name="TownOfUsMira.Role.RevealerNotEnoughPLayers">Not enough players were caught in your traps.</string>
     <string name="TownOfUsMira.Role.RevealerRolesCaught">Roles caught in traps:</string>
     <string name="TownOfUsMira.Role.RevealerMessageTitle">Trap Report</string>
+
+<!-- Clueless Modifier -->
+    <string name="MiraUnleashed.Modifier.Clueless">Clueless</string>
+    <string name="MiraUnleashed.Modifier.Clueless.IntroBlurb">No task guidance.</string>
+    <string name="MiraUnleashed.Modifier.Clueless.TabDescription">You cannot see your task list, task markers, or task locations on the map.</string>
+    <string name="MiraUnleashed.Modifier.Clueless.WikiDescription">You cannot see your task list, task markers, or task locations on the map. Tasks still spawn normally and count toward the task bar.</string>
+
+<!-- Clueless Options -->
+    <string name="MiraUnleashed.Options.Clueless.Amount">Clueless Amount</string>
+    <string name="MiraUnleashed.Options.Clueless.Chance">Clueless Chance</string>
+    <string name="MiraUnleashed.Options.Clueless.CensorType">Clueless Censor Type</string>
+    <string name="MiraUnleashed.Options.Clueless.CensorType.WhiteBars">White Bars</string>
+    <string name="MiraUnleashed.Options.Clueless.CensorType.Asterisks">Asterisks</string>
+    <string name="MiraUnleashed.Options.Clueless.CensorType.QuestionMarks">Question Marks</string>
+    <string name="MiraUnleashed.Options.Clueless.CensorType.Remove">Remove</string>
 </resources>
