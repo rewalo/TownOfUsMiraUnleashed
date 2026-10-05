@@ -331,4 +331,31 @@ If you fail to kill them, you will get penalized.</string>
     <string name="TownOfUsMira.Role.BloodhoundYourNextTarget">Is Your Next Target.</string>
     <string name="TownOfUsMira.Role.BloodhoundTabTimer">Scavenge Time: [timeLeft]</string>
     <string name="TownOfUsMira.Role.BloodhoundTabTarget">Current Target: [player]</string>
+
+<!-- Spiteful Modifier -->
+    <string name="MiraUnleashed.Modifier.Spiteful">Spiteful</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.IntroBlurb">Punish those who vote you out.</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.TabDescription">When you are voted out, everyone who voted for you receives a negative effect.</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.WikiDescription">When you are voted out, everyone who voted for you receives a negative effect.</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.EffectType">Punishment Effect</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.LowerVision">Lower Vision</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.Slowness">Slowness</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.IncreasedCooldowns">Increased Cooldowns</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.VoterNotification">The player you voted for was &lt;spiteful&gt;! &lt;effect&gt;</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.LowerVisionDescription">Your vision is reduced by &lt;impact&gt;%</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.SlownessDescription">Your speed is reduced by &lt;impact&gt;%</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.IncreasedCooldownsDescription">Your ability cooldowns are increased by &lt;impact&gt;%</string>
+
+<!-- Spiteful Options -->
+    <string name="MiraUnleashed.Options.Spiteful.Amount">Spiteful Amount</string>
+    <string name="MiraUnleashed.Options.Spiteful.Chance">Spiteful Chance</string>
+    <string name="MiraUnleashed.Options.Spiteful.Impact">Spiteful Impact</string>
+    <string name="MiraUnleashed.Options.Spiteful.EffectType">Punishment Effect</string>
+    <string name="MiraUnleashed.Options.Spiteful.EffectType.LowerVision">Lower Vision</string>
+    <string name="MiraUnleashed.Options.Spiteful.EffectType.Slowness">Slowness</string>
+    <string name="MiraUnleashed.Options.Spiteful.EffectType.IncreasedCooldowns">Increased Cooldowns</string>
+    <string name="MiraUnleashed.Options.Spiteful.DurationType">Punishment Duration</string>
+    <string name="MiraUnleashed.Options.Spiteful.DurationType.NextRounds">Next Rounds</string>
+    <string name="MiraUnleashed.Options.Spiteful.DurationType.RestOfGame">Rest of Game</string>
+    <string name="MiraUnleashed.Options.Spiteful.RoundCount">Number of Rounds</string>
 </resources>
