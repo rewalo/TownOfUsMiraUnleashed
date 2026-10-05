@@ -163,6 +163,27 @@
     <string name="MiraUnleashed.Injector.Notification.WoreOffVisionBoost">Your vision has returned to normal.</string>
     <string name="MiraUnleashed.Injector.Notification.WoreOffRegeneration">The regeneration effect has ended.</string>
 
+<!-- Witch Role -->
+    <string name="MiraUnleashed.Role.Witch">Witch</string>
+    <string name="MiraUnleashed.Role.Witch.IntroBlurb">We love casting spells!</string>
+    <string name="MiraUnleashed.Role.Witch.TabDescription">Cast spells on players.\%nl\%They'll be highlighted in the next meeting and die after the configured amount of meetings.</string>
+    <string name="MiraUnleashed.Role.Witch.WikiDescription">The Witch is an Impostor Killing role that can cast spells on other players. Spellbound players are highlighted in the next meeting and die after the configured amount of meetings. If the Witch dies, gets exiled, or is guessed, all spellbound players survive.</string>
+    <string name="MiraUnleashed.Role.WitchSpell">Spell</string>
+    <string name="MiraUnleashed.Role.WitchSpell.WikiDescription">Cast a spell on a player. They will be highlighted in the next meeting and die after the configured amount of meetings.</string>
+
+<!-- Witch Options -->
+    <string name="MiraUnleashed.Options.Witch.SpellCooldown">Spell Cooldown</string>
+    <string name="MiraUnleashed.Options.Witch.AdditionalCooldown">Witch Additional Cooldown</string>
+    <string name="MiraUnleashed.Options.Witch.SpellCastingDuration">Witch Spell Casting Duration</string>
+    <string name="MiraUnleashed.Options.Witch.MeetingsUntilDeath">Meetings Until Death</string>
+
+<!-- Witch Death Message -->
+    <string name="DiedToWitch">Cursed</string>
+
+<!-- Witch Notifications -->
+    <string name="MiraUnleashed.Witch.SpellNotification">&lt;player&gt; has been cursed! They have &lt;meetings&gt; meeting(s) left. Vote out or kill the Witch to save them!</string>
+    <string name="MiraUnleashed.Witch.SpellNotificationMultiple">Multiple players have been cursed:\n&lt;players&gt;\nVote out or kill the Witch to save them!</string>
+
 <!-- Trapper Role -->
     <string name="MiraUnleashed.Role.Trapper">Trapper</string>
     <string name="MiraUnleashed.Role.Trapper.IntroBlurb">Trap vents to catch venters.</string>
