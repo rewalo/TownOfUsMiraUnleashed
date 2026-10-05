@@ -280,4 +280,23 @@
     <string name="MiraUnleashed.Options.Charlatan.ConcealReportRangeEnum.Short">Short</string>
     <string name="MiraUnleashed.Options.Charlatan.ConcealChannelDuration">Conceal Channel Duration</string>
     <string name="MiraUnleashed.Options.Charlatan.ConcealCooldown">Conceal Cooldown</string>
+
+<!-- Serial Killer Role -->
+    <string name="MiraUnleashed.Role.SerialKiller">Serial Killer</string>
+    <string name="MiraUnleashed.Role.SerialKiller.IntroBlurb">Kill everyone, win alone.</string>
+    <string name="MiraUnleashed.Role.SerialKiller.TabDescription">Kill everyone to win alone.\%nl\%You can kill players in vents, but you'll lose the ability to vent after doing so.</string>
+    <string name="MiraUnleashed.Role.SerialKiller.WikiDescription">The Serial Killer is a Neutral Killing role whose only objective is to kill everyone and win alone. The Serial Killer can optionally kill players who are in vents with them, but loses the ability to vent for the rest of the game after doing so.</string>
+    <string name="MiraUnleashed.Modifier.SerialKillerManiac">Maniac</string>
+    <string name="DiedToSerialKiller">Murdered</string>
+
+<!-- Serial Killer Options -->
+    <string name="MiraUnleashed.Options.SerialKiller.CanReportBodies">Can Report Bodies</string>
+    <string name="MiraUnleashed.Options.SerialKiller.VentKillTargets">Vent Kill Targets</string>
+    <string name="MiraUnleashed.Options.SerialKiller.VentKillTargetsEnum.Impostors">Impostors</string>
+    <string name="MiraUnleashed.Options.SerialKiller.VentKillTargetsEnum.ImpNK">Impostors + Neutral Killers</string>
+    <string name="MiraUnleashed.Options.SerialKiller.VentKillTargetsEnum.ImpNeutrals">Impostors + Neutrals</string>
+    <string name="MiraUnleashed.Options.SerialKiller.VentKillTargetsEnum.Any">Any</string>
+    <string name="MiraUnleashed.Options.SerialKiller.ManiacMode">Maniac Mode</string>
+    <string name="MiraUnleashed.Options.SerialKiller.ManiacTimer">Maniac Timer</string>
+    <string name="MiraUnleashed.Options.SerialKiller.ManiacCooldown">Kill Cooldown</string>
 </resources>
