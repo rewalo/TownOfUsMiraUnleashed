@@ -18,4 +18,32 @@
     <string name="MiraUnleashed.Options.Forestaller.RevealTiming">Reveal Timing</string>
     <string name="MiraUnleashed.Options.Forestaller.RevealTiming.NextMeeting">Next Meeting</string>
     <string name="MiraUnleashed.Options.Forestaller.RevealTiming.Instant">Instant</string>
+
+<!-- Mirage Role -->
+    <string name="MiraUnleashed.Role.Mirage">Mirage</string>
+    <string name="MiraUnleashed.Role.Mirage.IntroBlurb">You got blam-boozled!</string>
+    <string name="MiraUnleashed.Role.Mirage.TabDescription">Prime a decoy, then place it. If anyone interacts with it, it vanishes and you are notified.</string>
+    <string name="MiraUnleashed.Role.Mirage.WikiDescription">The Mirage is a Crewmate Support role that can place a decoy with the appearance of a chosen target (yourself or a random player). If any player interacts with the decoy, it disappears instantly and both the Mirage and the toucher receive a notification. Note: Mirage cannot be guessed if the decoy has the appearance of yourself.</string>
+    <string name="MiraUnleashed.Role.MirageDecoy">Decoy</string>
+    <string name="MiraUnleashed.Role.MirageDecoy.WikiDescription">Prime to prepare a decoy for placement. Press again to place the decoy. While active, the button becomes Destroy.</string>
+    <string name="MiraUnleashed.Mirage.InteractorTriggered">You interacted with a decoy!</string>
+    <string name="MiraUnleashed.Mirage.OwnerTriggered">Your decoy was triggered!</string>
+
+<!-- Mirage Button -->
+    <string name="MiraUnleashed.Mirage.DecoyPrime">Prime</string>
+    <string name="MiraUnleashed.Mirage.DecoyPlace">Place</string>
+    <string name="MiraUnleashed.Mirage.DecoyDestroy">Destroy</string>
+
+<!-- Mirage Options -->
+    <string name="MiraUnleashed.Options.Mirage.InitialUses">Initial Uses</string>
+    <string name="MiraUnleashed.Options.Mirage.UsesPerTasks">Uses Per Tasks</string>
+    <string name="MiraUnleashed.Options.Mirage.DecoyCooldown">Decoy Cooldown</string>
+    <string name="MiraUnleashed.Options.Mirage.DecoyDuration">Auto Destroy Cooldown</string>
+    <string name="MiraUnleashed.Options.Mirage.DecoyType">Decoy Type</string>
+    <string name="MiraUnleashed.Options.Mirage.DecoyType.Mirage">Mirage</string>
+    <string name="MiraUnleashed.Options.Mirage.DecoyType.RandomPlayer">Random Player</string>
+    <string name="MiraUnleashed.Options.Mirage.ArrowTime">Arrow Time</string>
+    <string name="MiraUnleashed.Options.Mirage.ArrowTarget">Arrow Target</string>
+    <string name="MiraUnleashed.Options.Mirage.ArrowTarget.Mirage">Mirage</string>
+    <string name="MiraUnleashed.Options.Mirage.ArrowTarget.Interactor">Interactor</string>
 </resources>
