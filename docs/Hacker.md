@@ -37,4 +37,4 @@ The Hacker is an Impostor Support role that can download information from nearby
 ## Interactions & notes
 
 - Simple Mode disables Download/Device and leaves Jam as the only ability.
-- Jam charges are tracked by the host per Hacker, so the count on the button stays in sync for every client.
+- Each Hacker has their own Jam charges; the number on the button is how many jams you have left.

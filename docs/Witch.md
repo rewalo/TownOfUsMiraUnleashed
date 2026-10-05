@@ -31,4 +31,4 @@ The Witch is an Impostor Killing role that can cast spells on other players. Spe
 
 - The Witch also has a standard kill button.
 - Spellbound players are announced in chat at the meeting ("has been cursed!").
-- Spell deaths happen during vote processing like a meeting kill, so they do not trigger Bait, Frosty, or other kill-modifier reactions.
+- Spellbound players die at the end of the meeting, the same way as a meeting kill. Modifiers that react to being killed on the map (Bait, Frosty, Aftermath, etc.) are not triggered.

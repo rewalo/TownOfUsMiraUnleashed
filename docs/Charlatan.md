@@ -33,4 +33,3 @@ The Charlatan is an Impostor Support role that manipulates body reports. Deceive
 
 - Conceal is a channel: moving out of range, dying, a meeting starting, or the body disappearing cancels it and refunds the use.
 - A concealed body is made harder to spot (reduced alpha) and can only be reported from a shorter range.
-- In Mira Unleashed the conceal/deceive state is fully RPC-driven, so every client agrees on which bodies are concealed and which reports are legitimate — the old mod could desync.
