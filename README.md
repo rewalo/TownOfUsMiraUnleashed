@@ -16,7 +16,7 @@ An extension mod for [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira)
 [![Build](https://github.com/rewalo/TownOfUsMiraRolesExtension/actions/workflows/build.yml/badge.svg)](https://github.com/rewalo/TownOfUsMiraRolesExtension/actions/workflows/build.yml)
 [![Latest Release](https://img.shields.io/github/v/release/rewalo/TownOfUsMiraRolesExtension)](https://github.com/rewalo/TownOfUsMiraRolesExtension/releases/latest)
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](./LICENSE)
-[![Requires TOU-Mira 1.7.3](https://img.shields.io/badge/TOU--Mira-1.7.3-red.svg)](https://github.com/AU-Avengers/TOU-Mira)
+[![TOU-Mira](https://img.shields.io/badge/requires-TOU--Mira-red.svg)](#compatibility)
 
 -----------------------
 
@@ -68,7 +68,7 @@ Click a role for its abilities, options and interactions, or browse the [wiki](h
 
 # Installation
 
-1. Install [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira) 1.7.3 (which includes MiraAPI and its dependencies).
+1. Install [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira) (it bundles MiraAPI, Reactor and BepInEx). Check the [Compatibility](#compatibility) table for the TOU-Mira version that matches the Mira Unleashed release you are installing.
 2. Download the latest `MiraUnleashed.dll` from [Releases](https://github.com/rewalo/TownOfUsMiraRolesExtension/releases), or build it yourself.
 3. Place `MiraUnleashed.dll` in your `Among Us/BepInEx/plugins/` folder.
 4. Launch the game. The mod's config file is `BepInEx/config/rewalo.mira.unleashed.cfg`.
@@ -80,6 +80,8 @@ Click a role for its abilities, options and interactions, or browse the [wiki](h
 | Mira Unleashed | Town of Us: Mira | MiraAPI | Reactor |
 | --- | --- | --- | --- |
 | 2.0.0 | 1.7.3 | 0.5.0 | 2.5.0 |
+
+The table is updated with every release; the latest row applies to the newest release.
 
 The `experimental` branch of this repo tracks TOU-Mira's experimental branch and may target unreleased TOU-Mira builds.
 

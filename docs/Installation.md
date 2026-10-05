@@ -3,7 +3,7 @@
 ## Requirements
 
 - PC version of Among Us (not console)
-- [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira) **1.7.3** (bundles MiraAPI 0.5.0 and Reactor 2.5.0)
+- [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira) — the version pinned in `src/MiraUnleashed/MiraUnleashed.csproj` (it bundles MiraAPI and Reactor)
 
 ## Steps
 
