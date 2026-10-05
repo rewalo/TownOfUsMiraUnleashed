@@ -1,0 +1,404 @@
+using System.Text;
+using HarmonyLib;
+using MiraAPI.Events.Vanilla.Gameplay;
+using MiraAPI.GameOptions;
+using MiraAPI.Roles;
+using MiraAPI.Utilities;
+using MiraUnleashed.Roles.Neutral;
+using MiraUnleashed.Utilities;
+using Reactor.Utilities;
+using Reactor.Utilities.Extensions;
+using TownOfUs;
+using TownOfUs.Events;
+using TownOfUs.Options;
+using TownOfUs.Patches;
+using TownOfUs.Roles;
+using TownOfUs.Utilities;
+using UnityEngine;
+
+namespace MiraUnleashed.Patches.Lawyer;
+
+/// <summary>
+/// Patch to add target indicator for lawyer's client (similar to executioner target indicator).
+/// </summary>
+[HarmonyPatch(typeof(PlayerRoleTextExtensions), nameof(PlayerRoleTextExtensions.UpdateTargetSymbols), typeof(string), typeof(PlayerControl), typeof(bool))]
+public static class LawyerTargetIndicatorPatch
+{
+    private const string Symbol = "§";
+
+    [HarmonyPostfix]
+    public static void UpdateTargetSymbolsPostfix(ref string __result, PlayerControl player, bool hidden)
+    {
+        if (PlayerControl.LocalPlayer == null)
+        {
+            return;
+        }
+
+        var genOpt = OptionGroupSingleton<GeneralOptions>.Instance;
+        var localPlayer = PlayerControl.LocalPlayer;
+        var lawyerColor = TownOfUsColors.Lawyer.ToHtmlStringRGBA();
+
+        // Show symbol if local player is a lawyer and this player is their client
+        if (localPlayer.IsRole<LawyerRole>() &&
+            LawyerUtils.IsClientOfLawyer(player, localPlayer.PlayerId))
+        {
+            __result += $"<color=#{lawyerColor}> {Symbol}</color>";
+            return;
+        }
+
+        // Show symbol if local player is a client and this player is their lawyer
+        if (LawyerUtils.IsClientOfAnyLawyer(localPlayer))
+        {
+            var lawyers = LawyerUtils.GetAllLawyersForClient(localPlayer);
+            if (lawyers
+                .Select(lawyerRole => lawyerRole.Player)
+                .Any(lawyerPlayer => lawyerPlayer != null && lawyerPlayer.PlayerId == player.PlayerId))
+            {
+                __result += $"<color=#{lawyerColor}> {Symbol}</color>";
+                return;
+            }
+        }
+
+        // Dead players should see ALL lawyer/client relationships
+        if (localPlayer.HasDied() && genOpt.TheDeadKnow && !hidden)
+        {
+            // Check if the player being displayed is a lawyer (has a client)
+            var isLawyer = player.IsRole<LawyerRole>();
+
+            // Check if the player being displayed is a client (has a lawyer)
+            var isClient = LawyerUtils.IsClientOfAnyLawyer(player);
+
+            if (isLawyer || isClient)
+            {
+                __result += $"<color=#{lawyerColor}> {Symbol}</color>";
+            }
+        }
+    }
+}
+
+/// <summary>
+/// Patch to show lawyer's name to the client in their role description.
+/// </summary>
+[HarmonyPatch(typeof(TownOfUsEventHandlers), nameof(TownOfUsEventHandlers.IntroRoleRevealEventHandler))]
+public static class LawyerClientIntroPatch
+{
+    [HarmonyPostfix]
+    public static void IntroRoleRevealEventHandlerPostfix(IntroRoleRevealEvent @event)
+    {
+        var instance = @event.IntroCutscene;
+        var localPlayer = PlayerControl.LocalPlayer;
+
+        if (localPlayer == null)
+        {
+            return;
+        }
+
+        var lawyers = LawyerUtils.GetAllLawyersForClient(localPlayer);
+        if (lawyers.Count == 0)
+        {
+            return;
+        }
+
+        var lawyer = lawyers[0].Player;
+
+        if (lawyer == null || lawyer.Data == null)
+        {
+            return;
+        }
+
+        var lawyerInfo = MiraLocaleManager.Get("MiraUnleashed.Role.LawyerClientDescription")
+            .Replace("<lawyer>", lawyer.Data.PlayerName);
+        var color = TownOfUsColors.Lawyer.ToHtmlStringRGBA();
+
+        instance.RoleBlurbText.text += $"\n<size=2.5><color=#{color}>{lawyerInfo}</color></size>";
+    }
+}
+
+/// <summary>
+/// Patch to show lawyer's name to the client in intro begin event as well.
+/// </summary>
+[HarmonyPatch(typeof(TownOfUsEventHandlers), nameof(TownOfUsEventHandlers.IntroBeginEventHandler))]
+public static class LawyerClientIntroBeginPatch
+{
+    [HarmonyPostfix]
+    public static void IntroBeginEventHandlerPostfix(IntroBeginEvent @event)
+    {
+        var cutscene = @event.IntroCutscene;
+        var localPlayer = PlayerControl.LocalPlayer;
+
+        if (localPlayer == null || cutscene == null)
+        {
+            return;
+        }
+
+        var lawyers = LawyerUtils.GetAllLawyersForClient(localPlayer);
+        if (lawyers.Count == 0)
+        {
+            return;
+        }
+
+        var lawyer = lawyers[0].Player;
+
+        if (lawyer == null || lawyer.Data == null)
+        {
+            return;
+        }
+
+        Coroutines.Start(AddLawyerInfoToIntro(cutscene, lawyer));
+    }
+
+    private static System.Collections.IEnumerator AddLawyerInfoToIntro(IntroCutscene cutscene, PlayerControl lawyer)
+    {
+        yield return new WaitForSeconds(0.02f);
+
+        if (cutscene == null || lawyer?.Data == null)
+        {
+            yield break;
+        }
+
+        var lawyerInfo = MiraLocaleManager.Get("MiraUnleashed.Role.LawyerClientDescription")
+            .Replace("<lawyer>", lawyer.Data.PlayerName);
+        var color = TownOfUsColors.Lawyer.ToHtmlStringRGBA();
+
+        cutscene.RoleBlurbText.text += $"\n<size=2.5><color=#{color}>{lawyerInfo}</color></size>";
+    }
+}
+
+/// <summary>
+/// Patch to show lawyer in killer intro if they have a lawyer (handles both impostors and neutral killers).
+/// </summary>
+[HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginImpostor))]
+public static class LawyerKillerIntroPatch
+{
+    [HarmonyPrefix]
+    public static bool BeginImpostorPrefix(IntroCutscene __instance)
+    {
+        var localPlayer = PlayerControl.LocalPlayer;
+        if (localPlayer == null || !localPlayer.IsImpostor())
+        {
+            return true;
+        }
+
+        var lawyers = LawyerUtils.GetAllLawyersForClient(localPlayer);
+        if (lawyers.Count == 0)
+        {
+            return true;
+        }
+
+        return true;
+    }
+
+    [HarmonyPostfix]
+    public static void BeginImpostorPostfix(IntroCutscene __instance)
+    {
+        var localPlayer = PlayerControl.LocalPlayer;
+        if (localPlayer == null || !localPlayer.IsImpostor())
+        {
+            return;
+        }
+
+        var lawyers = LawyerUtils.GetAllLawyersForClient(localPlayer);
+        if (lawyers.Count == 0)
+        {
+            return;
+        }
+
+        var lawyer = lawyers[0].Player;
+
+        if (lawyer == null || lawyer.Data == null)
+        {
+            return;
+        }
+
+        var impostorCount = Helpers.GetAlivePlayers().Count(x => x.IsImpostor());
+        var lawyerIndex = impostorCount;
+        var maxDepth = impostorCount + 1;
+
+        var lawyerPlayer = __instance.CreatePlayer(lawyerIndex, maxDepth, lawyer.Data, true);
+
+        if (lawyerPlayer != null)
+        {
+            lawyerPlayer.SetNameColor(TownOfUsColors.Lawyer);
+        }
+
+        var role = localPlayer.Data?.Role;
+        if (role != null && Camera.main != null)
+        {
+            Camera.main.backgroundColor = role.TeamColor;
+        }
+
+        __instance.ImpostorText.gameObject.SetActive(true);
+        IntroScenePatches.SetHiddenImpostors(__instance);
+    }
+}
+
+/// <summary>
+/// Patch to show lawyer in crewmate intro if a neutral killer has a lawyer.
+/// </summary>
+[HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginCrewmate))]
+public static class LawyerNeutralKillerIntroPatch
+{
+    [HarmonyPrefix]
+    public static void BeginCrewmatePrefix(ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay, IntroCutscene __instance)
+    {
+        var localPlayer = PlayerControl.LocalPlayer;
+        if (localPlayer == null || localPlayer.IsImpostor() || localPlayer.IsCrewmate())
+        {
+            return;
+        }
+
+        var role = localPlayer.Data?.Role;
+        if (role == null)
+        {
+            return;
+        }
+
+        var alignment = MiscUtils.GetRoleAlignment(role);
+        if (alignment != RoleAlignment.NeutralKilling)
+        {
+            return;
+        }
+
+        var lawyers = LawyerUtils.GetAllLawyersForClient(localPlayer);
+        if (lawyers.Count == 0)
+        {
+            return;
+        }
+
+        var lawyer = lawyers[0].Player;
+
+        if (lawyer == null || lawyer.Data == null)
+        {
+            return;
+        }
+
+        var team = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+        team.Add(localPlayer);
+        team.Add(lawyer);
+        teamToDisplay = team;
+    }
+
+    [HarmonyPostfix]
+    public static void BeginCrewmatePostfix(IntroCutscene __instance)
+    {
+        var localPlayer = PlayerControl.LocalPlayer;
+        if (localPlayer == null || localPlayer.IsImpostor() || localPlayer.IsCrewmate())
+        {
+            return;
+        }
+
+        var role = localPlayer.Data?.Role;
+        if (role == null)
+        {
+            return;
+        }
+
+        var alignment = MiscUtils.GetRoleAlignment(role);
+        if (alignment != RoleAlignment.NeutralKilling)
+        {
+            return;
+        }
+
+        var lawyers = LawyerUtils.GetAllLawyersForClient(localPlayer);
+        if (lawyers.Count == 0)
+        {
+            return;
+        }
+
+        __instance.TeamTitle.text = MiraLocaleManager.Get("MiraApi.RoleTeam.Neutral").ToUpperInvariant();
+        __instance.TeamTitle.color = new Color32(138, 138, 138, 255);
+
+        __instance.ImpostorText.gameObject.SetActive(true);
+        IntroScenePatches.SetHiddenImpostors(__instance);
+    }
+}
+
+/// <summary>
+/// Patch to set correct background color for defendant in intro based on their alignment.
+/// </summary>
+[HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginCrewmate))]
+public static class LawyerIntroBackgroundColorPatch
+{
+    [HarmonyPostfix]
+    public static void BeginCrewmatePostfix(IntroCutscene __instance)
+    {
+        var localPlayer = PlayerControl.LocalPlayer;
+
+        if (localPlayer == null || !LawyerUtils.IsClientOfAnyLawyer(localPlayer))
+        {
+            return;
+        }
+
+        var role = localPlayer.Data?.Role;
+        if (role == null)
+        {
+            return;
+        }
+
+        var roleColor = role.TeamColor;
+        if (Camera.main != null)
+        {
+            Camera.main.backgroundColor = roleColor;
+        }
+    }
+}
+
+/// <summary>
+/// Patch to add lawyer info to tab text for the defendant.
+/// </summary>
+[HarmonyPatch(typeof(TouRoleUtils), nameof(TouRoleUtils.SetTabText))]
+public static class LawyerClientTabTextPatch
+{
+    [HarmonyPostfix]
+    public static void SetTabTextPostfix(ref StringBuilder __result, ICustomRole role)
+    {
+        AddLawyerInfoToTabText(ref __result);
+    }
+
+    private static void AddLawyerInfoToTabText(ref StringBuilder __result)
+    {
+        var localPlayer = PlayerControl.LocalPlayer;
+        if (localPlayer == null || localPlayer.Data == null)
+        {
+            return;
+        }
+
+        if (!LawyerUtils.IsClientOfAnyLawyer(localPlayer))
+        {
+            return;
+        }
+
+        var lawyers = LawyerUtils.GetAllLawyersForClient(localPlayer);
+        if (lawyers.Count == 0)
+        {
+            return;
+        }
+
+        var lawyer = lawyers[0].Player;
+
+        if (lawyer == null || lawyer.Data == null)
+        {
+            return;
+        }
+
+        var lawyerInfo = MiraLocaleManager.Get("MiraUnleashed.Role.LawyerClientTabDescription")
+            .Replace("<lawyer>", lawyer.Data.PlayerName);
+        var color = TownOfUsColors.Lawyer.ToHtmlStringRGBA();
+
+        __result.AppendLine();
+        __result.AppendLine(TownOfUsPlugin.Culture, $"<size=70%><color=#{color}>{lawyerInfo}</color></size>");
+    }
+}
+
+/// <summary>
+/// Patch to add lawyer info to dead tab text for the defendant.
+/// </summary>
+[HarmonyPatch(typeof(TouRoleUtils), nameof(TouRoleUtils.SetDeadTabText))]
+public static class LawyerClientDeadTabTextPatch
+{
+    [HarmonyPostfix]
+    public static void SetDeadTabTextPostfix(ref StringBuilder __result, ICustomRole role)
+    {
+        LawyerClientTabTextPatch.SetTabTextPostfix(ref __result, role);
+    }
+}

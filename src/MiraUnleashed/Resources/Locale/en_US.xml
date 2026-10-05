@@ -3,4 +3,408 @@
     <string name="MiraUnleashed.LocalSetting.EnableNauseaCameraShake">Enable Nausea Camera Shake</string>
 <!-- Plugin -->
     <string name="MiraUnleashed.OptionsTitle">Mira Unleashed</string>
+    <string name="MiraUnleashed.Common.Unknown">Unknown</string>
+
+<!-- Forestaller Role -->
+    <string name="MiraUnleashed.Role.Forestaller">Forestaller</string>
+    <string name="MiraUnleashed.Role.Forestaller.IntroBlurb">Complete all tasks to disable sabotages.</string>
+    <string name="MiraUnleashed.Role.Forestaller.TabDescription">Finish all of your tasks. Once you do, sabotages cannot be called while you are alive.</string>
+    <string name="MiraUnleashed.Role.Forestaller.WikiDescription">The Forestaller is a Crewmate Support role that can prevent sabotages before they happen. After completing all tasks, sabotages are disabled while the Forestaller is alive. The Forestaller is revealed after finishing their last task.</string>
+    <string name="MiraUnleashed.Forestaller.SabotagesDisabledAnnouncement">Forestaller has completed all tasks. Sabotages are now disabled.</string>
+
+<!-- Forestaller Options -->
+    <string name="MiraUnleashed.Options.Forestaller.ExtraShortTasks">Extra Short Tasks</string>
+    <string name="MiraUnleashed.Options.Forestaller.ExtraLongTasks">Extra Long Tasks</string>
+    <string name="MiraUnleashed.Options.Forestaller.RevealTiming">Reveal Timing</string>
+    <string name="MiraUnleashed.Options.Forestaller.RevealTiming.NextMeeting">Next Meeting</string>
+    <string name="MiraUnleashed.Options.Forestaller.RevealTiming.Instant">Instant</string>
+
+<!-- Mirage Role -->
+    <string name="MiraUnleashed.Role.Mirage">Mirage</string>
+    <string name="MiraUnleashed.Role.Mirage.IntroBlurb">You got blam-boozled!</string>
+    <string name="MiraUnleashed.Role.Mirage.TabDescription">Prime a decoy, then place it. If anyone interacts with it, it vanishes and you are notified.</string>
+    <string name="MiraUnleashed.Role.Mirage.WikiDescription">The Mirage is a Crewmate Support role that can place a decoy with the appearance of a chosen target (yourself or a random player). If any player interacts with the decoy, it disappears instantly and both the Mirage and the toucher receive a notification. Note: Mirage cannot be guessed if the decoy has the appearance of yourself.</string>
+    <string name="MiraUnleashed.Role.MirageDecoy">Decoy</string>
+    <string name="MiraUnleashed.Role.MirageDecoy.WikiDescription">Prime to prepare a decoy for placement. Press again to place the decoy. While active, the button becomes Destroy.</string>
+    <string name="MiraUnleashed.Mirage.InteractorTriggered">You interacted with a decoy!</string>
+    <string name="MiraUnleashed.Mirage.OwnerTriggered">Your decoy was triggered!</string>
+
+<!-- Mirage Button -->
+    <string name="MiraUnleashed.Mirage.DecoyPrime">Prime</string>
+    <string name="MiraUnleashed.Mirage.DecoyPlace">Place</string>
+    <string name="MiraUnleashed.Mirage.DecoyDestroy">Destroy</string>
+
+<!-- Mirage Options -->
+    <string name="MiraUnleashed.Options.Mirage.InitialUses">Initial Uses</string>
+    <string name="MiraUnleashed.Options.Mirage.UsesPerTasks">Uses Per Tasks</string>
+    <string name="MiraUnleashed.Options.Mirage.DecoyCooldown">Decoy Cooldown</string>
+    <string name="MiraUnleashed.Options.Mirage.DecoyDuration">Auto Destroy Cooldown</string>
+    <string name="MiraUnleashed.Options.Mirage.DecoyType">Decoy Type</string>
+    <string name="MiraUnleashed.Options.Mirage.DecoyType.Mirage">Mirage</string>
+    <string name="MiraUnleashed.Options.Mirage.DecoyType.RandomPlayer">Random Player</string>
+    <string name="MiraUnleashed.Options.Mirage.ArrowTime">Arrow Time</string>
+    <string name="MiraUnleashed.Options.Mirage.ArrowTarget">Arrow Target</string>
+    <string name="MiraUnleashed.Options.Mirage.ArrowTarget.Mirage">Mirage</string>
+    <string name="MiraUnleashed.Options.Mirage.ArrowTarget.Interactor">Interactor</string>
+
+<!-- Hacker Role -->
+    <string name="MiraUnleashed.Role.Hacker">Hacker</string>
+    <string name="MiraUnleashed.Role.Hacker.IntroBlurb">Download system information and jam comms.</string>
+    <string name="MiraUnleashed.Role.Hacker.TabDescription">Download and jam equipment, kill for extra jam charges.</string>
+    <string name="MiraUnleashed.Role.Hacker.WikiDescription">The Hacker is an Impostor Support role that can download information from nearby equipment to charge a portable device. Once you start downloading, you're locked into that equipment type until the next round. Jam disrupts information systems as if comms were sabotaged, but emergency meetings can still be called.</string>
+    <string name="MiraUnleashed.Role.HackerDownload">Download</string>
+    <string name="MiraUnleashed.Role.HackerDownload.WikiDescription">While near a downloadable console (Admin/Cams/Vitals/Door Log), download to charge your battery. Every 1 second downloading grants 2 seconds of device battery (configurable). You cannot switch equipment type until the next round.</string>
+    <string name="MiraUnleashed.Role.HackerDevice">Device</string>
+    <string name="MiraUnleashed.Role.HackerDevice.WikiDescription">Use the downloaded system anywhere, consuming battery over time.</string>
+    <string name="MiraUnleashed.Role.HackerJam">Jam</string>
+    <string name="MiraUnleashed.Role.HackerJam.WikiDescription">Spend a Jam charge to disrupt information systems for a duration. This behaves like comms being down, but does not prevent calling emergency meetings.</string>
+
+<!-- Hacker Options -->
+    <string name="MiraUnleashed.Options.Hacker.MaxBatterySeconds">Maximum Battery Duration</string>
+    <string name="MiraUnleashed.Options.Hacker.BatteryPerDownloadSecond">Battery Gained Per Download Second</string>
+    <string name="MiraUnleashed.Options.Hacker.DownloadRange">Download Range</string>
+    <string name="MiraUnleashed.Options.Hacker.MoveWithDevice">Move While Using Device</string>
+    <string name="MiraUnleashed.Options.Hacker.SimpleModeJamOnly">Simple Mode (Jam Only)</string>
+    <string name="MiraUnleashed.Options.Hacker.InitialJamCharges">Initial Jam Charges</string>
+    <string name="MiraUnleashed.Options.Hacker.JamChargesPerKill">Jam Charges Per Kill</string>
+    <string name="MiraUnleashed.Options.Hacker.JamMaxCharges">Max Jam Charges</string>
+    <string name="MiraUnleashed.Options.Hacker.JamCooldown">Jam Cooldown</string>
+    <string name="MiraUnleashed.Options.Hacker.JamDuration">Jam Duration</string>
+    <string name="MiraUnleashed.Options.Hacker.JamSoundCue">Jam Sound Cue</string>
+    <string name="MiraUnleashed.Options.Hacker.JamSoundCue.HackerOnly">Hacker Only</string>
+    <string name="MiraUnleashed.Options.Hacker.JamSoundCue.Everyone">Everyone</string>
+
+<!-- Injector Role -->
+    <string name="MiraUnleashed.Role.Injector">Injector</string>
+    <string name="MiraUnleashed.Role.Injector.IntroBlurb">Inject players with negative effects.</string>
+    <string name="MiraUnleashed.Role.Injector.TabDescription">Inject players to give them random effects. </string>
+    <string name="MiraUnleashed.Role.Injector.WikiDescription">The Injector is an Impostor Support role that can inject players with various negative effects. Effects are randomly selected and can include inverted controls, reduced vision, slowness, or confusion.</string>
+    <string name="MiraUnleashed.Role.InjectorInject">Inject</string>
+    <string name="MiraUnleashed.Role.InjectorInject.WikiDescription">Inject a nearby player with a random negative effect. The effect will activate after a configurable delay.</string>
+
+<!-- Injector Options -->
+    <string name="MiraUnleashed.Options.Injector.InjectCooldown">Inject Cooldown</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDelay">Effect Activation Delay</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDurationType">Effect Duration Type</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDurationType.AllRound">All Round</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDurationType.AllGame">All Game</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDurationType.SetTime">Set Time</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDuration">Effect Duration</string>
+    <string name="MiraUnleashed.Options.Injector.InitialUses">Initial Uses</string>
+    <string name="MiraUnleashed.Options.Injector.UsesPerKill">Uses Per Kill</string>
+    <string name="MiraUnleashed.Options.Injector.PositiveEffectsEnabled">Positive Effects Enabled</string>
+    <string name="MiraUnleashed.Options.Injector.SelectedEffectType">Effect Type To Configure</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.InvertedControls">Inverted Controls</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.LowVision">Low Vision</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.Slowness">Slowness</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.VeryLowVision">Very Low Vision</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.Confused">Confused</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.NoVent">No Vent</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.NoUse">No Use</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.NoReport">No Report</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.Nausea">Nausea</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.Weakness">Weakness</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.SpeedBoost">Speed Boost</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.VisionBoost">Vision Boost</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.Regeneration">Regeneration</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceInvertedControls">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceLowVision">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceSlowness">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceVeryLowVision">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceConfused">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceNoVent">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceNoUse">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceNoReport">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceNausea">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceWeakness">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceSpeedBoost">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceVisionBoost">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceRegeneration">Effect Chance</string>
+
+<!-- Injector Modifier Display -->
+    <string name="MiraUnleashed.Injector.Modifier.Name">Injected (&lt;effect&gt;)</string>
+    <string name="MiraUnleashed.Injector.Notification.Injected">You have been injected! &lt;effect&gt;: &lt;description&gt;. &lt;duration&gt;</string>
+    <string name="MiraUnleashed.Injector.Duration.SetTime">&lt;time&gt;s left</string>
+    <string name="MiraUnleashed.Injector.Duration.AllRound">Until the next meeting</string>
+    <string name="MiraUnleashed.Injector.Duration.AllGame">For the rest of the game</string>
+    <string name="MiraUnleashed.Injector.Duration.Lasts">Lasts &lt;time&gt;s</string>
+
+<!-- Injector Notifications -->
+    <string name="MiraUnleashed.Injector.Notification.InvertedControls">You start to feel lightheaded…</string>
+    <string name="MiraUnleashed.Injector.Notification.LowVision">Your vision narrows…</string>
+    <string name="MiraUnleashed.Injector.Notification.Slowness">Your legs start to feel heavy…</string>
+    <string name="MiraUnleashed.Injector.Notification.VeryLowVision">You feel your eyesight begin to fade...</string>
+    <string name="MiraUnleashed.Injector.Notification.Confused">You start to feel confused...</string>
+    <string name="MiraUnleashed.Injector.Notification.NoVent">You feel too weak to use vents…</string>
+    <string name="MiraUnleashed.Injector.Notification.NoUse">Your body feels paralyzed…</string>
+    <string name="MiraUnleashed.Injector.Notification.NoReport">Your mind goes blank when you see bodies…</string>
+    <string name="MiraUnleashed.Injector.Notification.Nausea">You feel nauseous…</string>
+    <string name="MiraUnleashed.Injector.Notification.Weakness">You feel extremely weak…</string>
+    <string name="MiraUnleashed.Injector.Notification.SpeedBoost">You feel energized and fast!</string>
+    <string name="MiraUnleashed.Injector.Notification.VisionBoost">Your vision becomes crystal clear!</string>
+    <string name="MiraUnleashed.Injector.Notification.Regeneration">You feel your body healing rapidly!</string>
+
+<!-- Injector Effect Descriptions -->
+    <string name="MiraUnleashed.Injector.EffectDescription.InvertedControls">Inverted controls</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.LowVision">0.5x vision</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.VeryLowVision">0.1x vision</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.Slowness">0.5x speed</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.Confused">Hallucinations, cannot report</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.NoVent">Cannot vent</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.NoUse">Cannot use abilities</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.NoReport">Cannot report bodies</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.Nausea">0.7x speed, 0.7x vision, camera shake</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.Weakness">0.6x speed</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.SpeedBoost">1.5x speed</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.VisionBoost">1.5x vision</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.Regeneration">Reduced cooldowns</string>
+
+<!-- Injector Wore Off Notifications -->
+    <string name="MiraUnleashed.Injector.Notification.WoreOffInvertedControls">The lightheaded feeling has passed.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffLowVision">Your vision has returned to normal.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffVeryLowVision">Your eyesight has fully recovered.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffSlowness">Your legs feel normal again.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffConfused">The confusion has cleared.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffNoVent">You can use vents again.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffNoUse">You can use abilities again.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffNoReport">You can report bodies again.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffNausea">The nausea has subsided.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffWeakness">Your strength has returned.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffSpeedBoost">The speed boost has worn off.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffVisionBoost">Your vision has returned to normal.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffRegeneration">The regeneration effect has ended.</string>
+
+<!-- Witch Role -->
+    <string name="MiraUnleashed.Role.Witch">Witch</string>
+    <string name="MiraUnleashed.Role.Witch.IntroBlurb">We love casting spells!</string>
+    <string name="MiraUnleashed.Role.Witch.TabDescription">Cast spells on players.
+They'll be highlighted in the next meeting and die after the configured amount of meetings.</string>
+    <string name="MiraUnleashed.Role.Witch.WikiDescription">The Witch is an Impostor Killing role that can cast spells on other players. Spellbound players are highlighted in the next meeting and die after the configured amount of meetings. If the Witch dies, gets exiled, or is guessed, all spellbound players survive.</string>
+    <string name="MiraUnleashed.Role.WitchSpell">Spell</string>
+    <string name="MiraUnleashed.Role.WitchSpell.WikiDescription">Cast a spell on a player. They will be highlighted in the next meeting and die after the configured amount of meetings.</string>
+
+<!-- Witch Options -->
+    <string name="MiraUnleashed.Options.Witch.SpellCooldown">Spell Cooldown</string>
+    <string name="MiraUnleashed.Options.Witch.AdditionalCooldown">Witch Additional Cooldown</string>
+    <string name="MiraUnleashed.Options.Witch.SpellCastingDuration">Witch Spell Casting Duration</string>
+    <string name="MiraUnleashed.Options.Witch.MeetingsUntilDeath">Meetings Until Death</string>
+    <string name="MiraUnleashed.Options.Witch.SpellRange">Spell Range</string>
+    <string name="MiraUnleashed.Options.Witch.SpellResetsKillCooldown">Spell Resets Kill Cooldown</string>
+
+<!-- Witch Death Message -->
+    <string name="DiedToWitch">Cursed</string>
+
+<!-- Witch Notifications -->
+    <string name="MiraUnleashed.Witch.SpellNotification">&lt;player&gt; has been cursed! They have &lt;meetings&gt; meeting(s) left. Vote out or kill the Witch to save them!</string>
+    <string name="MiraUnleashed.Witch.SpellNotificationMultiple">Multiple players have been cursed:\n&lt;players&gt;\nVote out or kill the Witch to save them!</string>
+
+<!-- Wraith Role -->
+    <string name="MiraUnleashed.Role.Wraith">Wraith</string>
+    <string name="MiraUnleashed.Role.Wraith.IntroBlurb">Move fast and strike unpredictably.</string>
+    <string name="MiraUnleashed.Role.Wraith.TabDescription">Dash for speed. Place a Lantern to teleport back to it.</string>
+    <string name="MiraUnleashed.Role.Wraith.WikiDescription">The Wraith is an Impostor Power role focused on fast, unpredictable movement. Dash increases your movement speed by 75% for a short time. Lantern lets you place a hidden marker only you can see; reactivate it to teleport back and briefly swoop. If the Lantern expires before you return, it breaks and leaves permanent evidence visible to all players.</string>
+    <string name="MiraUnleashed.Role.WraithDash">Dash</string>
+    <string name="MiraUnleashed.Role.WraithDash.WikiDescription">Temporarily increase your movement speed by 75%.</string>
+    <string name="MiraUnleashed.Role.WraithLantern">Lantern</string>
+    <string name="MiraUnleashed.Role.WraithLantern.WikiDescription">Place a Lantern only you can see. Reactivate it to teleport back and briefly turn invisible. If it expires, it breaks and leaves evidence visible to everyone.</string>
+    <string name="MiraUnleashed.Role.WraithLanternPlace">Lantern</string>
+    <string name="MiraUnleashed.Role.WraithLanternReturn">Return</string>
+
+<!-- Wraith Options -->
+    <string name="MiraUnleashed.Options.Wraith.DashCooldown">Dash Cooldown</string>
+    <string name="MiraUnleashed.Options.Wraith.DashDuration">Dash Duration</string>
+    <string name="MiraUnleashed.Options.Wraith.Lantern">Lantern</string>
+    <string name="MiraUnleashed.Options.Wraith.LanternCooldown">Lantern Cooldown</string>
+    <string name="MiraUnleashed.Options.Wraith.LanternDuration">Lantern Duration</string>
+    <string name="MiraUnleashed.Options.Wraith.InvisibleDuration">Invisible Duration</string>
+
+<!-- Trapper Role -->
+    <string name="MiraUnleashed.Role.Trapper">Trapper</string>
+    <string name="MiraUnleashed.Role.Trapper.IntroBlurb">Trap vents to catch venters.</string>
+    <string name="MiraUnleashed.Role.Trapper.TabDescription">Place traps on vents. Players who use trapped vents will be immobilized for a duration.</string>
+    <string name="MiraUnleashed.Role.Trapper.WikiDescription">The Trapper is a Crewmate role that can place traps on vents. When players use a trapped vent, they are immobilized for a duration and the Trapper is notified.</string>
+    <string name="MiraUnleashed.Role.TrapperTrap">Trap</string>
+    <string name="MiraUnleashed.Role.TrapperTrap.WikiDescription">Place a trap on a vent. Players who use this vent will be caught and immobilized.</string>
+    <string name="MiraUnleashed.Trapper.Placed">Trapped a vent in &lt;room&gt;!</string>
+    <string name="MiraUnleashed.Trapper.Triggered">Your trap was triggered in &lt;room&gt;!</string>
+    <string name="MiraUnleashed.Trapper.Caught">You were caught in a trap in &lt;room&gt;!</string>
+
+<!-- Trapper Options -->
+    <string name="MiraUnleashed.Options.Trapper.TrapCooldown">Trap Cooldown</string>
+    <string name="MiraUnleashed.Options.Trapper.TrapDuration">Trap Duration</string>
+    <string name="MiraUnleashed.Options.Trapper.ArrowDuration">Arrow Duration</string>
+    <string name="MiraUnleashed.Options.Trapper.MaxTraps">Max Number of Traps</string>
+    <string name="MiraUnleashed.Options.Trapper.TrapRoundsLast">Trap Rounds Last</string>
+    <string name="MiraUnleashed.Options.Trapper.GetMoreFromTasks">Get More Traps From Tasks</string>
+    <string name="MiraUnleashed.Options.Trapper.TasksUntilMoreTraps">Tasks Until More Traps</string>
+    <string name="MiraUnleashed.Options.Trapper.TrapTargets">Trap Targets</string>
+    <string name="MiraUnleashed.Options.Trapper.TrapTargets.Impostors">Impostors</string>
+    <string name="MiraUnleashed.Options.Trapper.TrapTargets.ImpostorsAndNeutrals">Impostors and Neutrals</string>
+    <string name="MiraUnleashed.Options.Trapper.TrapTargets.All">All</string>
+    <string name="MiraUnleashed.Options.Trapper.ArrowTarget">Arrow Target</string>
+    <string name="MiraUnleashed.Options.Trapper.ArrowTarget.Vent">Vent</string>
+    <string name="MiraUnleashed.Options.Trapper.ArrowTarget.Person">Person</string>
+
+<!-- Renamed Trapper to Revealer - these override the base mod's Trapper strings
+     (TOU-Mira 1.7.3 looks up TownOfUsMira.Role.<IdPart>* keys; the IdPart patch returns "Revealer") -->
+    <string name="TownOfUsMira.Role.Revealer">Revealer</string>
+    <string name="TownOfUsMira.Role.Revealer.IntroBlurb">Place traps to reveal roles of players who stay in them.</string>
+    <string name="TownOfUsMira.Role.Revealer.TabDescription">Place traps around the map. Players who stay in traps long enough will have their roles revealed to you at the next meeting.</string>
+    <string name="TownOfUsMira.Role.Revealer.WikiDescription">The Revealer is a Crewmate role that can place traps around the map. When players stay in a trap for a certain amount of time, their roles are revealed to the Revealer at the next meeting.</string>
+    <string name="TownOfUsMira.Role.RevealerTrap">Trap</string>
+    <string name="TownOfUsMira.Role.RevealerTrap.WikiDescription">Place a trap at your current location. Players who stay in the trap for the required duration will have their roles revealed to you.</string>
+    <string name="TownOfUsMira.Role.RevealerNoPlayers">No players were caught in your traps.</string>
+    <string name="TownOfUsMira.Role.RevealerNotEnoughPLayers">Not enough players were caught in your traps.</string>
+    <string name="TownOfUsMira.Role.RevealerRolesCaught">Roles caught in traps:</string>
+    <string name="TownOfUsMira.Role.RevealerMessageTitle">Trap Report</string>
+
+<!-- Clueless Modifier -->
+    <string name="MiraUnleashed.Modifier.Clueless">Clueless</string>
+    <string name="MiraUnleashed.Modifier.Clueless.IntroBlurb">No task guidance.</string>
+    <string name="MiraUnleashed.Modifier.Clueless.TabDescription">You cannot see your task list, task markers, or task locations on the map.</string>
+    <string name="MiraUnleashed.Modifier.Clueless.WikiDescription">You cannot see your task list, task markers, or task locations on the map. Tasks still spawn normally and count toward the task bar.</string>
+
+<!-- Clueless Options -->
+    <string name="MiraUnleashed.Options.Clueless.Amount">Clueless Amount</string>
+    <string name="MiraUnleashed.Options.Clueless.Chance">Clueless Chance</string>
+    <string name="MiraUnleashed.Options.Clueless.CensorType">Clueless Censor Type</string>
+    <string name="MiraUnleashed.Options.Clueless.CensorType.WhiteBars">White Bars</string>
+    <string name="MiraUnleashed.Options.Clueless.CensorType.Asterisks">Asterisks</string>
+    <string name="MiraUnleashed.Options.Clueless.CensorType.QuestionMarks">Question Marks</string>
+    <string name="MiraUnleashed.Options.Clueless.CensorType.Remove">Remove</string>
+
+<!-- Charlatan Role -->
+    <string name="MiraUnleashed.Role.Charlatan">Charlatan</string>
+    <string name="MiraUnleashed.Role.Charlatan.IntroBlurb">Manipulate body reports to your advantage.</string>
+    <string name="MiraUnleashed.Role.Charlatan.TabDescription">Use Deceive to report bodies you've killed from any distance.
+Use Conceal to reduce the report range of nearby bodies.</string>
+    <string name="MiraUnleashed.Role.Charlatan.WikiDescription">The Charlatan is an Impostor Support role that manipulates body reports. Deceive allows you to report bodies you've killed from any distance for a limited time after killing. Conceal reduces the report range of nearby bodies, but requires you to stay near the body for the duration.</string>
+    <string name="MiraUnleashed.Role.CharlatanDeceive">Deceive</string>
+    <string name="MiraUnleashed.Role.CharlatanDeceive.WikiDescription">Report the body you killed from any distance, regardless of range or line of sight. Available for a limited time after killing.</string>
+    <string name="MiraUnleashed.Role.CharlatanConceal">Conceal</string>
+    <string name="MiraUnleashed.Role.CharlatanConceal.WikiDescription">Reduce the report range of nearby bodies. You must stay near the body for the duration to successfully conceal it.</string>
+
+<!-- Charlatan Options -->
+    <string name="MiraUnleashed.Options.Charlatan.DeceiveBaseDuration">Deceive Base Duration</string>
+    <string name="MiraUnleashed.Options.Charlatan.DeceiveDurationIncreasePerKill">Deceive Duration Increase Per Kill</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealUses">Conceal Uses</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealChargesPerKill">Conceal Charges Per Kill</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealReportRange">Conceal Report Range</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealReportRangeEnum.ExtremelyShort">Extremely Short</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealReportRangeEnum.VeryShort">Very Short</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealReportRangeEnum.Short">Short</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealChannelDuration">Conceal Channel Duration</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealCooldown">Conceal Cooldown</string>
+
+<!-- Serial Killer Role -->
+    <string name="MiraUnleashed.Role.SerialKiller">Serial Killer</string>
+    <string name="MiraUnleashed.Role.SerialKiller.IntroBlurb">Kill everyone, win alone.</string>
+    <string name="MiraUnleashed.Role.SerialKiller.TabDescription">Kill everyone to win alone.
+You can kill players in vents, but you'll lose the ability to vent after doing so.</string>
+    <string name="MiraUnleashed.Role.SerialKiller.WikiDescription">The Serial Killer is a Neutral Killing role whose only objective is to kill everyone and win alone. The Serial Killer can optionally kill players who are in vents with them, but loses the ability to vent for the rest of the game after doing so.</string>
+    <string name="MiraUnleashed.Modifier.SerialKillerManiac">Maniac</string>
+    <string name="DiedToSerialKiller">Murdered</string>
+
+<!-- Serial Killer Options -->
+    <string name="MiraUnleashed.Options.SerialKiller.CanReportBodies">Can Report Bodies</string>
+    <string name="MiraUnleashed.Options.SerialKiller.VentKillTargets">Vent Kill Targets</string>
+    <string name="MiraUnleashed.Options.SerialKiller.VentKillTargetsEnum.Impostors">Impostors</string>
+    <string name="MiraUnleashed.Options.SerialKiller.VentKillTargetsEnum.ImpNK">Impostors + Neutral Killers</string>
+    <string name="MiraUnleashed.Options.SerialKiller.VentKillTargetsEnum.ImpNeutrals">Impostors + Neutrals</string>
+    <string name="MiraUnleashed.Options.SerialKiller.VentKillTargetsEnum.Any">Any</string>
+    <string name="MiraUnleashed.Options.SerialKiller.ManiacMode">Maniac Mode</string>
+    <string name="MiraUnleashed.Options.SerialKiller.ManiacTimer">Maniac Timer</string>
+    <string name="MiraUnleashed.Options.SerialKiller.ManiacCooldown">Kill Cooldown</string>
+
+<!-- Scavenger Role -->
+    <string name="MiraUnleashed.Role.Scavenger">Scavenger</string>
+    <string name="MiraUnleashed.Role.Scavenger.IntroBlurb">Eat dead bodies to win alone.</string>
+    <string name="MiraUnleashed.Role.Scavenger.TabDescription">Eat dead bodies to win alone.</string>
+    <string name="MiraUnleashed.Role.Scavenger.WikiDescription">The Scavenger is a Neutral Evil role whose goal is to eat a set amount of dead bodies. Optionally, the Scavenger can use Scavenge to get arrows pointing to corpses. If the Scavenger's win condition can no longer be met, they become the configured role.</string>
+    <string name="MiraUnleashed.Role.ScavengerEat">Eat</string>
+    <string name="MiraUnleashed.Role.ScavengerEat.WikiDescription">Eat a nearby dead body. This counts toward your win condition.</string>
+    <string name="MiraUnleashed.Role.ScavengerScavenge">Scavenge</string>
+    <string name="MiraUnleashed.Role.ScavengerScavenge.WikiDescription">Get arrows pointing to all corpses for a duration. If a corpse is on a different floor on Submerged, the arrow will point to the elevator.</string>
+
+<!-- Scavenger Options -->
+    <string name="MiraUnleashed.Options.Scavenger.EatCooldown">Eat Cooldown</string>
+    <string name="MiraUnleashed.Options.Scavenger.EatDuration">Eat Duration</string>
+    <string name="MiraUnleashed.Options.Scavenger.BodiesToWin">Number Of Bodies To Win</string>
+    <string name="MiraUnleashed.Options.Scavenger.CanVent">Scavenger Can Vent</string>
+    <string name="MiraUnleashed.Options.Scavenger.CannotSpawnWithJanitor">Cannot Spawn With Janitor</string>
+    <string name="MiraUnleashed.Options.Scavenger.ScavengeEnabled">Scavenge Enabled</string>
+    <string name="MiraUnleashed.Options.Scavenger.ScavengeCooldown">Scavenge Cooldown</string>
+    <string name="MiraUnleashed.Options.Scavenger.ScavengeDuration">Scavenge Duration</string>
+    <string name="MiraUnleashed.Options.Scavenger.OnLoseBecomes">On Lose, Scavenger Becomes</string>
+
+<!-- Renamed TOU Scavenger to Bloodhound - IdPart patch makes these the role's locale keys -->
+    <string name="TownOfUsMira.Role.Bloodhound">Bloodhound</string>
+    <string name="TownOfUsMira.Role.Bloodhound.IntroBlurb">Hunt down your prey</string>
+    <string name="TownOfUsMira.Role.Bloodhound.MedDescription">Kill off your targets to kill quicker, or suffer with a slow cooldown.</string>
+    <string name="TownOfUsMira.Role.Bloodhound.TabDescription">Kill your given targets for a reduced cooldown.
+If you fail to kill them, you will get penalized.</string>
+    <string name="TownOfUsMira.Role.Bloodhound.WikiDescription">The Bloodhound is an Impostor Killing role that gets new targets after every kill and when the round starts. If they kill their target, they get a reduced kill cooldown, but if they don't, their cooldown is increased significantly.</string>
+    <string name="TownOfUsMira.Role.BloodhoundYourNextTarget">Is Your Next Target.</string>
+    <string name="TownOfUsMira.Role.BloodhoundTabTimer">Scavenge Time: [timeLeft]</string>
+    <string name="TownOfUsMira.Role.BloodhoundTabTarget">Current Target: [player]</string>
+
+<!-- Spiteful Modifier -->
+    <string name="MiraUnleashed.Modifier.Spiteful">Spiteful</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.IntroBlurb">Punish those who vote you out.</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.TabDescription">When you are voted out, everyone who voted for you receives a negative effect.</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.WikiDescription">When you are voted out, everyone who voted for you receives a negative effect.</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.EffectType">Punishment Effect</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.LowerVision">Lower Vision</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.Slowness">Slowness</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.IncreasedCooldowns">Increased Cooldowns</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.VoterNotification">The player you voted for was &lt;spiteful&gt;! &lt;effect&gt;</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.LowerVisionDescription">Your vision is reduced by &lt;impact&gt;%</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.SlownessDescription">Your speed is reduced by &lt;impact&gt;%</string>
+    <string name="MiraUnleashed.Modifier.Spiteful.Effect.IncreasedCooldownsDescription">Your ability cooldowns are increased by &lt;impact&gt;%</string>
+
+<!-- Spiteful Options -->
+    <string name="MiraUnleashed.Options.Spiteful.Amount">Spiteful Amount</string>
+    <string name="MiraUnleashed.Options.Spiteful.Chance">Spiteful Chance</string>
+    <string name="MiraUnleashed.Options.Spiteful.Impact">Spiteful Impact</string>
+    <string name="MiraUnleashed.Options.Spiteful.EffectType">Punishment Effect</string>
+    <string name="MiraUnleashed.Options.Spiteful.EffectType.LowerVision">Lower Vision</string>
+    <string name="MiraUnleashed.Options.Spiteful.EffectType.Slowness">Slowness</string>
+    <string name="MiraUnleashed.Options.Spiteful.EffectType.IncreasedCooldowns">Increased Cooldowns</string>
+    <string name="MiraUnleashed.Options.Spiteful.DurationType">Punishment Duration</string>
+    <string name="MiraUnleashed.Options.Spiteful.DurationType.NextRounds">Next Rounds</string>
+    <string name="MiraUnleashed.Options.Spiteful.DurationType.RestOfGame">Rest of Game</string>
+    <string name="MiraUnleashed.Options.Spiteful.RoundCount">Number of Rounds</string>
+
+<!-- Lawyer Role -->
+    <string name="MiraUnleashed.Role.Lawyer">Lawyer</string>
+    <string name="MiraUnleashed.Role.LawyerIntroBlurb">Defend your client to win!</string>
+    <string name="MiraUnleashed.Role.LawyerTabDescription">Defend &lt;client&gt;. If they get voted out, you lose!</string>
+    <string name="MiraUnleashed.Role.LawyerWikiDescription">The Lawyer is a Neutral Benign role that wins by keeping their assigned client from being voted out. If their client gets voted out, the Lawyer loses.</string>
+    <string name="MiraUnleashed.Role.LawyerObject">Object</string>
+    <string name="MiraUnleashed.Role.LawyerObjectWikiDescription">During meetings, click the objection button on your client's vote area to object to all votes, clearing them and forcing players to vote again.</string>
+    <string name="MiraUnleashed.Role.LawyerClientDescription">Your lawyer is &lt;lawyer&gt;.</string>
+    <string name="MiraUnleashed.Role.LawyerClientTabDescription">Your lawyer is &lt;lawyer&gt;.</string>
+
+<!-- Lawyer Options -->
+    <string name="MiraUnleashed.Options.Lawyer.WinMode">Lawyer Win Mode</string>
+    <string name="MiraUnleashed.Options.Lawyer.WinMode.WithClient">Win With Client</string>
+    <string name="MiraUnleashed.Options.Lawyer.WinMode.StealWin">Steal Win</string>
+    <string name="MiraUnleashed.Options.Lawyer.DieOnClientDeath">Lawyer Dies When Client Dies</string>
+    <string name="MiraUnleashed.Options.Lawyer.BecomesOnClientDeath">On Client Death, Lawyer Becomes</string>
+    <string name="MiraUnleashed.Options.Lawyer.GetVotedOutWithClient">Lawyer Gets Voted Out With Client</string>
+    <string name="MiraUnleashed.Options.Lawyer.CanSeeClientRole">Lawyer Knows Client's Role</string>
+    <string name="MiraUnleashed.Options.Lawyer.KillerClientChance">Killer Client Chance</string>
+    <string name="MiraUnleashed.Options.Lawyer.ObjectionPreventsSameVote">Prevent Same Votes On Objection</string>
+    <string name="MiraUnleashed.Options.Lawyer.MaxObjections">Max Objections (Per Game)</string>
+    <string name="MiraUnleashed.Options.Lawyer.MaxObjectionsPerMeeting">Max Objections Per Meeting</string>
+    <string name="MiraUnleashed.Options.Lawyer.PrivateChat">Lawyer/Client Gets A Private Chat</string>
+
+<!-- Lawyer Misc -->
+    <string name="MiraUnleashed.Lawyer.Win">Wins</string>
+    <string name="MiraUnleashed.Lawyer.ChatTitle">&lt;player&gt; (Lawyer)</string>
+    <string name="MiraUnleashed.Lawyer.ClientChatTitle">&lt;player&gt; (Client)</string>
+    <string name="MiraUnleashed.Lawyer.DiedWithClient">Failed to Defend</string>
+    <string name="MiraUnleashed.Lawyer.DiedClientDeath">Case Closed</string>
+    <string name="MiraUnleashed.Lawyer.ObjectionNotification">Objection! A lawyer has objected to the current votes! All votes have been cleared - please vote again.</string>
+    <string name="MiraUnleashed.Lawyer.CannotVoteSamePerson">You cannot vote for the same person after an objection!</string>
 </resources>
