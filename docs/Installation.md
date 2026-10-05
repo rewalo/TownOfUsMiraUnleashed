@@ -8,7 +8,7 @@
 ## Steps
 
 1. Install TOU-Mira per its own instructions and launch the game once.
-2. Download `MiraUnleashed.dll` from the [Releases page](https://github.com/rewalo/TownOfUsMiraRolesExtension/releases) (or build from source — see [Building](Building)).
+2. Download `MiraUnleashed.dll` from the [Releases page](https://github.com/rewalo/TownOfUsMiraUnleashed/releases) (or build from source — see [Building](Building)).
 3. Copy `MiraUnleashed.dll` into `Among Us/BepInEx/plugins/`.
 4. Launch the game. "Mira Unleashed" should appear in the mods list, and role settings gain Mira Unleashed entries.
 

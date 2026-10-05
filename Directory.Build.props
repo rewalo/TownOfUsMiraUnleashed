@@ -17,7 +17,7 @@
     <VersionPrefix>2.0.0</VersionPrefix>
     <VersionSuffix>dev</VersionSuffix>
     <Authors>rewalo</Authors>
-    <RepositoryUrl>https://github.com/rewalo/TownOfUsMiraRolesExtension</RepositoryUrl>
+    <RepositoryUrl>https://github.com/rewalo/TownOfUsMiraUnleashed</RepositoryUrl>
 
     <RootNamespace>MiraUnleashed</RootNamespace>
     <AssemblyName>MiraUnleashed</AssemblyName>

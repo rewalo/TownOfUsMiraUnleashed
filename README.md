@@ -13,8 +13,8 @@
 
 An extension mod for [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira) that adds new roles and modifiers to enhance your gameplay experience!
 
-[![Build](https://github.com/rewalo/TownOfUsMiraRolesExtension/actions/workflows/build.yml/badge.svg)](https://github.com/rewalo/TownOfUsMiraRolesExtension/actions/workflows/build.yml)
-[![Latest Release](https://img.shields.io/github/v/release/rewalo/TownOfUsMiraRolesExtension)](https://github.com/rewalo/TownOfUsMiraRolesExtension/releases/latest)
+[![Build](https://github.com/rewalo/TownOfUsMiraUnleashed/actions/workflows/build.yml/badge.svg)](https://github.com/rewalo/TownOfUsMiraUnleashed/actions/workflows/build.yml)
+[![Latest Release](https://img.shields.io/github/v/release/rewalo/TownOfUsMiraUnleashed)](https://github.com/rewalo/TownOfUsMiraUnleashed/releases/latest)
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](./LICENSE)
 [![TOU-Mira](https://img.shields.io/badge/requires-TOU--Mira-red.svg)](#compatibility)
 
@@ -62,14 +62,14 @@ An extension mod for [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira)
   <a href="./docs/Spiteful.md"><img width="30%" src="./docs/assets/ModifierHeaders/Spiteful.png" /></a>
 </p>
 
-Click a role for its abilities, options and interactions, or browse the [wiki](https://github.com/rewalo/TownOfUsMiraRolesExtension/wiki).
+Click a role for its abilities, options and interactions, or browse the [wiki](https://github.com/rewalo/TownOfUsMiraUnleashed/wiki).
 
 -----------------------
 
 # Installation
 
 1. Install [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira) (it bundles MiraAPI, Reactor and BepInEx). Check the [Compatibility](#compatibility) table for the TOU-Mira version that matches the Mira Unleashed release you are installing.
-2. Download the latest `MiraUnleashed.dll` from [Releases](https://github.com/rewalo/TownOfUsMiraRolesExtension/releases), or build it yourself.
+2. Download the latest `MiraUnleashed.dll` from [Releases](https://github.com/rewalo/TownOfUsMiraUnleashed/releases), or build it yourself.
 3. Place `MiraUnleashed.dll` in your `Among Us/BepInEx/plugins/` folder.
 4. Launch the game. The mod's config file is `BepInEx/config/rewalo.mira.unleashed.cfg`.
 
@@ -117,7 +117,7 @@ Optionally create `Directory.Build.local.props` (git-ignored) with an `<AmongUs>
 
 # Documentation
 
-Role and modifier details, options, and testing checklists live in [docs/](./docs) and are mirrored to the [GitHub Wiki](https://github.com/rewalo/TownOfUsMiraRolesExtension/wiki).
+Role and modifier details, options, and testing checklists live in [docs/](./docs) and are mirrored to the [GitHub Wiki](https://github.com/rewalo/TownOfUsMiraUnleashed/wiki).
 
 -----------------------
 

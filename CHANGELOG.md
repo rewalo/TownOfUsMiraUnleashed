@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-For releases before 2.0.0, see the [old repository's release history](https://github.com/rewalo/TownOfUsMiraRolesExtension/releases).
+For releases before 2.0.0, see the [old repository's release history](https://github.com/rewalo/TownOfUsMiraUnleashed/releases).
 
 ## [2.0.0] - Unreleased
 
