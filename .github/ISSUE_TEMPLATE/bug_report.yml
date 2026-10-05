@@ -1,0 +1,50 @@
+name: Bug Report
+description: Report a problem with Mira Unleashed
+labels: [bug]
+body:
+  - type: input
+    id: mu-version
+    attributes:
+      label: Mira Unleashed version
+      placeholder: 2.0.0
+    validations:
+      required: true
+  - type: input
+    id: tou-version
+    attributes:
+      label: Town of Us: Mira version
+      placeholder: 1.7.3
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Were you the host or a client?
+      options:
+        - Host
+        - Client
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: BepInEx log
+      description: Upload or paste your BepInEx/LogOutput.log (drag the file into this field)

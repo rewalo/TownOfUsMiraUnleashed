@@ -1,0 +1,53 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Verify tag matches VersionPrefix
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}".TrimStart('v')
+          $base = $tag.Split('-')[0]
+          $props = [xml](Get-Content Directory.Build.props)
+          $prefix = ($props.Project.PropertyGroup.VersionPrefix | Select-Object -First 1)
+          if ($base -ne $prefix) {
+            Write-Error "Tag version '$base' does not match VersionPrefix '$prefix'"
+            exit 1
+          }
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Release --no-restore -p:ContinuousIntegrationBuild=true
+
+      - name: Package
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          mkdir out/BepInEx/plugins
+          Copy-Item src/MiraUnleashed/bin/Release/net6.0/MiraUnleashed.dll out/BepInEx/plugins/
+          Compress-Archive -Path out/* -DestinationPath "MiraUnleashed-$tag.zip"
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            src/MiraUnleashed/bin/Release/net6.0/MiraUnleashed.dll
+            MiraUnleashed-${{ github.ref_name }}.zip
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-') }}
