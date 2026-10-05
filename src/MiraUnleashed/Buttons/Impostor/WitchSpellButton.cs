@@ -25,6 +25,7 @@ public sealed class WitchSpellButton : TownOfUsKillRoleButton<WitchRole, PlayerC
     public override Color TextOutlineColor => MiraUnleashedColors.Witch;
     public override float Cooldown => Math.Clamp(OptionGroupSingleton<WitchOptions>.Instance.SpellCooldown + MapCooldown, 5f, 120f);
     public override LoadableAsset<Sprite> Sprite => MiraUnleashedImpAssets.SpellButtonSprite;
+    public override float Distance => base.Distance * OptionGroupSingleton<WitchOptions>.Instance.SpellRange;
 
     public override bool ZeroIsInfinite { get; set; } = true;
 
@@ -54,12 +55,15 @@ public sealed class WitchSpellButton : TownOfUsKillRoleButton<WitchRole, PlayerC
                     var newCooldown = Cooldown + options.AdditionalCooldown;
                     SetTimer(newCooldown);
 
-                    var killButton = CustomButtonSingleton<WitchKillButton>.Instance;
-                    if (killButton != null)
+                    if (options.SpellResetsKillCooldown)
                     {
-                        killButton.SetTimer(killButton.Cooldown);
+                        var killButton = CustomButtonSingleton<WitchKillButton>.Instance;
+                        if (killButton != null)
+                        {
+                            killButton.SetTimer(killButton.Cooldown);
+                        }
+                        player.SetKillTimer(killButton?.Cooldown ?? player.GetKillCooldown());
                     }
-                    player.SetKillTimer(killButton?.Cooldown ?? player.GetKillCooldown());
                 }
             }
             else

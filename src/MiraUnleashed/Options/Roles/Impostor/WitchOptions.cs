@@ -21,4 +21,10 @@ public sealed class WitchOptions : AbstractOptionGroup<WitchRole>
 
     [ModdedNumberOption("MiraUnleashed.Options.Witch.MeetingsUntilDeath", 1f, 5f, 1f, MiraNumberSuffixes.None)]
     public float MeetingsUntilDeath { get; set; } = 1f;
+
+    [ModdedNumberOption("MiraUnleashed.Options.Witch.SpellRange", 1f, 3f, 0.25f, MiraNumberSuffixes.Multiplier)]
+    public float SpellRange { get; set; } = 1.5f;
+
+    [ModdedToggleOption("MiraUnleashed.Options.Witch.SpellResetsKillCooldown")]
+    public bool SpellResetsKillCooldown { get; set; } = false;
 }

@@ -180,6 +180,8 @@ They'll be highlighted in the next meeting and die after the configured amount o
     <string name="MiraUnleashed.Options.Witch.AdditionalCooldown">Witch Additional Cooldown</string>
     <string name="MiraUnleashed.Options.Witch.SpellCastingDuration">Witch Spell Casting Duration</string>
     <string name="MiraUnleashed.Options.Witch.MeetingsUntilDeath">Meetings Until Death</string>
+    <string name="MiraUnleashed.Options.Witch.SpellRange">Spell Range</string>
+    <string name="MiraUnleashed.Options.Witch.SpellResetsKillCooldown">Spell Resets Kill Cooldown</string>
 
 <!-- Witch Death Message -->
     <string name="DiedToWitch">Cursed</string>

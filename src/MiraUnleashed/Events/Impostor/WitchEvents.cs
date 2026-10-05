@@ -1,26 +1,24 @@
 using MiraAPI.Events;
 using MiraAPI.Events.Vanilla.Gameplay;
 using MiraAPI.Events.Vanilla.Meeting;
+using MiraAPI.Events.Vanilla.Meeting.Voting;
 using MiraAPI.Events.Vanilla.Player;
 using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
-using Reactor.Utilities;
-using System.Collections;
+using MiraAPI.Utilities;
 using MiraUnleashed.Modifiers;
 using MiraUnleashed.Options.Roles.Impostor;
 using MiraUnleashed.Roles.Impostor;
+using TownOfUs.Modifiers;
 using TownOfUs.Modifiers.Neutral;
 using TownOfUs.Networking;
 using TownOfUs.Utilities;
-using UnityEngine;
 
 namespace MiraUnleashed.Events.Impostor;
 
 public static class WitchEvents
 {
-    private static readonly List<PlayerControl> PendingSpellDeaths = new();
     private static int _meetingCount;
-    private static bool _processingDeaths;
 
     public static int GetCurrentMeetingCount() => _meetingCount;
 
@@ -75,44 +73,13 @@ public static class WitchEvents
                 voteArea.NameText.color = MiraUnleashedColors.Witch;
             }
         }
-
-        Coroutines.Start(CoMonitorMeetingEnd());
-    }
-
-    private static IEnumerator CoMonitorMeetingEnd()
-    {
-        while (MeetingHud.Instance != null)
-        {
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        if (!HasAnyWitch() || !HasAnyHexedPlayers())
-        {
-            yield break;
-        }
-
-        if (!_processingDeaths)
-        {
-            _processingDeaths = true;
-            Coroutines.Start(CoProcessSpellDeaths());
-        }
     }
 
     [RegisterEvent]
-    public static void EjectionEventHandler(EjectionEvent @event)
+    public static void ProcessVotesEventHandler(ProcessVotesEvent @event)
     {
-        var exiled = @event.ExileController?.initData?.networkedPlayer?.Object;
-        if (exiled == null)
+        if (!PlayerControl.LocalPlayer.IsHost())
         {
-            return;
-        }
-
-        if (exiled.IsRole<WitchRole>())
-        {
-            if (AmongUsClient.Instance != null && AmongUsClient.Instance.AmHost)
-            {
-                WitchRole.RpcWitchClearSpellboundByWitch(PlayerControl.LocalPlayer, exiled.PlayerId);
-            }
             return;
         }
 
@@ -121,121 +88,48 @@ public static class WitchEvents
             return;
         }
 
-        _processingDeaths = true;
-        Coroutines.Start(CoProcessSpellDeaths());
-    }
+        var exiledId = @event.ExiledPlayer?.PlayerId;
+        var meetingsUntilDeath = OptionGroupSingleton<WitchOptions>.Instance.MeetingsUntilDeath;
 
-    private static IEnumerator CoProcessSpellDeaths()
-    {
-        try
+        foreach (var player in PlayerControl.AllPlayerControls)
         {
-            while (MeetingHud.Instance != null)
+            if (player == null || player.HasDied() || !player.HasModifier<WitchSpellboundModifier>())
             {
-                yield return new WaitForSeconds(0.05f);
+                continue;
             }
 
-            yield return new WaitForSeconds(0.1f);
-
-            if (AmongUsClient.Instance == null || !AmongUsClient.Instance.AmHost)
+            if (player.PlayerId == exiledId)
             {
-                yield break;
+                continue;
             }
 
-            if (!HasAnyWitch() || !HasAnyHexedPlayers())
+            var modifier = player.GetModifier<WitchSpellboundModifier>();
+            if (modifier == null)
             {
-                yield break;
+                continue;
             }
 
-            var witchAlive = false;
-
-            foreach (var player in PlayerControl.AllPlayerControls)
+            var hexingWitch = MiscUtils.PlayerById(modifier.WitchId);
+            if (hexingWitch == null || hexingWitch.HasDied() || !hexingWitch.IsRole<WitchRole>() || hexingWitch.PlayerId == exiledId)
             {
-                if (player == null || !player.IsRole<WitchRole>())
-                {
-                    continue;
-                }
-
-                if (!player.HasDied())
-                {
-                    witchAlive = true;
-                }
-            }
-
-            if (!witchAlive)
-            {
-                WitchRole.RpcWitchClearAllSpellbound(PlayerControl.LocalPlayer);
-                PendingSpellDeaths.Clear();
-                yield break;
-            }
-
-            var options = OptionGroupSingleton<WitchOptions>.Instance;
-            var meetingsUntilDeath = options.MeetingsUntilDeath;
-
-            var spellboundPlayers = new List<PlayerControl>();
-            foreach (var pc in PlayerControl.AllPlayerControls)
-            {
-                if (pc != null && pc.HasModifier<WitchSpellboundModifier>())
-                {
-                    spellboundPlayers.Add(pc);
-                }
-            }
-
-            foreach (var player in spellboundPlayers)
-            {
-                if (player == null || player.HasDied())
-                {
-                    continue;
-                }
-
-                var modifier = player.GetModifier<WitchSpellboundModifier>();
-                if (modifier == null)
-                {
-                    continue;
-                }
-
-                var hexingWitch = MiscUtils.PlayerById(modifier.WitchId);
-                if (hexingWitch == null || hexingWitch.HasDied() || !hexingWitch.IsRole<WitchRole>())
-                {
-                    WitchRole.RpcWitchClearSpellboundPlayer(PlayerControl.LocalPlayer, player.PlayerId);
-                    continue;
-                }
-
-                var meetingsSinceSpell = _meetingCount - modifier.SpellCastMeeting;
-                if (meetingsSinceSpell < meetingsUntilDeath)
-                {
-                    continue;
-                }
-
-                var shouldDie = true;
-
-                if (player.HasModifier<GuardianAngelProtectModifier>())
-                {
-                    shouldDie = false;
-                }
-
-                if (shouldDie)
-                {
-                    hexingWitch.RpcSpecialMurder(
-                        player,
-                        isIndirect: true,
-                        ignoreShield: false,
-                        didSucceed: true,
-                        resetKillTimer: true,
-                        createDeadBody: false,
-                        teleportMurderer: false,
-                        showKillAnim: true,
-                        playKillSound: false,
-                        causeOfDeath: "Witch");
-                }
-
                 WitchRole.RpcWitchClearSpellboundPlayer(PlayerControl.LocalPlayer, player.PlayerId);
+                continue;
             }
 
-            PendingSpellDeaths.Clear();
-        }
-        finally
-        {
-            _processingDeaths = false;
+            var meetingsSinceSpell = _meetingCount - modifier.SpellCastMeeting;
+            if (meetingsSinceSpell < meetingsUntilDeath)
+            {
+                continue;
+            }
+
+            hexingWitch.RpcMeetingMurder(
+                player,
+                MeetingAnimation.PlayerNameplateAnimation,
+                CustomTouMurderRpcs.GetRandomMeetingAnim(DeathAnimType.Nameplate),
+                didSucceed: !player.HasModifier<InvulnerabilityModifier>() && !player.HasModifier<GuardianAngelProtectModifier>(),
+                causeOfDeath: "Witch");
+
+            WitchRole.RpcWitchClearSpellboundPlayer(PlayerControl.LocalPlayer, player.PlayerId);
         }
     }
 
@@ -243,35 +137,14 @@ public static class WitchEvents
     public static void PlayerDeathEventHandler(PlayerDeathEvent @event)
     {
         var victim = @event.Player;
-        if (victim == null)
+        if (victim == null || !victim.IsRole<WitchRole>())
         {
             return;
         }
 
-        if (victim.IsRole<WitchRole>())
+        if (AmongUsClient.Instance != null && AmongUsClient.Instance.AmHost)
         {
-            // If a Witch dies during a meeting, wait for the meeting to end before processing
-            if (MeetingHud.Instance != null)
-            {
-                if (!HasAnyHexedPlayers())
-                {
-                    return;
-                }
-
-                if (!_processingDeaths)
-                {
-                    _processingDeaths = true;
-                    Coroutines.Start(CoProcessSpellDeaths());
-                }
-
-                return;
-            }
-
-            // If a Witch dies outside a meeting, clear only their spellbound modifiers immediately
-            if (AmongUsClient.Instance != null && AmongUsClient.Instance.AmHost)
-            {
-                WitchRole.RpcWitchClearSpellboundByWitch(PlayerControl.LocalPlayer, victim.PlayerId);
-            }
+            WitchRole.RpcWitchClearSpellboundByWitch(PlayerControl.LocalPlayer, victim.PlayerId);
         }
     }
 
