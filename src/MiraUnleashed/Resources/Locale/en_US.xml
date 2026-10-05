@@ -184,6 +184,26 @@
     <string name="MiraUnleashed.Witch.SpellNotification">&lt;player&gt; has been cursed! They have &lt;meetings&gt; meeting(s) left. Vote out or kill the Witch to save them!</string>
     <string name="MiraUnleashed.Witch.SpellNotificationMultiple">Multiple players have been cursed:\n&lt;players&gt;\nVote out or kill the Witch to save them!</string>
 
+<!-- Wraith Role -->
+    <string name="MiraUnleashed.Role.Wraith">Wraith</string>
+    <string name="MiraUnleashed.Role.Wraith.IntroBlurb">Move fast and strike unpredictably.</string>
+    <string name="MiraUnleashed.Role.Wraith.TabDescription">Dash for speed. Place a Lantern to teleport back to it.</string>
+    <string name="MiraUnleashed.Role.Wraith.WikiDescription">The Wraith is an Impostor Power role focused on fast, unpredictable movement. Dash increases your movement speed by 75% for a short time. Lantern lets you place a hidden marker only you can see; reactivate it to teleport back and briefly swoop. If the Lantern expires before you return, it breaks and leaves permanent evidence visible to all players.</string>
+    <string name="MiraUnleashed.Role.WraithDash">Dash</string>
+    <string name="MiraUnleashed.Role.WraithDash.WikiDescription">Temporarily increase your movement speed by 75%.</string>
+    <string name="MiraUnleashed.Role.WraithLantern">Lantern</string>
+    <string name="MiraUnleashed.Role.WraithLantern.WikiDescription">Place a Lantern only you can see. Reactivate it to teleport back and briefly turn invisible. If it expires, it breaks and leaves evidence visible to everyone.</string>
+    <string name="MiraUnleashed.Role.WraithLanternPlace">Lantern</string>
+    <string name="MiraUnleashed.Role.WraithLanternReturn">Return</string>
+
+<!-- Wraith Options -->
+    <string name="MiraUnleashed.Options.Wraith.DashCooldown">Dash Cooldown</string>
+    <string name="MiraUnleashed.Options.Wraith.DashDuration">Dash Duration</string>
+    <string name="MiraUnleashed.Options.Wraith.Lantern">Lantern</string>
+    <string name="MiraUnleashed.Options.Wraith.LanternCooldown">Lantern Cooldown</string>
+    <string name="MiraUnleashed.Options.Wraith.LanternDuration">Lantern Duration</string>
+    <string name="MiraUnleashed.Options.Wraith.InvisibleDuration">Invisible Duration</string>
+
 <!-- Trapper Role -->
     <string name="MiraUnleashed.Role.Trapper">Trapper</string>
     <string name="MiraUnleashed.Role.Trapper.IntroBlurb">Trap vents to catch venters.</string>
