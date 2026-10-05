@@ -47,6 +47,30 @@
     <string name="MiraUnleashed.Options.Mirage.ArrowTarget.Mirage">Mirage</string>
     <string name="MiraUnleashed.Options.Mirage.ArrowTarget.Interactor">Interactor</string>
 
+<!-- Hacker Role -->
+    <string name="MiraUnleashed.Role.Hacker">Hacker</string>
+    <string name="MiraUnleashed.Role.Hacker.IntroBlurb">Download system information and jam comms.</string>
+    <string name="MiraUnleashed.Role.Hacker.TabDescription">Download and jam equipment, kill for extra jam charges.</string>
+    <string name="MiraUnleashed.Role.Hacker.WikiDescription">The Hacker is an Impostor Support role that can download information from nearby equipment to charge a portable device. Once you start downloading, you're locked into that equipment type until the next round. Jam disrupts information systems as if comms were sabotaged, but emergency meetings can still be called.</string>
+    <string name="MiraUnleashed.Role.HackerDownload">Download</string>
+    <string name="MiraUnleashed.Role.HackerDownload.WikiDescription">While near a downloadable console (Admin/Cams/Vitals/Door Log), download to charge your battery. Every 1 second downloading grants 2 seconds of device battery (configurable). You cannot switch equipment type until the next round.</string>
+    <string name="MiraUnleashed.Role.HackerDevice">Device</string>
+    <string name="MiraUnleashed.Role.HackerDevice.WikiDescription">Use the downloaded system anywhere, consuming battery over time.</string>
+    <string name="MiraUnleashed.Role.HackerJam">Jam</string>
+    <string name="MiraUnleashed.Role.HackerJam.WikiDescription">Spend a Jam charge to disrupt information systems for a duration. This behaves like comms being down, but does not prevent calling emergency meetings.</string>
+
+<!-- Hacker Options -->
+    <string name="MiraUnleashed.Options.Hacker.MaxBatterySeconds">Maximum Battery Duration</string>
+    <string name="MiraUnleashed.Options.Hacker.BatteryPerDownloadSecond">Battery Gained Per Download Second</string>
+    <string name="MiraUnleashed.Options.Hacker.DownloadRange">Download Range</string>
+    <string name="MiraUnleashed.Options.Hacker.MoveWithDevice">Move While Using Device</string>
+    <string name="MiraUnleashed.Options.Hacker.SimpleModeJamOnly">Simple Mode (Jam Only)</string>
+    <string name="MiraUnleashed.Options.Hacker.InitialJamCharges">Initial Jam Charges</string>
+    <string name="MiraUnleashed.Options.Hacker.JamChargesPerKill">Jam Charges Per Kill</string>
+    <string name="MiraUnleashed.Options.Hacker.JamMaxCharges">Max Jam Charges</string>
+    <string name="MiraUnleashed.Options.Hacker.JamCooldown">Jam Cooldown</string>
+    <string name="MiraUnleashed.Options.Hacker.JamDuration">Jam Duration</string>
+
 <!-- Trapper Role -->
     <string name="MiraUnleashed.Role.Trapper">Trapper</string>
     <string name="MiraUnleashed.Role.Trapper.IntroBlurb">Trap vents to catch venters.</string>
