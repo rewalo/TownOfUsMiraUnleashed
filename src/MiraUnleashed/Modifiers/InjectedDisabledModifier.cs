@@ -1,5 +1,6 @@
 using System.Globalization;
 using MiraAPI.Modifiers;
+using MiraAPI.PluginLoading;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using MiraUnleashed.Assets;
@@ -12,6 +13,7 @@ namespace MiraUnleashed.Modifiers;
 
 // Variant of InjectedModifier for effects that must stay a DisabledModifier so TOU's
 // GetModifiers<DisabledModifier>() checks (report button, ability blocking) keep working.
+[MiraIgnore]
 public abstract class InjectedDisabledModifier : DisabledModifier, IInjectedModifier
 {
     private readonly float _duration;

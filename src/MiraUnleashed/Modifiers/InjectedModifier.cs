@@ -1,6 +1,7 @@
 using System.Globalization;
 using MiraAPI.Modifiers;
 using MiraAPI.Modifiers.Types;
+using MiraAPI.PluginLoading;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using MiraUnleashed.Assets;
@@ -10,6 +11,7 @@ using UnityEngine;
 
 namespace MiraUnleashed.Modifiers;
 
+[MiraIgnore]
 public abstract class InjectedModifier : TimedModifier, IInjectedModifier
 {
     private readonly float _duration;
