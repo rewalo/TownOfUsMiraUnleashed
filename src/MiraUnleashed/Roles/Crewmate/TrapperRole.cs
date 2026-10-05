@@ -45,6 +45,16 @@ public sealed class TrapperRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnle
                 TouCrewAssets.TrapSprite)
         ];
 
+    [HideFromIl2Cpp]
+    public List<AdvancedWikiAbilityDescription> WikiAbilities =>
+        [
+            new(
+                MiraLocaleManager.Get("MiraUnleashed.Role.TrapperTrap", "Trap"),
+                MiraLocaleManager.Get("MiraApi.AbilityType.Radius"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.TrapperTrap.WikiDescription"),
+                TouCrewAssets.TrapSprite)
+        ];
+
     public Color RoleColor => MiraUnleashedColors.Trapper;
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
     public RoleAlignment RoleAlignment => RoleAlignment.CrewmateSupport;

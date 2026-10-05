@@ -101,6 +101,34 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
         }
     }
 
+    [HideFromIl2Cpp]
+    public List<AdvancedWikiAbilityDescription> WikiAbilities
+    {
+        get
+        {
+            var abilities = new List<AdvancedWikiAbilityDescription>
+            {
+                new(
+                    MiraLocaleManager.Get("MiraUnleashed.Role.ScavengerEat", "Eat"),
+                    MiraLocaleManager.Get("MiraApi.AbilityType.Interaction"),
+                    MiraLocaleManager.Get("MiraUnleashed.Role.ScavengerEat.WikiDescription"),
+                    MiraUnleashedAssets.ScavengerEatButtonSprite)
+            };
+
+            var options = OptionGroupSingleton<ScavengerOptions>.Instance;
+            if (options.ScavengeEnabled && options.ScavengeDuration.Value > 0f)
+            {
+                abilities.Add(new(
+                    MiraLocaleManager.Get("MiraUnleashed.Role.ScavengerScavenge", "Scavenge"),
+                    MiraLocaleManager.Get("MiraApi.AbilityType.Basic"),
+                    MiraLocaleManager.Get("MiraUnleashed.Role.ScavengerScavenge.WikiDescription"),
+                    MiraUnleashedAssets.ScavengerScavengeButtonSprite));
+            }
+
+            return abilities;
+        }
+    }
+
     public bool WinConditionMet()
     {
         if (Player.HasDied())

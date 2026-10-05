@@ -44,6 +44,16 @@ public sealed class InjectorRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnl
                 MiraUnleashedImpAssets.InjectorInjectButtonSprite)
         ];
 
+    [HideFromIl2Cpp]
+    public List<AdvancedWikiAbilityDescription> WikiAbilities =>
+        [
+            new(
+                MiraLocaleManager.Get("MiraUnleashed.Role.InjectorInject", "Inject"),
+                MiraLocaleManager.Get("MiraApi.AbilityType.Interaction"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.InjectorInject.WikiDescription"),
+                MiraUnleashedImpAssets.InjectorInjectButtonSprite)
+        ];
+
     public override void Initialize(PlayerControl player)
     {
         RoleBehaviourStubs.Initialize(this, player);

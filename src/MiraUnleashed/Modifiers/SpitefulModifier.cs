@@ -13,7 +13,8 @@ namespace MiraUnleashed.Modifiers;
 
 public sealed class SpitefulModifier : UniversalGameModifier, IWikiDiscoverable
 {
-    public override string ModifierName => MiraLocaleManager.Get("MiraUnleashed.Modifier.Spiteful", "Spiteful");
+    public override string IdPrefix => "MiraUnleashed.Modifier";
+    public override string IdPart => "Spiteful";
     public override string IntroInfo => MiraLocaleManager.Get("MiraUnleashed.Modifier.Spiteful.IntroBlurb");
     public override LoadableAsset<Sprite>? ModifierIcon => MiraUnleashedAssets.SpitefulModifierIcon;
 
@@ -74,6 +75,8 @@ public sealed class SpitefulModifier : UniversalGameModifier, IWikiDiscoverable
     }
 
     public override Color FreeplayFileColor => new Color32(255, 100, 0, 255);
+    public override Color GeneralColor => FreeplayFileColor;
+    public override ModifierUiConfiguration Configuration => new(FreeplayFileColor);
 
     public override ModifierFaction FactionType => ModifierFaction.UniversalPassive;
 

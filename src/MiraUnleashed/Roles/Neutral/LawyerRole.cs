@@ -208,6 +208,27 @@ public sealed class LawyerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnleas
         }
     }
 
+    [HideFromIl2Cpp]
+    public List<AdvancedWikiAbilityDescription> WikiAbilities
+    {
+        get
+        {
+            var maxObjections = (int)OptionGroupSingleton<LawyerOptions>.Instance.MaxObjections;
+            if (maxObjections <= 0)
+            {
+                return [];
+            }
+
+            return new List<AdvancedWikiAbilityDescription>
+            {
+                new(MiraLocaleManager.Get("MiraUnleashed.Role.LawyerObject", "Object"),
+                    MiraLocaleManager.Get("MiraApi.AbilityType.MeetingMenu"),
+                    MiraLocaleManager.Get("MiraUnleashed.Role.LawyerObjectWikiDescription"),
+                    MiraUnleashedAssets.ObjectionButtonSprite)
+            };
+        }
+    }
+
     private string ClientString(bool capitalize = false)
     {
         string desc;
