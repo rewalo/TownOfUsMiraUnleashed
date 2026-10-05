@@ -2,6 +2,15 @@
 
 Thanks for your interest in contributing to Mira Unleashed!
 
+## AI usage policy
+
+- **Generative AI content is off limits.** No AI-generated art, logos, icons, audio, role/ability text, lore, or documentation prose. Assets must be human-made and credited (the Credits list names the artist).
+- **AI assistance in code is strongly discouraged** and must be kept to a bare minimum (trivial autocomplete at most). Do not submit code you do not fully understand or could not have written yourself.
+- **Disclosure is mandatory.** If AI tooling touched a change, say so in the PR description, including which parts.
+- **Human review before a PR counts.** Every line of an AI-assisted change must be read, understood, and tested in-game by the human author *before* the PR is opened; maintainers will not review on the contributor's behalf. PRs that look machine-generated or whose authors cannot explain the code will be closed.
+
+This keeps the mod's art style, writing and codebase consistent and reviewable, and respects the original artists.
+
 ## Branch model
 
 - `main` – release commits only, reached via release PRs.

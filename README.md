@@ -123,7 +123,7 @@ Role and modifier details, options, and testing checklists live in [docs/](./doc
 
 # Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md). Pull requests target `dev`.
+See [CONTRIBUTING.md](./CONTRIBUTING.md). Pull requests target `dev`. Please read the [AI usage policy](./CONTRIBUTING.md#ai-usage-policy) before contributing.
 
 -----------------------
 
