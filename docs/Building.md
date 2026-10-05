@@ -58,3 +58,7 @@ Then build as usual. If TOU-Mira lives elsewhere, point `TouMiraSourcePath` at i
   </PropertyGroup>
 </Project>
 ```
+
+### Runtime set
+
+The game must run the `TownOfUsMira.dll`, `MiraAPI.dll` and `AchievementsAPI.dll` produced by the same TOU-Mira experimental build (found in `TOU-Mira\TownOfUs\bin\Release\` after building `TownOfUsMira.csproj`), plus the Reactor version pinned in TOU-Mira's `AmongUs.props`. Mixing CI artifacts from different pipelines or branches causes `TypeLoadException`s and crashes.
