@@ -6,6 +6,12 @@ using MiraUnleashed.Roles.Impostor;
 
 namespace MiraUnleashed.Options.Roles.Impostor;
 
+public enum HackerJamSoundCue
+{
+    HackerOnly,
+    Everyone
+}
+
 public sealed class HackerOptions : AbstractOptionGroup<HackerRole>
 {
     public override string GroupName => MiraLocaleManager.Get("MiraUnleashed.Role.Hacker", "Hacker");
@@ -39,6 +45,13 @@ public sealed class HackerOptions : AbstractOptionGroup<HackerRole>
 
     [ModdedNumberOption("MiraUnleashed.Options.Hacker.JamDuration", 5f, 20f, 2.5f, MiraNumberSuffixes.Seconds)]
     public float JamDurationSeconds { get; set; } = 15f;
+
+    public ModdedEnumOption<HackerJamSoundCue> JamSoundCue { get; } =
+        new("MiraUnleashed.Options.Hacker.JamSoundCue", HackerJamSoundCue.HackerOnly,
+            [
+                "MiraUnleashed.Options.Hacker.JamSoundCue.HackerOnly",
+                "MiraUnleashed.Options.Hacker.JamSoundCue.Everyone"
+            ]);
 
     public bool JamEnabled =>
         JamMaxCharges > 0f && (SimpleModeJamOnly || JamChargesPerKill > 0f || InitialJamCharges > 0f);

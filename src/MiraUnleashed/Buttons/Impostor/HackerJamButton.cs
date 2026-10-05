@@ -23,37 +23,21 @@ public sealed class HackerJamButton : TownOfUsRoleButton<HackerRole>
     public override LoadableAsset<Sprite> Sprite => MiraUnleashedImpAssets.HackerJamButtonSprite;
     public override bool ZeroIsInfinite { get; set; } = true;
 
-    public override void CreateButton(Transform parent)
+    public override void ClickHandler()
     {
-        base.CreateButton(parent);
-        EnsureChargesInitialized();
+        if (!CanClick())
+        {
+            return;
+        }
+
+        OnClick();
+        Button?.SetDisabled();
     }
 
-    private static void EnsureChargesInitialized()
+    public void OnJamStarted(float duration)
     {
-        var player = PlayerControl.LocalPlayer;
-        if (player == null || player.Data?.Role == null)
-        {
-            return;
-        }
-
-        if (player.Data.Role is not HackerRole)
-        {
-            return;
-        }
-
-        var opts = OptionGroupSingleton<HackerOptions>.Instance;
-        if (opts.JamMaxCharges <= 0f)
-        {
-            return;
-        }
-
-        if (HackerSystem.GetJamCharges(player.PlayerId) == 0)
-        {
-            var max = (int)opts.JamMaxCharges;
-            var initial = (byte)Mathf.Clamp((int)opts.InitialJamCharges, 0, Math.Max(0, max));
-            HackerSystem.SetJamCharges(player.PlayerId, initial);
-        }
+        EffectActive = true;
+        Timer = duration;
     }
 
     public override bool Enabled(RoleBehaviour? role)
@@ -91,18 +75,10 @@ public sealed class HackerJamButton : TownOfUsRoleButton<HackerRole>
             return;
         }
 
-        EnsureChargesInitialized();
-
         var charges = HackerSystem.GetJamCharges(PlayerControl.LocalPlayer.PlayerId);
         Button.usesRemainingText.gameObject.SetActive(true);
         Button.usesRemainingSprite.gameObject.SetActive(true);
         Button.usesRemainingText.text = charges.ToString(CultureInfo.InvariantCulture);
-
-        if (EffectActive && !HackerSystem.IsJammed)
-        {
-            EffectActive = false;
-            Timer = Cooldown;
-        }
     }
 
     protected override void OnClick()

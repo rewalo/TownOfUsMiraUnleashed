@@ -70,6 +70,9 @@
     <string name="MiraUnleashed.Options.Hacker.JamMaxCharges">Max Jam Charges</string>
     <string name="MiraUnleashed.Options.Hacker.JamCooldown">Jam Cooldown</string>
     <string name="MiraUnleashed.Options.Hacker.JamDuration">Jam Duration</string>
+    <string name="MiraUnleashed.Options.Hacker.JamSoundCue">Jam Sound Cue</string>
+    <string name="MiraUnleashed.Options.Hacker.JamSoundCue.HackerOnly">Hacker Only</string>
+    <string name="MiraUnleashed.Options.Hacker.JamSoundCue.Everyone">Everyone</string>
 
 <!-- Injector Role -->
     <string name="MiraUnleashed.Role.Injector">Injector</string>

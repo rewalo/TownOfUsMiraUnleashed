@@ -1,5 +1,7 @@
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Attributes;
+using MiraAPI.GameOptions;
+using MiraUnleashed.Options.Roles.Impostor;
 using TownOfUs.Utilities;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -91,17 +93,17 @@ public static class HackerSystem
 
     public static byte GetJamCharges(byte playerId)
     {
-        return JamChargesByPlayer.TryGetValue(playerId, out var c) ? c : (byte)0;
+        if (JamChargesByPlayer.TryGetValue(playerId, out var c))
+        {
+            return c;
+        }
+
+        var opts = OptionGroupSingleton<HackerOptions>.Instance;
+        return (byte)Mathf.Clamp((int)opts.InitialJamCharges, 0, (int)opts.JamMaxCharges);
     }
 
     public static void SetJamCharges(byte playerId, byte charges)
     {
-        if (charges == 0)
-        {
-            JamChargesByPlayer.Remove(playerId);
-            return;
-        }
-
         JamChargesByPlayer[playerId] = charges;
     }
 
