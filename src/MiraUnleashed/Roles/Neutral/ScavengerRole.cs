@@ -196,7 +196,7 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
             }
             Coroutines.Start(TimeLordBodyManager.CoHideBodyForTimeLord(body, destroyBody));
         }
-        else if (isHost)
+        else
         {
             Coroutines.Start(body.CoCleanCustom(destroyBody));
         }
