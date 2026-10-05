@@ -358,4 +358,37 @@ If you fail to kill them, you will get penalized.</string>
     <string name="MiraUnleashed.Options.Spiteful.DurationType.NextRounds">Next Rounds</string>
     <string name="MiraUnleashed.Options.Spiteful.DurationType.RestOfGame">Rest of Game</string>
     <string name="MiraUnleashed.Options.Spiteful.RoundCount">Number of Rounds</string>
+
+<!-- Lawyer Role -->
+    <string name="MiraUnleashed.Role.Lawyer">Lawyer</string>
+    <string name="MiraUnleashed.Role.LawyerIntroBlurb">Defend your client to win!</string>
+    <string name="MiraUnleashed.Role.LawyerTabDescription">Defend &lt;client&gt;. If they get voted out, you lose!</string>
+    <string name="MiraUnleashed.Role.LawyerWikiDescription">The Lawyer is a Neutral Benign role that wins by keeping their assigned client from being voted out. If their client gets voted out, the Lawyer loses.</string>
+    <string name="MiraUnleashed.Role.LawyerObject">Object</string>
+    <string name="MiraUnleashed.Role.LawyerObjectWikiDescription">During meetings, click the objection button on your client's vote area to object to all votes, clearing them and forcing players to vote again.</string>
+    <string name="MiraUnleashed.Role.LawyerClientDescription">Your lawyer is &lt;lawyer&gt;.</string>
+    <string name="MiraUnleashed.Role.LawyerClientTabDescription">Your lawyer is &lt;lawyer&gt;.</string>
+
+<!-- Lawyer Options -->
+    <string name="MiraUnleashed.Options.Lawyer.WinMode">Lawyer Win Mode</string>
+    <string name="MiraUnleashed.Options.Lawyer.WinMode.WithClient">Win With Client</string>
+    <string name="MiraUnleashed.Options.Lawyer.WinMode.StealWin">Steal Win</string>
+    <string name="MiraUnleashed.Options.Lawyer.DieOnClientDeath">Lawyer Dies When Client Dies</string>
+    <string name="MiraUnleashed.Options.Lawyer.BecomesOnClientDeath">On Client Death, Lawyer Becomes</string>
+    <string name="MiraUnleashed.Options.Lawyer.GetVotedOutWithClient">Lawyer Gets Voted Out With Client</string>
+    <string name="MiraUnleashed.Options.Lawyer.CanSeeClientRole">Lawyer Knows Client's Role</string>
+    <string name="MiraUnleashed.Options.Lawyer.KillerClientChance">Killer Client Chance</string>
+    <string name="MiraUnleashed.Options.Lawyer.ObjectionPreventsSameVote">Prevent Same Votes On Objection</string>
+    <string name="MiraUnleashed.Options.Lawyer.MaxObjections">Max Objections (Per Game)</string>
+    <string name="MiraUnleashed.Options.Lawyer.MaxObjectionsPerMeeting">Max Objections Per Meeting</string>
+    <string name="MiraUnleashed.Options.Lawyer.PrivateChat">Lawyer/Client Gets A Private Chat</string>
+
+<!-- Lawyer Misc -->
+    <string name="MiraUnleashed.Lawyer.Win">Wins</string>
+    <string name="MiraUnleashed.Lawyer.ChatTitle">&lt;player&gt; (Lawyer)</string>
+    <string name="MiraUnleashed.Lawyer.ClientChatTitle">&lt;player&gt; (Client)</string>
+    <string name="MiraUnleashed.Lawyer.DiedWithClient">Failed to Defend</string>
+    <string name="MiraUnleashed.Lawyer.DiedClientDeath">Case Closed</string>
+    <string name="MiraUnleashed.Lawyer.ObjectionNotification">Objection! A lawyer has objected to the current votes! All votes have been cleared - please vote again.</string>
+    <string name="MiraUnleashed.Lawyer.CannotVoteSamePerson">You cannot vote for the same person after an objection!</string>
 </resources>
