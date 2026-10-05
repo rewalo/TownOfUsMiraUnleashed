@@ -30,7 +30,7 @@ public partial class MiraUnleashedPlugin : BasePlugin, IMiraPlugin
     public string OptionsTitleText => "Mira Unleashed";
 
     /// <inheritdoc />
-    public string GetAbbreviatedModName() => "MU";
+    public string GetAbbreviatedModName() => "TOUMU";
 
     /// <inheritdoc />
     public ConfigFile GetConfigFile() => Config;

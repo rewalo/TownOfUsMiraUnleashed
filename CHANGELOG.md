@@ -12,7 +12,7 @@ For releases before 2.0.0, see the [old repository's release history](https://gi
 ### Added
 
 - Rewritten as **Mira Unleashed** for Town of Us: Mira 1.7.3 / MiraAPI 0.5.0 on .NET 6.
-- New BepInEx GUID `rewalo.mira.unleashed` and mod abbreviation `MU` (was `TOUE`).
+- New BepInEx GUID `rewalo.mira.unleashed` and mod abbreviation `TOUMU` (was `TOUE`).
 - All strings now use MiraAPI locale IDs under the `MiraUnleashed.*` key space.
 - New Scavenger option `Cannot Spawn With Janitor` (default off).
 - Trapper moved to the `Crewmate Support` alignment.

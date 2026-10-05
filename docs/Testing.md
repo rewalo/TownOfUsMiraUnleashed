@@ -79,7 +79,7 @@ Manual smoke checks before a release. Requires at least two clients where noted.
 
 ## Regression checks for 2.0.0
 
-- [ ] Role tags in-game show `MU`, not `TOUE`.
+- [ ] Role tags in-game show `TOUMU`, not `TOUE`.
 - [ ] Trapper shown as Crew Support alignment.
 - [ ] Serial Killer / Scavenger keep their custom colours with "Use Crewmate Team Color" on.
 - [ ] Scavenger spawns with all other neutrals disabled.
