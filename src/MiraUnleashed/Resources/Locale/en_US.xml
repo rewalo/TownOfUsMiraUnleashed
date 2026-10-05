@@ -71,6 +71,98 @@
     <string name="MiraUnleashed.Options.Hacker.JamCooldown">Jam Cooldown</string>
     <string name="MiraUnleashed.Options.Hacker.JamDuration">Jam Duration</string>
 
+<!-- Injector Role -->
+    <string name="MiraUnleashed.Role.Injector">Injector</string>
+    <string name="MiraUnleashed.Role.Injector.IntroBlurb">Inject players with negative effects.</string>
+    <string name="MiraUnleashed.Role.Injector.TabDescription">Inject players to give them random effects. </string>
+    <string name="MiraUnleashed.Role.Injector.WikiDescription">The Injector is an Impostor Support role that can inject players with various negative effects. Effects are randomly selected and can include inverted controls, reduced vision, slowness, or confusion.</string>
+    <string name="MiraUnleashed.Role.InjectorInject">Inject</string>
+    <string name="MiraUnleashed.Role.InjectorInject.WikiDescription">Inject a nearby player with a random negative effect. The effect will activate after a configurable delay.</string>
+
+<!-- Injector Options -->
+    <string name="MiraUnleashed.Options.Injector.InjectCooldown">Inject Cooldown</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDelay">Effect Activation Delay</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDurationType">Effect Duration Type</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDurationType.AllRound">All Round</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDurationType.AllGame">All Game</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDurationType.SetTime">Set Time</string>
+    <string name="MiraUnleashed.Options.Injector.EffectDuration">Effect Duration</string>
+    <string name="MiraUnleashed.Options.Injector.InitialUses">Initial Uses</string>
+    <string name="MiraUnleashed.Options.Injector.UsesPerKill">Uses Per Kill</string>
+    <string name="MiraUnleashed.Options.Injector.PositiveEffectsEnabled">Positive Effects Enabled</string>
+    <string name="MiraUnleashed.Options.Injector.SelectedEffectType">Effect Type To Configure</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.InvertedControls">Inverted Controls</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.LowVision">Low Vision</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.Slowness">Slowness</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.VeryLowVision">Very Low Vision</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.Confused">Confused</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.NoVent">No Vent</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.NoUse">No Use</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.NoReport">No Report</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.Nausea">Nausea</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.Weakness">Weakness</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.SpeedBoost">Speed Boost</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.VisionBoost">Vision Boost</string>
+    <string name="MiraUnleashed.Options.Injector.EffectType.Regeneration">Regeneration</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceInvertedControls">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceLowVision">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceSlowness">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceVeryLowVision">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceConfused">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceNoVent">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceNoUse">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceNoReport">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceNausea">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceWeakness">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceSpeedBoost">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceVisionBoost">Effect Chance</string>
+    <string name="MiraUnleashed.Options.Injector.ChanceRegeneration">Effect Chance</string>
+
+<!-- Injector Notifications -->
+    <string name="MiraUnleashed.Injector.Notification.InvertedControls">You start to feel lightheaded…</string>
+    <string name="MiraUnleashed.Injector.Notification.LowVision">Your vision narrows…</string>
+    <string name="MiraUnleashed.Injector.Notification.Slowness">Your legs start to feel heavy…</string>
+    <string name="MiraUnleashed.Injector.Notification.VeryLowVision">You feel your eyesight begin to fade...</string>
+    <string name="MiraUnleashed.Injector.Notification.Confused">You start to feel confused...</string>
+    <string name="MiraUnleashed.Injector.Notification.NoVent">You feel too weak to use vents…</string>
+    <string name="MiraUnleashed.Injector.Notification.NoUse">Your body feels paralyzed…</string>
+    <string name="MiraUnleashed.Injector.Notification.NoReport">Your mind goes blank when you see bodies…</string>
+    <string name="MiraUnleashed.Injector.Notification.Nausea">You feel nauseous… (0.7x speed, 0.7x vision, camera shake)</string>
+    <string name="MiraUnleashed.Injector.Notification.Weakness">You feel extremely weak…</string>
+    <string name="MiraUnleashed.Injector.Notification.SpeedBoost">You feel energized and fast!</string>
+    <string name="MiraUnleashed.Injector.Notification.VisionBoost">Your vision becomes crystal clear!</string>
+    <string name="MiraUnleashed.Injector.Notification.Regeneration">You feel your body healing rapidly!</string>
+
+<!-- Injector Effect Descriptions -->
+    <string name="MiraUnleashed.Injector.EffectDescription.InvertedControls">Inverted controls</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.LowVision">0.5x vision</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.VeryLowVision">0.1x vision</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.Slowness">0.5x speed</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.Confused">Hallucinations, cannot report</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.NoVent">Cannot vent</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.NoUse">Cannot use abilities</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.NoReport">Cannot report bodies</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.Nausea">0.7x speed, 0.7x vision, camera shake</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.Weakness">0.6x speed</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.SpeedBoost">1.5x speed</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.VisionBoost">1.5x vision</string>
+    <string name="MiraUnleashed.Injector.EffectDescription.Regeneration">Reduced cooldowns</string>
+
+<!-- Injector Wore Off Notifications -->
+    <string name="MiraUnleashed.Injector.Notification.WoreOffInvertedControls">The lightheaded feeling has passed.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffLowVision">Your vision has returned to normal.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffVeryLowVision">Your eyesight has fully recovered.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffSlowness">Your legs feel normal again.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffConfused">The confusion has cleared.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffNoVent">You can use vents again.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffNoUse">You can use abilities again.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffNoReport">You can report bodies again.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffNausea">The nausea has subsided.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffWeakness">Your strength has returned.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffSpeedBoost">The speed boost has worn off.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffVisionBoost">Your vision has returned to normal.</string>
+    <string name="MiraUnleashed.Injector.Notification.WoreOffRegeneration">The regeneration effect has ended.</string>
+
 <!-- Trapper Role -->
     <string name="MiraUnleashed.Role.Trapper">Trapper</string>
     <string name="MiraUnleashed.Role.Trapper.IntroBlurb">Trap vents to catch venters.</string>
