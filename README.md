@@ -39,75 +39,30 @@ An extension mod for [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira)
 # Roles & Modifiers
 
 <p align="center">
-  <img src="./docs/assets/Groups/CrewSupport.png" align="center" />
+  <img width="100%" src="./docs/assets/Groups/CrewSupport.png" />
   <a href="./docs/Forestaller.md"><img width="30%" src="./docs/assets/RoleHeaders/Forestaller.png" /></a>
   <a href="./docs/Mirage.md"><img width="30%" src="./docs/assets/RoleHeaders/Mirage.png" /></a>
   <a href="./docs/Trapper.md"><img width="30%" src="./docs/assets/RoleHeaders/Trapper.png" /></a>
-  <img src="./docs/assets/Groups/ImpSupport.png" align="center" />
+  <img width="100%" src="./docs/assets/Groups/ImpSupport.png" />
   <a href="./docs/Charlatan.md"><img width="30%" src="./docs/assets/RoleHeaders/Charlatan.png" /></a>
   <a href="./docs/Hacker.md"><img width="30%" src="./docs/assets/RoleHeaders/Hacker.png" /></a>
   <a href="./docs/Injector.md"><img width="30%" src="./docs/assets/RoleHeaders/Injector.png" /></a>
-  <img src="./docs/assets/Groups/ImpKilling.png" align="center" />
+  <img width="100%" src="./docs/assets/Groups/ImpKilling.png" />
   <a href="./docs/Witch.md"><img width="30%" src="./docs/assets/RoleHeaders/Witch.png" /></a>
-  <img src="./docs/assets/Groups/ImpPower.png" align="center" />
+  <img width="100%" src="./docs/assets/Groups/ImpPower.png" />
   <a href="./docs/Wraith.md"><img width="30%" src="./docs/assets/RoleHeaders/Wraith.png" /></a>
-  <img src="./docs/assets/Groups/NeutBenign.png" align="center" />
+  <img width="100%" src="./docs/assets/Groups/NeutBenign.png" />
   <a href="./docs/Lawyer.md"><img width="30%" src="./docs/assets/RoleHeaders/Lawyer.png" /></a>
-  <img src="./docs/assets/Groups/NeutKilling.png" align="center" />
+  <img width="100%" src="./docs/assets/Groups/NeutKilling.png" />
   <a href="./docs/Serial-Killer.md"><img width="30%" src="./docs/assets/RoleHeaders/Serial Killer.png" /></a>
-  <img src="./docs/assets/Groups/NeutEvil.png" align="center" />
+  <img width="100%" src="./docs/assets/Groups/NeutEvil.png" />
   <a href="./docs/Scavenger.md"><img width="30%" src="./docs/assets/RoleHeaders/Scavenger.png" /></a>
-  <img src="./docs/assets/Groups/UniMods.png" align="center" />
+  <img width="100%" src="./docs/assets/Groups/UniMods.png" />
   <a href="./docs/Clueless.md"><img width="30%" src="./docs/assets/ModifierHeaders/Clueless.png" /></a>
   <a href="./docs/Spiteful.md"><img width="30%" src="./docs/assets/ModifierHeaders/Spiteful.png" /></a>
 </p>
 
-## Crewmate Roles
-
-### Forestaller (Support)
-Complete all tasks to disable sabotages while alive. Revealed in meetings after completing all tasks.
-
-### Mirage (Support)
-Place a decoy with the appearance of a chosen target (yourself or a random player). If any player interacts with the decoy, it disappears instantly and both the Mirage and the toucher receive a notification. Cannot be guessed if the decoy has the appearance of yourself.
-
-### Trapper (Support)
-Place traps on vents that immobilize players who use them. Not to be confused with TOU-Mira's Trapper, which is renamed to Revealer while this mod is loaded.
-
-## Impostor Roles
-
-### Charlatan (Support)
-Manipulate body reports. Deceive lets you report bodies you killed from any distance for a limited time after killing. Conceal reduces the report range of a nearby body, but requires you to stay near the body while channeling.
-
-### Hacker (Support)
-Download information from nearby equipment (Admin/Cams/Vitals/Door Log) to charge a portable device. Jam disrupts information systems like comms being sabotaged, but emergency meetings can still be called. Gain jam charges from kills.
-
-### Injector (Support)
-Inject non-impostor players with a syringe that applies a random effect after a delay. Effects can be negative or positive. Starts with a limited number of uses and gains additional uses from kills.
-
-### Witch (Killing)
-Cast spells on players to curse them. Spellbound players are highlighted in the next meeting and die after a configured amount of meetings. If the Witch dies, gets exiled, or is guessed, all spellbound players survive.
-
-### Wraith (Power)
-Dash increases movement speed by 75% for a short time. Lantern lets you place a hidden marker only you can see; reactivate it to teleport back and briefly turn invisible. If the Lantern expires before returning, it breaks and leaves permanent evidence.
-
-## Neutral Roles
-
-### Lawyer (Benign)
-Win by keeping your assigned client from being voted out. If your client gets voted out, you lose. Can object to votes during meetings to force players to vote again.
-
-### Serial Killer (Killing)
-Kill everyone to win alone. Can optionally kill players who are in vents with them, but loses the ability to vent for the rest of the game after doing so.
-
-### Scavenger (Evil)
-Eat dead bodies to win alone. Optionally, use Scavenge to get arrows pointing to all corpses. If the win condition becomes impossible, the Scavenger becomes a configured role.
-
-## Modifiers
-
-### Clueless (Universal)
-Removes all task guidance (task list, task arrows/markers, and map task locations). Tasks still function normally and contribute to the task bar.
-
-### Spiteful (Universal)
-When you are voted out, everyone who voted for you receives a negative effect (lower vision, slowness, or increased cooldowns) for a configured number of rounds or the rest of the game.
+Click a role for its abilities, options and interactions, or browse the [wiki](https://github.com/rewalo/TownOfUsMiraRolesExtension/wiki).
 
 -----------------------
 
