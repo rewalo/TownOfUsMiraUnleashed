@@ -22,7 +22,7 @@
     <RootNamespace>MiraUnleashed</RootNamespace>
     <AssemblyName>MiraUnleashed</AssemblyName>
     <!-- 1591: missing XML docs. CA1707: Harmony patch naming (__instance/__result) is required. -->
-    <NoWarn>$(NoWarn);1591;CA1707</NoWarn>
+    <NoWarn>$(NoWarn);1591;CA1707;CA1720</NoWarn>
 
     <!-- Optional: set the Among Us property via the `AmongUs` environment variable,
          or create a git-ignored Directory.Build.local.props at the repo root that sets it. -->

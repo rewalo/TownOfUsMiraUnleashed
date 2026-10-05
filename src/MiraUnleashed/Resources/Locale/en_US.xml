@@ -258,4 +258,26 @@
     <string name="MiraUnleashed.Options.Clueless.CensorType.Asterisks">Asterisks</string>
     <string name="MiraUnleashed.Options.Clueless.CensorType.QuestionMarks">Question Marks</string>
     <string name="MiraUnleashed.Options.Clueless.CensorType.Remove">Remove</string>
+
+<!-- Charlatan Role -->
+    <string name="MiraUnleashed.Role.Charlatan">Charlatan</string>
+    <string name="MiraUnleashed.Role.Charlatan.IntroBlurb">Manipulate body reports to your advantage.</string>
+    <string name="MiraUnleashed.Role.Charlatan.TabDescription">Use Deceive to report bodies you've killed from any distance.\%nl\%Use Conceal to reduce the report range of nearby bodies.</string>
+    <string name="MiraUnleashed.Role.Charlatan.WikiDescription">The Charlatan is an Impostor Support role that manipulates body reports. Deceive allows you to report bodies you've killed from any distance for a limited time after killing. Conceal reduces the report range of nearby bodies, but requires you to stay near the body for the duration.</string>
+    <string name="MiraUnleashed.Role.CharlatanDeceive">Deceive</string>
+    <string name="MiraUnleashed.Role.CharlatanDeceive.WikiDescription">Report the body you killed from any distance, regardless of range or line of sight. Available for a limited time after killing.</string>
+    <string name="MiraUnleashed.Role.CharlatanConceal">Conceal</string>
+    <string name="MiraUnleashed.Role.CharlatanConceal.WikiDescription">Reduce the report range of nearby bodies. You must stay near the body for the duration to successfully conceal it.</string>
+
+<!-- Charlatan Options -->
+    <string name="MiraUnleashed.Options.Charlatan.DeceiveBaseDuration">Deceive Base Duration</string>
+    <string name="MiraUnleashed.Options.Charlatan.DeceiveDurationIncreasePerKill">Deceive Duration Increase Per Kill</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealUses">Conceal Uses</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealChargesPerKill">Conceal Charges Per Kill</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealReportRange">Conceal Report Range</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealReportRangeEnum.ExtremelyShort">Extremely Short</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealReportRangeEnum.VeryShort">Very Short</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealReportRangeEnum.Short">Short</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealChannelDuration">Conceal Channel Duration</string>
+    <string name="MiraUnleashed.Options.Charlatan.ConcealCooldown">Conceal Cooldown</string>
 </resources>
