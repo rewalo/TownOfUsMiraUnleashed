@@ -169,7 +169,8 @@
 <!-- Witch Role -->
     <string name="MiraUnleashed.Role.Witch">Witch</string>
     <string name="MiraUnleashed.Role.Witch.IntroBlurb">We love casting spells!</string>
-    <string name="MiraUnleashed.Role.Witch.TabDescription">Cast spells on players.\%nl\%They'll be highlighted in the next meeting and die after the configured amount of meetings.</string>
+    <string name="MiraUnleashed.Role.Witch.TabDescription">Cast spells on players.
+They'll be highlighted in the next meeting and die after the configured amount of meetings.</string>
     <string name="MiraUnleashed.Role.Witch.WikiDescription">The Witch is an Impostor Killing role that can cast spells on other players. Spellbound players are highlighted in the next meeting and die after the configured amount of meetings. If the Witch dies, gets exiled, or is guessed, all spellbound players survive.</string>
     <string name="MiraUnleashed.Role.WitchSpell">Spell</string>
     <string name="MiraUnleashed.Role.WitchSpell.WikiDescription">Cast a spell on a player. They will be highlighted in the next meeting and die after the configured amount of meetings.</string>
@@ -265,7 +266,8 @@
 <!-- Charlatan Role -->
     <string name="MiraUnleashed.Role.Charlatan">Charlatan</string>
     <string name="MiraUnleashed.Role.Charlatan.IntroBlurb">Manipulate body reports to your advantage.</string>
-    <string name="MiraUnleashed.Role.Charlatan.TabDescription">Use Deceive to report bodies you've killed from any distance.\%nl\%Use Conceal to reduce the report range of nearby bodies.</string>
+    <string name="MiraUnleashed.Role.Charlatan.TabDescription">Use Deceive to report bodies you've killed from any distance.
+Use Conceal to reduce the report range of nearby bodies.</string>
     <string name="MiraUnleashed.Role.Charlatan.WikiDescription">The Charlatan is an Impostor Support role that manipulates body reports. Deceive allows you to report bodies you've killed from any distance for a limited time after killing. Conceal reduces the report range of nearby bodies, but requires you to stay near the body for the duration.</string>
     <string name="MiraUnleashed.Role.CharlatanDeceive">Deceive</string>
     <string name="MiraUnleashed.Role.CharlatanDeceive.WikiDescription">Report the body you killed from any distance, regardless of range or line of sight. Available for a limited time after killing.</string>
@@ -287,7 +289,8 @@
 <!-- Serial Killer Role -->
     <string name="MiraUnleashed.Role.SerialKiller">Serial Killer</string>
     <string name="MiraUnleashed.Role.SerialKiller.IntroBlurb">Kill everyone, win alone.</string>
-    <string name="MiraUnleashed.Role.SerialKiller.TabDescription">Kill everyone to win alone.\%nl\%You can kill players in vents, but you'll lose the ability to vent after doing so.</string>
+    <string name="MiraUnleashed.Role.SerialKiller.TabDescription">Kill everyone to win alone.
+You can kill players in vents, but you'll lose the ability to vent after doing so.</string>
     <string name="MiraUnleashed.Role.SerialKiller.WikiDescription">The Serial Killer is a Neutral Killing role whose only objective is to kill everyone and win alone. The Serial Killer can optionally kill players who are in vents with them, but loses the ability to vent for the rest of the game after doing so.</string>
     <string name="MiraUnleashed.Modifier.SerialKillerManiac">Maniac</string>
     <string name="DiedToSerialKiller">Murdered</string>
