@@ -43,5 +43,5 @@ public sealed class ScavengerOptions : AbstractOptionGroup<ScavengerRole>
 
     public ModdedEnumOption OnLoseBecomes { get; } =
         new("MiraUnleashed.Options.Scavenger.OnLoseBecomes", (int)BecomeOptions.Crew, typeof(BecomeOptions),
-            ["CrewmateKeyword", "TouRoleAmnesiac", "TouRoleSurvivor", "TouRoleMercenary", "TouRoleJester"]);
+            ["MiraApi.RoleTeam.Crewmate", "TownOfUsMira.Role.Amnesiac", "TownOfUsMira.Role.Survivor", "TownOfUsMira.Role.Mercenary", "TownOfUsMira.Role.Jester"]);
 }

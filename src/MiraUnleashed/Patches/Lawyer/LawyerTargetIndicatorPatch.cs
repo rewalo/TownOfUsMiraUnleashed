@@ -305,7 +305,7 @@ public static class LawyerNeutralKillerIntroPatch
             return;
         }
 
-        __instance.TeamTitle.text = MiraLocaleManager.Get("NeutralKeyword").ToUpperInvariant();
+        __instance.TeamTitle.text = MiraLocaleManager.Get("MiraApi.RoleTeam.Neutral").ToUpperInvariant();
         __instance.TeamTitle.color = new Color32(138, 138, 138, 255);
 
         __instance.ImpostorText.gameObject.SetActive(true);

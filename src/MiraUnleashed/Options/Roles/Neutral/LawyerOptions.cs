@@ -20,7 +20,7 @@ public sealed class LawyerOptions : AbstractOptionGroup<LawyerRole>
 
     public ModdedEnumOption OnClientDeath { get; } =
         new("MiraUnleashed.Options.Lawyer.BecomesOnClientDeath", (int)BecomeOptions.Crew, typeof(BecomeOptions),
-            ["CrewmateKeyword", "TouRoleAmnesiac", "TouRoleSurvivor", "TouRoleMercenary", "TouRoleJester"])
+            ["MiraApi.RoleTeam.Crewmate", "TownOfUsMira.Role.Amnesiac", "TownOfUsMira.Role.Survivor", "TownOfUsMira.Role.Mercenary", "TownOfUsMira.Role.Jester"])
         {
             Visible = () => !OptionGroupSingleton<LawyerOptions>.Instance.DieOnClientDeath,
         };
