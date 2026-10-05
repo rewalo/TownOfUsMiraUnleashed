@@ -1,4 +1,0 @@
-[submodule "SourceReference/TOU-Mira"]
-	path = SourceReference/TOU-Mira
-	url = https://github.com/AU-Avengers/TOU-Mira.git
-	branch = dev
