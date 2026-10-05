@@ -21,6 +21,7 @@ namespace MiraUnleashed;
 [BepInDependency(ReactorPlugin.Id)]
 [BepInDependency(MiraApiPlugin.Id)]
 [BepInDependency(TownOfUsPlugin.Id)]
+[BepInDependency("com.edgetel.perfectcomms", BepInDependency.DependencyFlags.SoftDependency)]
 [ReactorModFlags(ModFlags.RequireOnAllClients)]
 public partial class MiraUnleashedPlugin : BasePlugin, IMiraPlugin
 {
@@ -48,5 +49,6 @@ public partial class MiraUnleashedPlugin : BasePlugin, IMiraPlugin
         WinConditionRegistry.Register(new LawyerDuoWinCondition());
         WinConditionRegistry.Register(new LawyerParityWinCondition());
         LawyerTeamChatRegistration.Register();
+        Integrations.PerfectCommsIntegration.TryRegister();
     }
 }

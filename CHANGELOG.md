@@ -23,6 +23,8 @@ For releases before 2.0.0, see the [old repository's release history](https://gi
 - Witch options "Spell Range" and "Spell Resets Kill Cooldown".
 - Injector effects now show in the victim's modifier panel with icon, description and remaining duration, and the injection notification names the effect and its duration.
 - Role icons shown next to the role name in the in-game role text.
+- Optional Perfect Comms voice chat integration (Lawyer/client team radio, Wraith muted while invisible, Hacker Jam disrupts voice, muffled hearing for injected vision/confusion effects).
+- Wiki home page redesigned as an icon table.
 - GitHub Actions CI (build, release, wiki sync).
 
 ### Changed

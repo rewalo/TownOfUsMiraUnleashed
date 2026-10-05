@@ -38,3 +38,4 @@ The Hacker is an Impostor Support role that can download information from nearby
 
 - Simple Mode disables Download/Device and leaves Jam as the only ability.
 - Each Hacker has their own Jam charges; the number on the button is how many jams you have left.
+- With [Perfect Comms](Voice-Chat) installed, an active Jam mutes everyone's voice during tasks, the same way a communications sabotage does.
