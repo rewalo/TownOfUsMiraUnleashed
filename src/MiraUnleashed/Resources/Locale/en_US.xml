@@ -1,0 +1,6 @@
+<resources>
+<!-- Local Settings -->
+    <string name="MiraUnleashed.LocalSetting.EnableNauseaCameraShake">Enable Nausea Camera Shake</string>
+<!-- Plugin -->
+    <string name="MiraUnleashed.OptionsTitle">Mira Unleashed</string>
+</resources>

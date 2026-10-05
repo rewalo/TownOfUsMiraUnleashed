@@ -1,13 +1,47 @@
+## .NET / Visual Studio standard .gitignore
+
+# Build results
 bin/
 obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
-.idea/
-*.lock.json
+out/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio
 .vs/
 *.user
-.qodo
-TownOfUs/Properties/
+*.userosscache
+*.suo
+*.userprefs
+*.sln.docstates
+*.vsidx
 
-.fake
+# Rider
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+*.lock.json
+
+# Local machine-specific overrides
+Directory.Build.local.props
+
+# Misc
+*.cache
+*.tmp
+*.log
+Thumbs.db
+.DS_Store

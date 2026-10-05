@@ -1,0 +1,38 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>embedded</DebugType>
+
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>Recommended</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors Condition="'$(ContinuousIntegrationBuild)' == 'true'">true</TreatWarningsAsErrors>
+
+    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionSuffix>dev</VersionSuffix>
+    <Authors>rewalo</Authors>
+    <RepositoryUrl>https://github.com/rewalo/TownOfUsMiraRolesExtension</RepositoryUrl>
+
+    <RootNamespace>MiraUnleashed</RootNamespace>
+    <AssemblyName>MiraUnleashed</AssemblyName>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+
+    <!-- Optional: set the Among Us property via the `AmongUs` environment variable,
+         or create a git-ignored Directory.Build.local.props at the repo root that sets it. -->
+    <AmongUs Condition="'$(AmongUs)' == ''"></AmongUs>
+  </PropertyGroup>
+
+  <Import Project="Directory.Build.local.props" Condition="Exists('Directory.Build.local.props')" />
+
+  <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(AmongUs)' != '' and Exists('$(AmongUs)\BepInEx\plugins')">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUs)\BepInEx\plugins\" />
+    <Message Text="Copied $(AssemblyName).dll to $(AmongUs)\BepInEx\plugins\" Importance="High" />
+  </Target>
+
+</Project>
