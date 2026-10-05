@@ -101,14 +101,7 @@ public static class ForestallerExtraTasksPatch
                 continue;
             }
 
-            try
-            {
-                pool.Add((byte)t.Index);
-            }
-            catch
-            {
-                // ignored
-            }
+            pool.Add((byte)t.Index);
         }
 
         return pool;

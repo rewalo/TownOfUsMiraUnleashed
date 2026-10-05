@@ -167,20 +167,20 @@ public static class CluelessTaskGuidancePatches
 
     private static void TryDestroyExistingTaskArrow(NormalPlayerTask task)
     {
+        var t = task.GetType();
+        var field =
+            AccessTools.Field(t, "Arrow") ??
+            AccessTools.Field(t, "arrow") ??
+            AccessTools.Field(t, "taskArrow") ??
+            AccessTools.Field(t, "_arrow");
+
+        if (field == null)
+        {
+            return;
+        }
+
         try
         {
-            var t = task.GetType();
-            var field =
-                AccessTools.Field(t, "Arrow") ??
-                AccessTools.Field(t, "arrow") ??
-                AccessTools.Field(t, "taskArrow") ??
-                AccessTools.Field(t, "_arrow");
-
-            if (field == null)
-            {
-                return;
-            }
-
             var arrowObj = field.GetValue(task) as MonoBehaviour;
             if (arrowObj == null)
             {
@@ -194,9 +194,9 @@ public static class CluelessTaskGuidancePatches
 
             field.SetValue(task, null);
         }
-        catch
+        catch (Exception ex)
         {
-            // ignored
+            Warning($"Clueless: failed to clear task arrow on {t.Name}: {ex.Message}");
         }
     }
 

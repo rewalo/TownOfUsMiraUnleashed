@@ -77,45 +77,39 @@ public static class MirageDecoyTownOfUsTargetButtonPatches
                 var prop = instance.GetType().GetProperty("Button", BindingFlags.Instance | BindingFlags.Public);
                 return prop?.GetValue(instance) as ActionButton;
             }
-            catch
+            catch (Exception ex)
             {
+                Warning($"Mirage decoy: failed to read Button property on {instance.GetType().Name}: {ex.Message}");
                 return null;
             }
         }
 
         private static void ForceActionButtonVisualEnabled(ActionButton button)
         {
-            try
+            var renderers = button.GetComponentsInChildren<SpriteRenderer>(true);
+            foreach (var sr in renderers)
             {
-                var renderers = button.GetComponentsInChildren<SpriteRenderer>(true);
-                foreach (var sr in renderers)
+                if (sr == null)
                 {
-                    if (sr == null)
-                    {
-                        continue;
-                    }
-
-                    sr.color = Palette.EnabledColor;
-                    if (sr.material != null)
-                    {
-                        sr.material.SetFloat("_Desat", 0f);
-                    }
+                    continue;
                 }
 
-                var tmps = button.GetComponentsInChildren<TMPro.TMP_Text>(true);
-                foreach (var tmp in tmps)
+                sr.color = Palette.EnabledColor;
+                if (sr.material != null)
                 {
-                    if (tmp == null)
-                    {
-                        continue;
-                    }
-
-                    tmp.color = Palette.EnabledColor;
+                    sr.material.SetFloat("_Desat", 0f);
                 }
             }
-            catch
+
+            var tmps = button.GetComponentsInChildren<TMPro.TMP_Text>(true);
+            foreach (var tmp in tmps)
             {
-                // ignore
+                if (tmp == null)
+                {
+                    continue;
+                }
+
+                tmp.color = Palette.EnabledColor;
             }
         }
 
@@ -135,9 +129,9 @@ public static class MirageDecoyTownOfUsTargetButtonPatches
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // ignore
+                Warning($"Mirage decoy: failed to read role TeamColor on {buttonInstance.GetType().Name}: {ex.Message}");
             }
 
             return Palette.EnabledColor;
@@ -236,22 +230,15 @@ public static class MirageDecoyTownOfUsTargetButtonPatches
 
     private static void SpendCooldownAndUses(object instance)
     {
-        try
+        if (instance is CustomActionButton btn)
         {
-            if (instance is CustomActionButton btn)
+            if (btn.LimitedUses)
             {
-                if (btn.LimitedUses)
-                {
-                    btn.DecreaseUses(1);
-                }
-
-                btn.EffectActive = false;
-                btn.Timer = btn.Cooldown;
+                btn.DecreaseUses(1);
             }
-        }
-        catch
-        {
-            // ignore
+
+            btn.EffectActive = false;
+            btn.Timer = btn.Cooldown;
         }
     }
 
@@ -269,9 +256,9 @@ public static class MirageDecoyTownOfUsTargetButtonPatches
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // ignore
+            Warning($"Mirage decoy: failed to read Distance on {instance.GetType().Name}: {ex.Message}");
         }
 
         return 1.25f;

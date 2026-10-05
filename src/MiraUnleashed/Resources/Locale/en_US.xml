@@ -60,7 +60,7 @@
 
 <!-- Trapper Options -->
     <string name="MiraUnleashed.Options.Trapper.TrapCooldown">Trap Cooldown</string>
-    <string name="MiraUnleashed.Options.Trapper.Trappeduration">Trap Duration</string>
+    <string name="MiraUnleashed.Options.Trapper.TrapDuration">Trap Duration</string>
     <string name="MiraUnleashed.Options.Trapper.ArrowDuration">Arrow Duration</string>
     <string name="MiraUnleashed.Options.Trapper.MaxTraps">Max Number of Traps</string>
     <string name="MiraUnleashed.Options.Trapper.TrapRoundsLast">Trap Rounds Last</string>

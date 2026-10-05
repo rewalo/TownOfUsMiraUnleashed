@@ -16,7 +16,7 @@ public sealed class TrapperTrapButton : TownOfUsRoleButton<TrapperRole, Vent>
 {
     private static readonly ContactFilter2D Filter = Helpers.CreateFilter(Constants.Usables);
 
-    public override string Name => MiraLocaleManager.GetParsed("MiraUnleashed.Role.TrapperTrap", [], "Trap");
+    public override string Name => MiraLocaleManager.Get("MiraUnleashed.Role.TrapperTrap", "Trap");
     public override BaseKeybind Keybind => Keybinds.SecondaryAction;
     public override Color TextOutlineColor => MiraUnleashedColors.Trapper;
     public override float Cooldown => Math.Clamp(OptionGroupSingleton<TrapperOptions>.Instance.TrapCooldown + MapCooldown, 5f, 120f);

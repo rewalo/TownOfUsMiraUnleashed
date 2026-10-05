@@ -34,7 +34,7 @@ public sealed class MirageDecoyButton : TownOfUsRoleButton<MirageRole>
     private float _destroyUnlockAt;
     private bool _isProcessingClick;
 
-    public override string Name => MiraLocaleManager.GetParsed("MiraUnleashed.Mirage.DecoyPrime", [], "Prime");
+    public override string Name => MiraLocaleManager.Get("MiraUnleashed.Mirage.DecoyPrime", "Prime");
     public override BaseKeybind Keybind => Keybinds.SecondaryAction;
     public override Color TextOutlineColor => MiraUnleashedColors.Mirage;
     public override float Cooldown => Math.Clamp(OptionGroupSingleton<MirageOptions>.Instance.DecoyCooldown + MapCooldown, 5f, 120f);
@@ -134,13 +134,13 @@ public sealed class MirageDecoyButton : TownOfUsRoleButton<MirageRole>
         switch (_stage)
         {
             case Stage.Prime:
-                OverrideName(MiraLocaleManager.GetParsed("MiraUnleashed.Mirage.DecoyPrime", [], "Prime"));
+                OverrideName(MiraLocaleManager.Get("MiraUnleashed.Mirage.DecoyPrime", "Prime"));
                 break;
             case Stage.Place:
-                OverrideName(MiraLocaleManager.GetParsed("MiraUnleashed.Mirage.DecoyPlace", [], "Place"));
+                OverrideName(MiraLocaleManager.Get("MiraUnleashed.Mirage.DecoyPlace", "Place"));
                 break;
             case Stage.Destroy:
-                OverrideName(MiraLocaleManager.GetParsed("MiraUnleashed.Mirage.DecoyDestroy", [], "Destroy"));
+                OverrideName(MiraLocaleManager.Get("MiraUnleashed.Mirage.DecoyDestroy", "Destroy"));
                 break;
         }
 
@@ -152,17 +152,10 @@ public sealed class MirageDecoyButton : TownOfUsRoleButton<MirageRole>
             var lockRemaining = _destroyUnlockAt - Time.time;
             if (lockRemaining > 0f)
             {
-                try
-                {
-                    Button.SetFillUp(lockRemaining, PostPlaceLockSeconds);
-                    Button.cooldownTimerText.text = Mathf.Ceil(lockRemaining)
-                        .ToString(CooldownTimerFormatString, System.Globalization.NumberFormatInfo.InvariantInfo);
-                    Button.cooldownTimerText.gameObject.SetActive(true);
-                }
-                catch
-                {
-                    // ignore
-                }
+                Button.SetFillUp(lockRemaining, PostPlaceLockSeconds);
+                Button.cooldownTimerText.text = Mathf.Ceil(lockRemaining)
+                    .ToString(CooldownTimerFormatString, System.Globalization.NumberFormatInfo.InvariantInfo);
+                Button.cooldownTimerText.gameObject.SetActive(true);
             }
         }
     }

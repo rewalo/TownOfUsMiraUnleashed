@@ -20,17 +20,17 @@ namespace MiraUnleashed.Modifiers;
 public sealed class CluelessModifier : UniversalGameModifier, IWikiDiscoverable
 {
     public override string ModifierName => MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless", "Clueless");
-    public override string IntroInfo => MiraLocaleManager.GetParsed("MiraUnleashed.Modifier.Clueless.IntroBlurb", []);
+    public override string IntroInfo => MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless.IntroBlurb";
     public override LoadableAsset<Sprite> ModifierIcon => MiraUnleashedAssets.CluelessModifierIcon;
 
     public override string GetDescription()
     {
-        return MiraLocaleManager.GetParsed("MiraUnleashed.Modifier.Clueless.TabDescription", []);
+        return MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless.TabDescription";
     }
 
     public string GetAdvancedDescription()
     {
-        return MiraLocaleManager.GetParsed("MiraUnleashed.Modifier.Clueless.WikiDescription", [])
+        return MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless.WikiDescription"
                + MiscUtils.AppendOptionsText(GetType());
     }
 
@@ -86,22 +86,15 @@ public sealed class CluelessModifier : UniversalGameModifier, IWikiDiscoverable
             return;
         }
 
-        try
+        if (HudManager.Instance != null && HudManager.Instance.TaskPanel != null &&
+            HudManager.Instance.TaskPanel.taskText != null)
         {
-            if (HudManager.Instance != null && HudManager.Instance.TaskPanel != null &&
-                HudManager.Instance.TaskPanel.taskText != null)
-            {
-                HudManager.Instance.TaskPanel.taskText.text = string.Empty;
-            }
-
-            if (MapBehaviour.Instance != null)
-            {
-                MapBehaviour.Instance.taskOverlay?.Hide();
-            }
+            HudManager.Instance.TaskPanel.taskText.text = string.Empty;
         }
-        catch
+
+        if (MapBehaviour.Instance != null)
         {
-            // ignored
+            MapBehaviour.Instance.taskOverlay?.Hide();
         }
     }
 }

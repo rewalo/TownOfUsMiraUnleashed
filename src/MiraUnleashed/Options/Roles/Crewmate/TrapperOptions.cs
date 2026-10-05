@@ -13,8 +13,8 @@ public sealed class TrapperOptions : AbstractOptionGroup<TrapperRole>
     [ModdedNumberOption("MiraUnleashed.Options.Trapper.TrapCooldown", 1f, 60f, 1f, MiraNumberSuffixes.Seconds)]
     public float TrapCooldown { get; set; } = 25f;
 
-    [ModdedNumberOption("MiraUnleashed.Options.Trapper.Trappeduration", 0.5f, 15f, 0.5f, MiraNumberSuffixes.Seconds)]
-    public float Trappeduration { get; set; } = 4f;
+    [ModdedNumberOption("MiraUnleashed.Options.Trapper.TrapDuration", 0.5f, 15f, 0.5f, MiraNumberSuffixes.Seconds)]
+    public float TrapDuration { get; set; } = 4f;
 
     [ModdedNumberOption("MiraUnleashed.Options.Trapper.ArrowDuration", 0.5f, 15f, 0.5f, MiraNumberSuffixes.Seconds)]
     public float ArrowDuration { get; set; } = 4.5f;

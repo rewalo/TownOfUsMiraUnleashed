@@ -193,9 +193,8 @@ public static class ForestallerSystem
 
     private static void ShowSabotagesDisabledAnnouncement()
     {
-        var msg = MiraLocaleManager.GetParsed(
+        var msg = MiraLocaleManager.Get(
             "MiraUnleashed.Forestaller.SabotagesDisabledAnnouncement",
-            [],
             "Forestaller has completed all tasks. Sabotages are now disabled.");
 
         var notif = Helpers.CreateAndShowNotification(

@@ -63,37 +63,30 @@ public static class MirageDecoyHighlightPatches
 
     private static void ForceActionButtonVisualEnabled(ActionButton button)
     {
-        try
+        var renderers = button.GetComponentsInChildren<SpriteRenderer>(true);
+        foreach (var sr in renderers)
         {
-            var renderers = button.GetComponentsInChildren<SpriteRenderer>(true);
-            foreach (var sr in renderers)
+            if (sr == null)
             {
-                if (sr == null)
-                {
-                    continue;
-                }
-
-                sr.color = Palette.EnabledColor;
-                if (sr.material != null)
-                {
-                    sr.material.SetFloat("_Desat", 0f);
-                }
+                continue;
             }
 
-            var tmps = button.GetComponentsInChildren<TMPro.TMP_Text>(true);
-            foreach (var tmp in tmps)
+            sr.color = Palette.EnabledColor;
+            if (sr.material != null)
             {
-                if (tmp == null)
-                {
-                    continue;
-                }
-
-                tmp.color = Palette.EnabledColor;
+                sr.material.SetFloat("_Desat", 0f);
             }
         }
-        catch
+
+        var tmps = button.GetComponentsInChildren<TMPro.TMP_Text>(true);
+        foreach (var tmp in tmps)
         {
-            // ignore
+            if (tmp == null)
+            {
+                continue;
+            }
+
+            tmp.color = Palette.EnabledColor;
         }
     }
 }

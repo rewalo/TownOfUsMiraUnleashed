@@ -35,20 +35,13 @@ public static class MirageDecoyTownOfUsButtonPatches
 
     private static void SpendCooldownAndUses(CustomActionButton instance)
     {
-        try
+        if (instance.LimitedUses)
         {
-            if (instance.LimitedUses)
-            {
-                instance.DecreaseUses(1);
-            }
+            instance.DecreaseUses(1);
+        }
 
-            instance.EffectActive = false;
-            instance.Timer = instance.Cooldown;
-        }
-        catch
-        {
-            // ignore
-        }
+        instance.EffectActive = false;
+        instance.Timer = instance.Cooldown;
     }
 
     private static bool TryTriggerFromLocalPlayer(float maxDistance)

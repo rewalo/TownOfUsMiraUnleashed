@@ -33,8 +33,8 @@ public sealed class MirageRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnlea
     public List<CustomButtonWikiDescription> Abilities =>
         [
             new(
-                MiraLocaleManager.GetParsed("MiraUnleashed.Role.MirageDecoy", [], "Decoy"),
-                MiraLocaleManager.GetParsed("MiraUnleashed.Role.MirageDecoy.WikiDescription", []),
+                MiraLocaleManager.Get("MiraUnleashed.Role.MirageDecoy", "Decoy"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.MirageDecoy.WikiDescription",
                 MiraUnleashedCrewAssets.DecoyButtonSprite)
         ];
 
@@ -145,7 +145,7 @@ public sealed class MirageRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnlea
         {
             Coroutines.Start(MiscUtils.CoFlash(MiraUnleashedColors.Mirage));
             TouAudio.PlaySound(TouAudio.DiscoveredSound);
-            var msg = MiraLocaleManager.GetParsed("MiraUnleashed.Mirage.InteractorTriggered", [], "You interacted with a decoy!");
+            var msg = MiraLocaleManager.Get("MiraUnleashed.Mirage.InteractorTriggered", "You interacted with a decoy!");
             var notif = Helpers.CreateAndShowNotification(
                 msg,
                 Color.white,

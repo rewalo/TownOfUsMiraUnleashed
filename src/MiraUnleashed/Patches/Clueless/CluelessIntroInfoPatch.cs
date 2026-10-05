@@ -31,7 +31,7 @@ public static class CluelessIntroInfoPatch
             var modifierText = ModifierTextField?.GetValue(null) as TextMeshPro;
             if (modifierText != null)
             {
-                var introBlurb = MiraLocaleManager.GetParsed("MiraUnleashed.Modifier.Clueless.IntroBlurb", []);
+                var introBlurb = MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless.IntroBlurb";
                 modifierText.text = $"<size={uniModifier.IntroSize}>{introBlurb}</size>";
                 modifierText.color = MiscUtils.GetModifierColour(uniModifier);
             }

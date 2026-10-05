@@ -33,32 +33,18 @@ public static class MirageDecoySystem
             return;
         }
 
-        try
+        if (LocalOutlinedCosmetics != null)
         {
-            if (LocalOutlinedCosmetics != null)
-            {
-                LocalOutlinedCosmetics.SetOutline(false, new Il2CppSystem.Nullable<Color>(Color.clear));
+            LocalOutlinedCosmetics.SetOutline(false, new Il2CppSystem.Nullable<Color>(Color.clear));
 
-                try
-                {
-                    if (LocalOutlinedCosmetics.currentBodySprite != null && LocalOutlinedCosmetics.currentBodySprite.BodySprite != null)
-                    {
-                        LocalOutlinedCosmetics.currentBodySprite.BodySprite.SetOutline(null);
-                    }
-                }
-                catch
-                {
-                    // ignore
-                }
-            }
-            else if (LocalOutlinedBody != null)
+            if (LocalOutlinedCosmetics.currentBodySprite != null && LocalOutlinedCosmetics.currentBodySprite.BodySprite != null)
             {
-                LocalOutlinedBody.SetOutline(null);
+                LocalOutlinedCosmetics.currentBodySprite.BodySprite.SetOutline(null);
             }
         }
-        catch
+        else if (LocalOutlinedBody != null)
         {
-            // ignore
+            LocalOutlinedBody.SetOutline(null);
         }
 
         LocalOutlinedCosmetics = null!;
@@ -119,27 +105,13 @@ public static class MirageDecoySystem
         if ((LocalOutlinedCosmetics != null && LocalOutlinedCosmetics != bestCosmetics) ||
             (LocalOutlinedBody != null && LocalOutlinedBody != bestBody))
         {
-            try
-            {
-                ClearLocalOutline();
-            }
-            catch
-            {
-                // ignore
-            }
+            ClearLocalOutline();
         }
 
         LocalOutlinedCosmetics = bestCosmetics;
         LocalOutlinedBody = bestBody;
-        try
-        {
-            LocalOutlinedCosmetics.SetOutline(true, new Il2CppSystem.Nullable<Color>(color));
-            LocalOutlinedBody.SetOutline(color);
-        }
-        catch
-        {
-            // ignore
-        }
+        LocalOutlinedCosmetics.SetOutline(true, new Il2CppSystem.Nullable<Color>(color));
+        LocalOutlinedBody.SetOutline(color);
     }
 
     public static bool TryGetClosestDecoy(Vector2 from, float maxDistance, out byte mirageId, out Vector2 decoyPos)

@@ -1,5 +1,5 @@
-using System.Reflection;
 using HarmonyLib;
+using MiraAPI.Roles;
 using TownOfUs.Roles.Crewmate;
 
 namespace MiraUnleashed.Patches.Trapper;
@@ -10,47 +10,12 @@ namespace MiraUnleashed.Patches.Trapper;
 /// so swapping IdPart to "Revealer" renames name/intro/tab/wiki/ability strings in one place.
 /// The TownOfUsMira.Role.Revealer* strings are provided by this mod's locale file.
 /// </summary>
-[HarmonyPatch]
+[HarmonyPatch(typeof(TrapperRole), nameof(ICustomRole.IdPart), MethodType.Getter)]
 public static class RenameTrapperToRevealerPatches
 {
-    private static readonly string[] FallbackGetters =
-    [
-        "get_RoleName",
-        "get_RoleDescription",
-        "get_RoleMedDescription",
-        "get_RoleLongDescription",
-        "get_RoleWikiDescription",
-    ];
-
-    private static IEnumerable<MethodBase> TargetMethods()
+    [HarmonyPostfix]
+    public static void Postfix(ref string __result)
     {
-        var idPartGetter = AccessTools.PropertyGetter(typeof(TrapperRole), "IdPart");
-        if (idPartGetter != null)
-        {
-            yield return idPartGetter;
-            yield break;
-        }
-
-        foreach (var name in FallbackGetters)
-        {
-            var method = AccessTools.Method(typeof(TrapperRole), name);
-            if (method != null)
-            {
-                yield return method;
-            }
-        }
-    }
-
-    private static void Postfix(MethodBase __originalMethod, ref string __result)
-    {
-        __result = __originalMethod.Name switch
-        {
-            "get_IdPart" => "Revealer",
-            "get_RoleName" => MiraLocaleManager.Get("TownOfUsMira.Role.Revealer", "Revealer"),
-            "get_RoleDescription" => MiraLocaleManager.GetParsed("TownOfUsMira.Role.Revealer.IntroBlurb", []),
-            "get_RoleMedDescription" or "get_RoleLongDescription" or "get_RoleWikiDescription" =>
-                MiraLocaleManager.GetParsed("TownOfUsMira.Role.Revealer.TabDescription", []),
-            _ => __result,
-        };
+        __result = "Revealer";
     }
 }

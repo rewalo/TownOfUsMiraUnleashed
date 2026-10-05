@@ -39,8 +39,8 @@ public sealed class TrapperRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnle
     public List<CustomButtonWikiDescription> Abilities =>
         [
             new(
-                MiraLocaleManager.GetParsed("MiraUnleashed.Role.TrapperTrap", [], "Trap"),
-                MiraLocaleManager.GetParsed("MiraUnleashed.Role.TrapperTrap.WikiDescription", []),
+                MiraLocaleManager.Get("MiraUnleashed.Role.TrapperTrap", "Trap"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.TrapperTrap.WikiDescription",
                 TouCrewAssets.TrapSprite)
         ];
 
@@ -164,7 +164,7 @@ public sealed class TrapperRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnle
             return;
         }
 
-        var dur = OptionGroupSingleton<TrapperOptions>.Instance.Trappeduration;
+        var dur = OptionGroupSingleton<TrapperOptions>.Instance.TrapDuration;
         if (victim.TryGetComponent<ModifierComponent>(out var modifierComp))
         {
             modifierComp.AddModifier(new TrappedOnVentModifier(ventTopPos, dur, ventId));

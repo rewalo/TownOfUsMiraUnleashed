@@ -56,17 +56,10 @@ public static class MirageDecoyInteractionPatches
             return true;
         }
 
-        try
+        var local = PlayerControl.LocalPlayer;
+        if (local != null)
         {
-            var local = PlayerControl.LocalPlayer;
-            if (local != null)
-            {
-                local.SetKillTimer(local.GetKillCooldown());
-            }
-        }
-        catch
-        {
-            // ignore
+            local.SetKillTimer(local.GetKillCooldown());
         }
 
         return false;
