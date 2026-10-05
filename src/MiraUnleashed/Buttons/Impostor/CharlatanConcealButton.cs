@@ -19,8 +19,6 @@ public sealed class CharlatanConcealButton : TownOfUsRoleButton<CharlatanRole, D
 {
     private bool _isChanneling;
 
-    public static CharlatanConcealButton? LocalInstance { get; private set; }
-
     public override string Name => MiraLocaleManager.Get("MiraUnleashed.Role.CharlatanConceal", "Conceal");
     public override BaseKeybind Keybind => Keybinds.TertiaryAction;
     public override Color TextOutlineColor => MiraUnleashedColors.Charlatan;
@@ -32,12 +30,6 @@ public sealed class CharlatanConcealButton : TownOfUsRoleButton<CharlatanRole, D
     public override bool ZeroIsInfinite { get; set; } = true;
 
     public override int MaxUses => (int)OptionGroupSingleton<CharlatanOptions>.Instance.ConcealUses;
-
-    public override void CreateButton(Transform parent)
-    {
-        base.CreateButton(parent);
-        LocalInstance = this;
-    }
 
     public override DeadBody? GetTarget()
     {

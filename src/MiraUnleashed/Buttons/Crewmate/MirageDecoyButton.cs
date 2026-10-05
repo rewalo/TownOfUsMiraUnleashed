@@ -26,8 +26,6 @@ public sealed class MirageDecoyButton : TownOfUsRoleButton<MirageRole>
 
     private const float PostPlaceLockSeconds = 3f;
 
-    public static MirageDecoyButton? LocalInstance { get; private set; }
-
     private Stage _stage = Stage.Prime;
     private byte? _primedAppearanceId;
     private Vector3 _primedWorldPos;
@@ -103,8 +101,6 @@ public sealed class MirageDecoyButton : TownOfUsRoleButton<MirageRole>
         {
             return;
         }
-
-        LocalInstance = this;
 
         var hasVisible = MirageDecoySystem.HasVisible(player.PlayerId);
         var hasAny = MirageDecoySystem.HasAny(player.PlayerId);

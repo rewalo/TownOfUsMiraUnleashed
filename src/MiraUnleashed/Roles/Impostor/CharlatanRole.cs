@@ -1,4 +1,5 @@
 using Il2CppInterop.Runtime.Attributes;
+using MiraAPI.Hud;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
 using Reactor.Networking.Attributes;
@@ -91,7 +92,7 @@ public sealed class CharlatanRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUn
 
         if (charlatan.AmOwner)
         {
-            CharlatanConcealButton.LocalInstance?.OnConcealCompleted();
+            CustomButtonSingleton<CharlatanConcealButton>.Instance.OnConcealCompleted();
         }
     }
 
@@ -107,7 +108,7 @@ public sealed class CharlatanRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUn
 
         if (charlatan.AmOwner)
         {
-            CharlatanConcealButton.LocalInstance?.OnConcealCancelled();
+            CustomButtonSingleton<CharlatanConcealButton>.Instance.OnConcealCancelled();
         }
     }
 

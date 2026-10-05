@@ -1,5 +1,6 @@
 using Il2CppInterop.Runtime.Attributes;
 using MiraAPI.GameOptions;
+using MiraAPI.Hud;
 using MiraAPI.Modifiers;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
@@ -7,6 +8,7 @@ using MiraAPI.Utilities;
 using Reactor.Networking.Attributes;
 using Reactor.Utilities;
 using MiraUnleashed.Assets;
+using MiraUnleashed.Buttons.Crewmate;
 using MiraUnleashed.Modifiers;
 using MiraUnleashed.Modules;
 using MiraUnleashed.Networking;
@@ -122,7 +124,7 @@ public sealed class MirageRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnlea
 
         if (MirageDecoySystem.TryRemoveDecoy(mirage.PlayerId, out _) && mirage.AmOwner)
         {
-            Buttons.Crewmate.MirageDecoyButton.LocalInstance?.StartCooldownAndReset();
+            CustomButtonSingleton<MirageDecoyButton>.Instance.StartCooldownAndReset();
         }
     }
 
@@ -156,7 +158,7 @@ public sealed class MirageRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnlea
 
         if (mirage.AmOwner)
         {
-            Buttons.Crewmate.MirageDecoyButton.LocalInstance?.StartCooldownAndReset();
+            CustomButtonSingleton<MirageDecoyButton>.Instance.StartCooldownAndReset();
 
             Coroutines.Start(MiscUtils.CoFlash(MiraUnleashedColors.Mirage));
             TouAudio.PlaySound(TouAudio.DiscoveredSound);
