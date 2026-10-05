@@ -3,6 +3,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
+using MiraAPI.Utilities.Assets;
 using MiraAPI.Utilities;
 using MiraUnleashed.Modifiers;
 using MiraUnleashed.Options.Roles.Neutral;
@@ -36,6 +37,7 @@ public sealed class SerialKillerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMira
         CanUseVent = true,
         IntroSound = TouAudio.HexBombAlarmSound,
         Icon = TouRoleIcons.SerialKiller,
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.SerialKiller.LoadAsset(), "MiraUnleashed.Role.Neutral.SerialKiller", 1.45f),
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>()
     };
 

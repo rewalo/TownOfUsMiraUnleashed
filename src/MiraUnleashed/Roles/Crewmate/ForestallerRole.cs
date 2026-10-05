@@ -1,6 +1,7 @@
 using Il2CppInterop.Runtime.Attributes;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
+using MiraAPI.Utilities.Assets;
 using MiraUnleashed.Assets;
 using TownOfUs.Extensions;
 using TownOfUs.Modules.Wiki;
@@ -30,6 +31,7 @@ public sealed class ForestallerRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMira
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = MiraUnleashedAssets.ForestallerRoleIcon,
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(MiraUnleashedAssets.ForestallerRoleIcon.LoadAsset(), "MiraUnleashed.Role.Crewmate.Forestaller", 1.45f),
         IntroSound = TownOfUs.Assets.TouAudio.EngineerIntroSound,
     };
 

@@ -4,6 +4,7 @@ using MiraAPI.Hud;
 using MiraAPI.Modifiers;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
+using MiraAPI.Utilities.Assets;
 using MiraAPI.Utilities;
 using Reactor.Networking.Attributes;
 using Reactor.Utilities;
@@ -47,6 +48,7 @@ public sealed class MirageRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnlea
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = MiraUnleashedAssets.MirageRoleIcon,
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(MiraUnleashedAssets.MirageRoleIcon.LoadAsset(), "MiraUnleashed.Role.Crewmate.Mirage", 1.45f),
     };
     public bool IsGuessable => OptionGroupSingleton<MirageOptions>.Instance.DecoyType != MirageDecoyType.Mirage;
     public RoleBehaviour AppearAs => this;

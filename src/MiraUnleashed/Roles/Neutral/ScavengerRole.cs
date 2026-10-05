@@ -4,6 +4,7 @@ using MiraAPI.GameModes;
 using MiraAPI.GameOptions;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
+using MiraAPI.Utilities.Assets;
 using MiraAPI.Utilities;
 using Reactor.Networking.Attributes;
 using Reactor.Utilities;
@@ -49,6 +50,7 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
     {
         CanUseVent = OptionGroupSingleton<ScavengerOptions>.Instance.CanVent,
         Icon = MiraUnleashedAssets.ScavengerRoleIcon,
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(MiraUnleashedAssets.ScavengerRoleIcon.LoadAsset(), "MiraUnleashed.Role.Neutral.Scavenger", 1.45f),
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>()
     };
 

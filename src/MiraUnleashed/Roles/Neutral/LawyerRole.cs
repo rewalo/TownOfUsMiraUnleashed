@@ -11,6 +11,7 @@ using MiraAPI.Modifiers.Types;
 using MiraAPI.Networking;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
+using MiraAPI.Utilities.Assets;
 using MiraAPI.Utilities;
 using MiraUnleashed.Assets;
 using MiraUnleashed.Events.Neutral;
@@ -254,6 +255,7 @@ public sealed class LawyerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnleas
     {
         IntroSound = TouAudio.DiscoveredSound,
         Icon = TouRoleIcons.Lawyer,
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Lawyer.LoadAsset(), "MiraUnleashed.Role.Neutral.Lawyer", 1.45f),
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>()
     };
 

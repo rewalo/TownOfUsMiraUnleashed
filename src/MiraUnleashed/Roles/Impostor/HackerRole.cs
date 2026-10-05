@@ -3,6 +3,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Hud;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
+using MiraAPI.Utilities.Assets;
 using Reactor.Networking.Attributes;
 using Reactor.Networking.Rpc;
 using MiraUnleashed.Assets;
@@ -36,6 +37,7 @@ public sealed class HackerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnlea
     {
         UseVanillaKillButton = true,
         Icon = MiraUnleashedImpAssets.HackerRole,
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(MiraUnleashedImpAssets.HackerRole.LoadAsset(), "MiraUnleashed.Role.Impostor.Hacker", 1.45f),
     };
 
     [HideFromIl2Cpp]

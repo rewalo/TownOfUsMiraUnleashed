@@ -4,6 +4,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
+using MiraAPI.Utilities.Assets;
 using MiraAPI.Utilities;
 using Reactor.Networking.Attributes;
 using Reactor.Utilities;
@@ -51,6 +52,7 @@ public sealed class TrapperRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnle
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = MiraUnleashedAssets.TrapperRoleIcon,
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(MiraUnleashedAssets.TrapperRoleIcon.LoadAsset(), "MiraUnleashed.Role.Crewmate.Trapper", 1.45f),
         IntroSound = TouAudio.EngineerIntroSound,
     };
 

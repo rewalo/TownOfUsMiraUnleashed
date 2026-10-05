@@ -3,6 +3,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
+using MiraAPI.Utilities.Assets;
 using Reactor.Networking.Attributes;
 using MiraUnleashed.Assets;
 using MiraUnleashed.Modifiers;
@@ -36,8 +37,8 @@ public sealed class WitchRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnleas
     public CustomRoleConfiguration Configuration => new(this)
     {
         UseVanillaKillButton = false,
-        Icon = TouRoleIcons.Witch
-    };
+        Icon = TouRoleIcons.Witch,
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Witch.LoadAsset(), "MiraUnleashed.Role.Impostor.Witch", 1.45f)    };
 
     [HideFromIl2Cpp]
     public List<CustomButtonWikiDescription> Abilities =>

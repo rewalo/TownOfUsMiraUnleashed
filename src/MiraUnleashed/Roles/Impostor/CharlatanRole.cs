@@ -2,6 +2,7 @@ using Il2CppInterop.Runtime.Attributes;
 using MiraAPI.Hud;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
+using MiraAPI.Utilities.Assets;
 using Reactor.Networking.Attributes;
 using MiraUnleashed.Assets;
 using MiraUnleashed.Buttons.Impostor;
@@ -31,8 +32,8 @@ public sealed class CharlatanRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUn
     public CustomRoleConfiguration Configuration => new(this)
     {
         UseVanillaKillButton = true,
-        Icon = MiraUnleashedImpAssets.CharlatanRole
-    };
+        Icon = MiraUnleashedImpAssets.CharlatanRole,
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(MiraUnleashedImpAssets.CharlatanRole.LoadAsset(), "MiraUnleashed.Role.Impostor.Charlatan", 1.45f)    };
 
     [HideFromIl2Cpp]
     public List<CustomButtonWikiDescription> Abilities =>
