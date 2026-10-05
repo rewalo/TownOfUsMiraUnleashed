@@ -28,12 +28,14 @@ jobs:
             Write-Error "Tag version '$base' does not match VersionPrefix '$prefix'"
             exit 1
           }
+          $suffix = if ($tag.Contains('-')) { $tag.Substring($tag.IndexOf('-') + 1) } else { '' }
+          "VERSION_SUFFIX=$suffix" >> $env:GITHUB_ENV
 
       - name: Restore
         run: dotnet restore
 
       - name: Build
-        run: dotnet build -c Release --no-restore -p:ContinuousIntegrationBuild=true
+        run: dotnet build -c Release --no-restore -p:ContinuousIntegrationBuild=true "-p:VersionSuffix=${{ env.VERSION_SUFFIX }}"
 
       - name: Package
         shell: pwsh
