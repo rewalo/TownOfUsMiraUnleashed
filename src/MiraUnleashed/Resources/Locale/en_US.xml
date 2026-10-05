@@ -3,4 +3,19 @@
     <string name="MiraUnleashed.LocalSetting.EnableNauseaCameraShake">Enable Nausea Camera Shake</string>
 <!-- Plugin -->
     <string name="MiraUnleashed.OptionsTitle">Mira Unleashed</string>
+    <string name="MiraUnleashed.Common.Unknown">Unknown</string>
+
+<!-- Forestaller Role -->
+    <string name="MiraUnleashed.Role.Forestaller">Forestaller</string>
+    <string name="MiraUnleashed.Role.Forestaller.IntroBlurb">Complete all tasks to disable sabotages.</string>
+    <string name="MiraUnleashed.Role.Forestaller.TabDescription">Finish all of your tasks. Once you do, sabotages cannot be called while you are alive.</string>
+    <string name="MiraUnleashed.Role.Forestaller.WikiDescription">The Forestaller is a Crewmate Support role that can prevent sabotages before they happen. After completing all tasks, sabotages are disabled while the Forestaller is alive. The Forestaller is revealed after finishing their last task.</string>
+    <string name="MiraUnleashed.Forestaller.SabotagesDisabledAnnouncement">Forestaller has completed all tasks. Sabotages are now disabled.</string>
+
+<!-- Forestaller Options -->
+    <string name="MiraUnleashed.Options.Forestaller.ExtraShortTasks">Extra Short Tasks</string>
+    <string name="MiraUnleashed.Options.Forestaller.ExtraLongTasks">Extra Long Tasks</string>
+    <string name="MiraUnleashed.Options.Forestaller.RevealTiming">Reveal Timing</string>
+    <string name="MiraUnleashed.Options.Forestaller.RevealTiming.NextMeeting">Next Meeting</string>
+    <string name="MiraUnleashed.Options.Forestaller.RevealTiming.Instant">Instant</string>
 </resources>
