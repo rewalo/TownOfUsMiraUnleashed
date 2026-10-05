@@ -16,6 +16,7 @@
 
     <VersionPrefix>2.0.0</VersionPrefix>
     <VersionSuffix>dev</VersionSuffix>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <Authors>rewalo</Authors>
     <RepositoryUrl>https://github.com/rewalo/TownOfUsMiraUnleashed</RepositoryUrl>
 
