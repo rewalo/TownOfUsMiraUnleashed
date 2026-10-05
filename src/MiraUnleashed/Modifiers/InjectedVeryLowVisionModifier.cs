@@ -1,60 +1,18 @@
-using MiraAPI.Modifiers;
-using MiraAPI.Modifiers.Types;
-using MiraAPI.Utilities.Assets;
-using MiraUnleashed.Events.Impostor;
 using MiraUnleashed.Options.Roles.Impostor;
-using TownOfUs.Events.Impostor;
-using UnityEngine;
 
 namespace MiraUnleashed.Modifiers;
 
-public sealed class InjectedVeryLowVisionModifier : TimedModifier, IInjectedModifier
+public sealed class InjectedVeryLowVisionModifier : InjectedModifier
 {
-    public override string ModifierName => "Injected (Very Low Vision)";
-    public override bool HideOnUi => true;
-    public override LoadableAsset<Sprite>? ModifierIcon => null;
-
-    private readonly float _duration;
-    private readonly InjectorEffectDurationType _durationType;
-
     public InjectedVeryLowVisionModifier(float duration, InjectorEffectDurationType durationType)
+        : base(InjectorEffectType.VeryLowVision, duration, durationType)
     {
-        _duration = duration;
-        _durationType = durationType;
     }
 
-    public Guid InjectionId { get; set; }
     public float VisionPerc { get; set; } = 0.1f;
 
-    public override float Duration => _durationType switch
-            {
-                InjectorEffectDurationType.AllRound => -1f,
-                InjectorEffectDurationType.AllGame => -1f,
-                InjectorEffectDurationType.SetTime => _duration,
-                _ => _duration
-            };
-
-    public override bool AutoStart => true;
-
-    public override void OnMeetingStart()
-    {
-        if (_durationType == InjectorEffectDurationType.AllRound)
-        {
-            Player.RemoveModifier(this);
-        }
-    }
-
-    public override void OnDeactivate()
+    protected override void OnEffectRemoved()
     {
         VisionPerc = 1f;
-        if (Player != null && Player.AmOwner)
-        {
-            InjectorEvents.ShowEffectWoreOffNotification(Player, "MiraUnleashed.Injector.Notification.WoreOffVeryLowVision");
-        }
-    }
-
-    public string GetEffectDescription()
-    {
-        return MiraLocaleManager.Get("MiraUnleashed.Injector.EffectDescription.VeryLowVision", "0.1x vision");
     }
 }

@@ -1,9 +1,5 @@
-using MiraAPI.Modifiers;
-using MiraAPI.Utilities.Assets;
-using MiraUnleashed.Events.Impostor;
 using MiraUnleashed.Options.Roles.Impostor;
 using TownOfUs.Events.Impostor;
-using TownOfUs.Modifiers;
 using TownOfUs.Patches;
 using TownOfUs.Utilities;
 using TownOfUs.Utilities.Appearances;
@@ -12,33 +8,15 @@ using Random = UnityEngine.Random;
 
 namespace MiraUnleashed.Modifiers;
 
-public sealed class InjectedConfusedModifier : DisabledModifier, IInjectedModifier
+public sealed class InjectedConfusedModifier : InjectedDisabledModifier
 {
-    public override string ModifierName => "Injected (Confused)";
-    public override bool HideOnUi => true;
-    public override LoadableAsset<Sprite>? ModifierIcon => null;
-    public override bool CanReport => false;
-
-    private readonly float _duration;
-    private readonly InjectorEffectDurationType _durationType;
-
     public InjectedConfusedModifier(float duration, InjectorEffectDurationType durationType)
+        : base(InjectorEffectType.Confused, duration, durationType)
     {
-        _duration = duration;
-        _durationType = durationType;
     }
 
-    public Guid InjectionId { get; set; }
+    public override bool CanReport => false;
 
-    public override float Duration => _durationType switch
-            {
-                InjectorEffectDurationType.AllRound => -1f,
-                InjectorEffectDurationType.AllGame => -1f,
-                InjectorEffectDurationType.SetTime => _duration,
-                _ => _duration
-            };
-
-    public override bool AutoStart => true;
     public override bool CanUseAbilities => true;
 
     public override void OnActivate()
@@ -53,11 +31,17 @@ public sealed class InjectedConfusedModifier : DisabledModifier, IInjectedModifi
 
     public override void OnMeetingStart()
     {
-        if (_durationType == InjectorEffectDurationType.AllRound)
+        if (DurationType != InjectorEffectDurationType.AllRound && Player.AmOwner)
         {
-            Player.RemoveModifier(this);
+            RemoveHallucinatoryEffects();
         }
-        else if (Player.AmOwner)
+
+        base.OnMeetingStart();
+    }
+
+    protected override void OnEffectRemoved()
+    {
+        if (Player != null && Player.AmOwner)
         {
             RemoveHallucinatoryEffects();
         }
@@ -117,20 +101,5 @@ public sealed class InjectedConfusedModifier : DisabledModifier, IInjectedModifi
             player.RawSetAppearance(player.GetDefaultModifiedAppearance());
             player.cosmetics.ToggleNameVisible(true);
         }
-    }
-
-    public override void OnDeactivate()
-    {
-        base.OnDeactivate();
-        if (Player != null && Player.AmOwner)
-        {
-            RemoveHallucinatoryEffects();
-            InjectorEvents.ShowEffectWoreOffNotification(Player, "MiraUnleashed.Injector.Notification.WoreOffConfused");
-        }
-    }
-
-    public string GetEffectDescription()
-    {
-        return MiraLocaleManager.Get("MiraUnleashed.Injector.EffectDescription.Confused", "Hallucinations, cannot report");
     }
 }

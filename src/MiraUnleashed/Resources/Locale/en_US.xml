@@ -121,6 +121,14 @@
     <string name="MiraUnleashed.Options.Injector.ChanceVisionBoost">Effect Chance</string>
     <string name="MiraUnleashed.Options.Injector.ChanceRegeneration">Effect Chance</string>
 
+<!-- Injector Modifier Display -->
+    <string name="MiraUnleashed.Injector.Modifier.Name">Injected (&lt;effect&gt;)</string>
+    <string name="MiraUnleashed.Injector.Notification.Injected">You have been injected! &lt;effect&gt;: &lt;description&gt;. &lt;duration&gt;</string>
+    <string name="MiraUnleashed.Injector.Duration.SetTime">&lt;time&gt;s left</string>
+    <string name="MiraUnleashed.Injector.Duration.AllRound">Until the next meeting</string>
+    <string name="MiraUnleashed.Injector.Duration.AllGame">For the rest of the game</string>
+    <string name="MiraUnleashed.Injector.Duration.Lasts">Lasts &lt;time&gt;s</string>
+
 <!-- Injector Notifications -->
     <string name="MiraUnleashed.Injector.Notification.InvertedControls">You start to feel lightheaded…</string>
     <string name="MiraUnleashed.Injector.Notification.LowVision">Your vision narrows…</string>
@@ -130,7 +138,7 @@
     <string name="MiraUnleashed.Injector.Notification.NoVent">You feel too weak to use vents…</string>
     <string name="MiraUnleashed.Injector.Notification.NoUse">Your body feels paralyzed…</string>
     <string name="MiraUnleashed.Injector.Notification.NoReport">Your mind goes blank when you see bodies…</string>
-    <string name="MiraUnleashed.Injector.Notification.Nausea">You feel nauseous… (0.7x speed, 0.7x vision, camera shake)</string>
+    <string name="MiraUnleashed.Injector.Notification.Nausea">You feel nauseous…</string>
     <string name="MiraUnleashed.Injector.Notification.Weakness">You feel extremely weak…</string>
     <string name="MiraUnleashed.Injector.Notification.SpeedBoost">You feel energized and fast!</string>
     <string name="MiraUnleashed.Injector.Notification.VisionBoost">Your vision becomes crystal clear!</string>

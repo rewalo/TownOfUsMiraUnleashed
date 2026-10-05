@@ -1,11 +1,8 @@
 using System.Collections;
 using MiraAPI.LocalSettings;
-using MiraAPI.Modifiers;
 using MiraAPI.Modifiers.Types;
-using MiraAPI.Utilities.Assets;
-using Reactor.Utilities;
-using MiraUnleashed.Events.Impostor;
 using MiraUnleashed.Options.Roles.Impostor;
+using Reactor.Utilities;
 using TownOfUs.Events.Impostor;
 using TownOfUs.Utilities;
 using TownOfUs.Utilities.Appearances;
@@ -13,40 +10,22 @@ using UnityEngine;
 
 namespace MiraUnleashed.Modifiers;
 
-public sealed class InjectedNauseaModifier : TimedModifier, IVisualAppearance, IInjectedModifier
+public sealed class InjectedNauseaModifier : InjectedModifier, IVisualAppearance
 {
-    public override string ModifierName => "Injected (Nausea)";
-    public override bool HideOnUi => true;
-    public override LoadableAsset<Sprite>? ModifierIcon => null;
-
-    private readonly float _duration;
-    private readonly InjectorEffectDurationType _durationType;
     private IEnumerator? _cameraShakeCoroutine;
     private Quaternion _originalCameraRotation;
 
     public InjectedNauseaModifier(float duration, InjectorEffectDurationType durationType)
+        : base(InjectorEffectType.Nausea, duration, durationType)
     {
-        _duration = duration;
-        _durationType = durationType;
     }
 
-    public Guid InjectionId { get; set; }
     public float SpeedFactor { get; set; } = 0.7f;
     public float VisionPerc { get; set; } = 0.7f;
 
     // Camera shake parameters
     private const float ShakeIntensity = 3f; // Maximum rotation angle in degrees
     private const float ShakeSpeed = 2.5f; // Speed of the shake animation
-
-    public override float Duration => _durationType switch
-            {
-                InjectorEffectDurationType.AllRound => -1f,
-                InjectorEffectDurationType.AllGame => -1f,
-                InjectorEffectDurationType.SetTime => _duration,
-                _ => _duration
-            };
-
-    public override bool AutoStart => true;
 
     public override void OnActivate()
     {
@@ -63,23 +42,16 @@ public sealed class InjectedNauseaModifier : TimedModifier, IVisualAppearance, I
         }
     }
 
-    public override void OnDeactivate()
-    {
-        StopCameraShake();
-        Player?.ResetAppearance(fullReset: true);
-        if (Player != null && Player.AmOwner)
-        {
-            InjectorEvents.ShowEffectWoreOffNotification(Player, "MiraUnleashed.Injector.Notification.WoreOffNausea");
-        }
-    }
-
     public override void OnMeetingStart()
     {
         StopCameraShake();
-        if (_durationType == InjectorEffectDurationType.AllRound)
-        {
-            Player.RemoveModifier(this);
-        }
+        base.OnMeetingStart();
+    }
+
+    protected override void OnEffectRemoved()
+    {
+        StopCameraShake();
+        Player?.ResetAppearance(fullReset: true);
     }
 
     private void StopCameraShake()
@@ -137,10 +109,5 @@ public sealed class InjectedNauseaModifier : TimedModifier, IVisualAppearance, I
         var appearance = Player.GetDefaultAppearance();
         appearance.Speed = SpeedFactor;
         return appearance;
-    }
-
-    public string GetEffectDescription()
-    {
-        return MiraLocaleManager.Get("MiraUnleashed.Injector.EffectDescription.Nausea", "0.7x speed, 0.7x vision, camera shake");
     }
 }

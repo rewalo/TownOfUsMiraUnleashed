@@ -3,6 +3,7 @@ using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities.Assets;
 using MiraUnleashed.Assets;
+using MiraUnleashed.Events.Impostor;
 using MiraUnleashed.Options.Roles.Impostor;
 using MiraUnleashed.Roles.Impostor;
 using TownOfUs.Buttons;
@@ -74,7 +75,9 @@ public sealed class InjectorInjectButton : TownOfUsKillRoleButton<InjectorRole, 
             return;
         }
 
-        InjectorRole.RpcInjectorInject(player, Target);
+        // Roll the effect on the injector's client so every client applies the same one.
+        var effect = InjectorEvents.RollEffect(Target);
+        InjectorRole.RpcInjectorInject(player, Target, (byte)effect);
         player.SetKillTimer(player.GetKillCooldown());
     }
 }

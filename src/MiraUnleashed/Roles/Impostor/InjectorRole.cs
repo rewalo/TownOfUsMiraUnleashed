@@ -1,10 +1,12 @@
 using Il2CppInterop.Runtime.Attributes;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
+using MiraAPI.Utilities.Assets;
 using Reactor.Networking.Attributes;
 using MiraUnleashed.Assets;
 using MiraUnleashed.Events.Impostor;
 using MiraUnleashed.Networking;
+using MiraUnleashed.Options.Roles.Impostor;
 using TownOfUs.Extensions;
 using TownOfUs.Modules.Wiki;
 using TownOfUs.Roles;
@@ -30,6 +32,7 @@ public sealed class InjectorRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnl
     {
         UseVanillaKillButton = true,
         Icon = MiraUnleashedImpAssets.InjectorRole,
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(MiraUnleashedImpAssets.InjectorRole.LoadAsset(), "MiraUnleashed.Role.Impostor.Injector", 1.45f),
     };
 
     [HideFromIl2Cpp]
@@ -52,7 +55,7 @@ public sealed class InjectorRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnl
     }
 
     [MethodRpc((uint)MiraUnleashedRpc.InjectorInject)]
-    public static void RpcInjectorInject(PlayerControl injector, PlayerControl target)
+    public static void RpcInjectorInject(PlayerControl injector, PlayerControl target, byte effectType)
     {
         if (injector?.Data?.Role is not InjectorRole)
         {
@@ -65,6 +68,6 @@ public sealed class InjectorRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnl
             return;
         }
 
-        InjectorEvents.ScheduleInjection(injector, target);
+        InjectorEvents.ScheduleInjection(injector, target, (InjectorEffectType)effectType);
     }
 }

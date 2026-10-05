@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Globalization;
 using MiraAPI.Events;
 using MiraAPI.Events.Vanilla.Gameplay;
 using MiraAPI.Events.Vanilla.Meeting;
@@ -24,7 +25,7 @@ public static class InjectorEvents
 {
     private static readonly Dictionary<byte, List<PendingInjection>> PendingInjections = new();
 
-    public static void ScheduleInjection(PlayerControl injector, PlayerControl target)
+    public static void ScheduleInjection(PlayerControl injector, PlayerControl target, InjectorEffectType effectType)
     {
         if (target == null || target.HasDied() || injector == null)
         {
@@ -38,6 +39,7 @@ public static class InjectorEvents
         {
             Injector = injector,
             Target = target,
+            Effect = effectType,
             Delay = delay,
             ScheduledTime = Time.time,
             InjectionId = Guid.NewGuid()
@@ -68,7 +70,7 @@ public static class InjectorEvents
             yield break;
         }
 
-        ApplyInjectionEffect(pending.Injector, pending.Target, pending.InjectionId);
+        ApplyInjectionEffect(pending.Injector, pending.Target, pending.InjectionId, pending.Effect);
 
         if (PendingInjections.TryGetValue(pending.Target.PlayerId, out var pendingInjection2))
         {
@@ -80,7 +82,87 @@ public static class InjectorEvents
         }
     }
 
-    private static void ApplyInjectionEffect(PlayerControl injector, PlayerControl target, Guid injectionId)
+    public static InjectorEffectType RollEffect(PlayerControl target)
+    {
+        var options = OptionGroupSingleton<InjectorOptions>.Instance;
+
+        var effects = new List<(float Weight, InjectorEffectType Type)>
+        {
+            // Negative effects
+            (options.ChanceInvertedControls, InjectorEffectType.InvertedControls),
+            (options.ChanceLowVision, InjectorEffectType.LowVision),
+            (options.ChanceSlowness, InjectorEffectType.Slowness),
+            (options.ChanceVeryLowVision, InjectorEffectType.VeryLowVision),
+            (options.ChanceConfused, InjectorEffectType.Confused)
+        };
+
+        // Only add NoVent if the player can actually vent
+        var canVent = target?.Data?.Role != null && (
+            target.IsImpostor() ||
+            target.Data.Role.CanVent ||
+            (target.Data.Role is ICustomRole customRole && customRole.Configuration.CanUseVent)
+        );
+        if (canVent)
+        {
+            effects.Add((options.ChanceNoVent, InjectorEffectType.NoVent));
+        }
+
+        effects.Add((options.ChanceNoUse, InjectorEffectType.NoUse));
+        effects.Add((options.ChanceNoReport, InjectorEffectType.NoReport));
+        effects.Add((options.ChanceNausea, InjectorEffectType.Nausea));
+        effects.Add((options.ChanceWeakness, InjectorEffectType.Weakness));
+
+        // Positive effects (only if enabled)
+        if (options.PositiveEffectsEnabled)
+        {
+            effects.Add((options.ChanceSpeedBoost, InjectorEffectType.SpeedBoost));
+            effects.Add((options.ChanceVisionBoost, InjectorEffectType.VisionBoost));
+            effects.Add((options.ChanceRegeneration, InjectorEffectType.Regeneration));
+        }
+
+        // If total weight is 0, default to InvertedControls to ensure an effect is always applied
+        var totalWeight = effects.Sum(e => e.Weight);
+        if (totalWeight <= 0f)
+        {
+            return InjectorEffectType.InvertedControls;
+        }
+
+        var randomValue = Random.RandomRange(0f, totalWeight);
+        var cumulativeWeight = 0f;
+
+        foreach (var (weight, type) in effects)
+        {
+            cumulativeWeight += weight;
+            if (randomValue <= cumulativeWeight)
+            {
+                return type;
+            }
+        }
+
+        return InjectorEffectType.InvertedControls;
+    }
+
+    private static IInjectedModifier CreateModifier(InjectorEffectType effect, float duration, InjectorEffectDurationType durationType)
+    {
+        return effect switch
+        {
+            InjectorEffectType.LowVision => new InjectedLowVisionModifier(duration, durationType),
+            InjectorEffectType.Slowness => new InjectedSlownessModifier(duration, durationType),
+            InjectorEffectType.VeryLowVision => new InjectedVeryLowVisionModifier(duration, durationType),
+            InjectorEffectType.Confused => new InjectedConfusedModifier(duration, durationType),
+            InjectorEffectType.NoVent => new InjectedNoVentModifier(duration, durationType),
+            InjectorEffectType.NoUse => new InjectedNoUseModifier(duration, durationType),
+            InjectorEffectType.NoReport => new InjectedNoReportModifier(duration, durationType),
+            InjectorEffectType.Nausea => new InjectedNauseaModifier(duration, durationType),
+            InjectorEffectType.Weakness => new InjectedWeaknessModifier(duration, durationType),
+            InjectorEffectType.SpeedBoost => new InjectedSpeedBoostModifier(duration, durationType),
+            InjectorEffectType.VisionBoost => new InjectedVisionBoostModifier(duration, durationType),
+            InjectorEffectType.Regeneration => new InjectedRegenerationModifier(duration, durationType),
+            _ => new InjectedInvertedControlsModifier(duration, durationType)
+        };
+    }
+
+    private static void ApplyInjectionEffect(PlayerControl injector, PlayerControl target, Guid injectionId, InjectorEffectType effect)
     {
         if (target == null || target.HasDied())
         {
@@ -91,99 +173,39 @@ public static class InjectorEvents
         var duration = options.EffectDuration;
         var durationType = options.EffectDurationType.Value;
 
-        var effects = new List<(float Weight, Func<BaseModifier> CreateModifier, string NotificationKey)>();
+        var modifier = CreateModifier(effect, duration, durationType);
+        modifier.InjectionId = injectionId;
+        target.AddModifier((BaseModifier)modifier);
 
-        // Negative effects
-        effects.Add((options.ChanceInvertedControls, () => new InjectedInvertedControlsModifier(duration, durationType), "MiraUnleashed.Injector.Notification.InvertedControls"));
-        effects.Add((options.ChanceLowVision, () => new InjectedLowVisionModifier(duration, durationType), "MiraUnleashed.Injector.Notification.LowVision"));
-        effects.Add((options.ChanceSlowness, () => new InjectedSlownessModifier(duration, durationType), "MiraUnleashed.Injector.Notification.Slowness"));
-        effects.Add((options.ChanceVeryLowVision, () => new InjectedVeryLowVisionModifier(duration, durationType), "MiraUnleashed.Injector.Notification.VeryLowVision"));
-        effects.Add((options.ChanceConfused, () => new InjectedConfusedModifier(duration, durationType), "MiraUnleashed.Injector.Notification.Confused"));
-
-        // Only add NoVent if the player can actually vent
-        var canVent = target.Data?.Role != null && (
-            target.IsImpostor() ||
-            target.Data.Role.CanVent ||
-            (target.Data.Role is ICustomRole customRole && customRole.Configuration.CanUseVent)
-        );
-        if (canVent)
-        {
-            effects.Add((options.ChanceNoVent, () => new InjectedNoVentModifier(duration, durationType), "MiraUnleashed.Injector.Notification.NoVent"));
-        }
-
-        effects.Add((options.ChanceNoUse, () => new InjectedNoUseModifier(duration, durationType), "MiraUnleashed.Injector.Notification.NoUse"));
-        effects.Add((options.ChanceNoReport, () => new InjectedNoReportModifier(duration, durationType), "MiraUnleashed.Injector.Notification.NoReport"));
-        effects.Add((options.ChanceNausea, () => new InjectedNauseaModifier(duration, durationType), "MiraUnleashed.Injector.Notification.Nausea"));
-        effects.Add((options.ChanceWeakness, () => new InjectedWeaknessModifier(duration, durationType), "MiraUnleashed.Injector.Notification.Weakness"));
-
-        // Positive effects (only if enabled)
-        if (options.PositiveEffectsEnabled)
-        {
-            effects.Add((options.ChanceSpeedBoost, () => new InjectedSpeedBoostModifier(duration, durationType), "MiraUnleashed.Injector.Notification.SpeedBoost"));
-            effects.Add((options.ChanceVisionBoost, () => new InjectedVisionBoostModifier(duration, durationType), "MiraUnleashed.Injector.Notification.VisionBoost"));
-            effects.Add((options.ChanceRegeneration, () => new InjectedRegenerationModifier(duration, durationType), "MiraUnleashed.Injector.Notification.Regeneration"));
-        }
-
-        // Calculate total weight
-        var totalWeight = effects.Sum(e => e.Weight);
-
-        // If total weight is 0, default to InvertedControls to ensure an effect is always applied
-        if (totalWeight <= 0f)
-        {
-            var defaultModifier = new InjectedInvertedControlsModifier(duration, durationType);
-            if (defaultModifier is IInjectedModifier defaultInjectedMod)
-            {
-                defaultInjectedMod.InjectionId = injectionId;
-            }
-            target.AddModifier(defaultModifier);
-            ShowNotification(target, "MiraUnleashed.Injector.Notification.InvertedControls",
-                defaultModifier is IInjectedModifier defaultInjected ? defaultInjected.GetEffectDescription() : string.Empty);
-            return;
-        }
-
-        var randomValue = Random.RandomRange(0f, totalWeight);
-        var cumulativeWeight = 0f;
-        BaseModifier? selectedModifier = null;
-        string selectedNotificationKey = string.Empty;
-
-        foreach (var (weight, createModifier, notificationKey) in effects)
-        {
-            cumulativeWeight += weight;
-            if (randomValue <= cumulativeWeight)
-            {
-                selectedModifier = createModifier();
-                selectedNotificationKey = notificationKey;
-                break;
-            }
-        }
-
-        if (selectedModifier == null)
-        {
-            selectedModifier = new InjectedInvertedControlsModifier(duration, durationType);
-            selectedNotificationKey = "MiraUnleashed.Injector.Notification.InvertedControls";
-        }
-
-        if (selectedModifier is IInjectedModifier injectedMod)
-        {
-            injectedMod.InjectionId = injectionId;
-        }
-        target.AddModifier(selectedModifier);
-        var effectDesc = selectedModifier is IInjectedModifier injected ? injected.GetEffectDescription() : string.Empty;
-        ShowNotification(target, selectedNotificationKey, effectDesc);
+        ShowInjectionNotification(target, effect, duration, durationType);
     }
 
-    private static void ShowNotification(PlayerControl target, string notificationKey, string effectDescription = "")
+    private static void ShowInjectionNotification(PlayerControl target, InjectorEffectType effect, float duration, InjectorEffectDurationType durationType)
     {
         if (target == null || !target.AmOwner)
         {
             return;
         }
 
-        var baseMessage = MiraLocaleManager.Get(notificationKey, notificationKey);
-        var message = string.IsNullOrEmpty(effectDescription) ? baseMessage : $"{baseMessage} ({effectDescription})";
+        var flavour = MiraLocaleManager.Get($"MiraUnleashed.Injector.Notification.{effect}");
+        var effectName = MiraLocaleManager.Get($"MiraUnleashed.Options.Injector.EffectType.{effect}");
+        var effectDescription = MiraLocaleManager.Get($"MiraUnleashed.Injector.EffectDescription.{effect}");
+        var durationText = durationType switch
+        {
+            InjectorEffectDurationType.SetTime => MiraLocaleManager.Get("MiraUnleashed.Injector.Duration.Lasts")
+                .Replace("<time>", Mathf.CeilToInt(duration).ToString(CultureInfo.InvariantCulture)),
+            InjectorEffectDurationType.AllRound => MiraLocaleManager.Get("MiraUnleashed.Injector.Duration.AllRound"),
+            _ => MiraLocaleManager.Get("MiraUnleashed.Injector.Duration.AllGame")
+        };
+
+        var explicitLine = MiraLocaleManager.Get("MiraUnleashed.Injector.Notification.Injected")
+            .Replace("<effect>", effectName)
+            .Replace("<description>", effectDescription)
+            .Replace("<duration>", durationText);
+
         var injectorColor = ColorUtility.ToHtmlStringRGBA(MiraUnleashedColors.Injector);
         var notif = Helpers.CreateAndShowNotification(
-            $"<b><color=#{injectorColor}>{message}</color></b>",
+            $"<b><color=#{injectorColor}>{flavour}\n{explicitLine}</color></b>",
             Color.white,
             new Vector3(0f, 1f, -20f),
             spr: MiraUnleashedImpAssets.InjectorRole.LoadAsset());
@@ -277,6 +299,7 @@ public static class InjectorEvents
     {
         public PlayerControl? Injector { get; set; }
         public PlayerControl? Target { get; set; }
+        public InjectorEffectType Effect { get; set; }
         public float Delay { get; set; }
         public float ScheduledTime { get; set; }
         public Guid InjectionId { get; set; }
