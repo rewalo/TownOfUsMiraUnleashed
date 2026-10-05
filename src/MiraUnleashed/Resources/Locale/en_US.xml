@@ -299,4 +299,36 @@
     <string name="MiraUnleashed.Options.SerialKiller.ManiacMode">Maniac Mode</string>
     <string name="MiraUnleashed.Options.SerialKiller.ManiacTimer">Maniac Timer</string>
     <string name="MiraUnleashed.Options.SerialKiller.ManiacCooldown">Kill Cooldown</string>
+
+<!-- Scavenger Role -->
+    <string name="MiraUnleashed.Role.Scavenger">Scavenger</string>
+    <string name="MiraUnleashed.Role.Scavenger.IntroBlurb">Eat dead bodies to win alone.</string>
+    <string name="MiraUnleashed.Role.Scavenger.TabDescription">Eat dead bodies to win alone.</string>
+    <string name="MiraUnleashed.Role.Scavenger.WikiDescription">The Scavenger is a Neutral Evil role whose goal is to eat a set amount of dead bodies. Optionally, the Scavenger can use Scavenge to get arrows pointing to corpses. If the Scavenger's win condition can no longer be met, they become the configured role.</string>
+    <string name="MiraUnleashed.Role.ScavengerEat">Eat</string>
+    <string name="MiraUnleashed.Role.ScavengerEat.WikiDescription">Eat a nearby dead body. This counts toward your win condition.</string>
+    <string name="MiraUnleashed.Role.ScavengerScavenge">Scavenge</string>
+    <string name="MiraUnleashed.Role.ScavengerScavenge.WikiDescription">Get arrows pointing to all corpses for a duration. If a corpse is on a different floor on Submerged, the arrow will point to the elevator.</string>
+
+<!-- Scavenger Options -->
+    <string name="MiraUnleashed.Options.Scavenger.EatCooldown">Eat Cooldown</string>
+    <string name="MiraUnleashed.Options.Scavenger.EatDuration">Eat Duration</string>
+    <string name="MiraUnleashed.Options.Scavenger.BodiesToWin">Number Of Bodies To Win</string>
+    <string name="MiraUnleashed.Options.Scavenger.CanVent">Scavenger Can Vent</string>
+    <string name="MiraUnleashed.Options.Scavenger.CannotSpawnWithJanitor">Cannot Spawn With Janitor</string>
+    <string name="MiraUnleashed.Options.Scavenger.ScavengeEnabled">Scavenge Enabled</string>
+    <string name="MiraUnleashed.Options.Scavenger.ScavengeCooldown">Scavenge Cooldown</string>
+    <string name="MiraUnleashed.Options.Scavenger.ScavengeDuration">Scavenge Duration</string>
+    <string name="MiraUnleashed.Options.Scavenger.OnLoseBecomes">On Lose, Scavenger Becomes</string>
+
+<!-- Renamed TOU Scavenger to Bloodhound - IdPart patch makes these the role's locale keys -->
+    <string name="TownOfUsMira.Role.Bloodhound">Bloodhound</string>
+    <string name="TownOfUsMira.Role.Bloodhound.IntroBlurb">Hunt down your prey</string>
+    <string name="TownOfUsMira.Role.Bloodhound.MedDescription">Kill off your targets to kill quicker, or suffer with a slow cooldown.</string>
+    <string name="TownOfUsMira.Role.Bloodhound.TabDescription">Kill your given targets for a reduced cooldown.
+If you fail to kill them, you will get penalized.</string>
+    <string name="TownOfUsMira.Role.Bloodhound.WikiDescription">The Bloodhound is an Impostor Killing role that gets new targets after every kill and when the round starts. If they kill their target, they get a reduced kill cooldown, but if they don't, their cooldown is increased significantly.</string>
+    <string name="TownOfUsMira.Role.BloodhoundYourNextTarget">Is Your Next Target.</string>
+    <string name="TownOfUsMira.Role.BloodhoundTabTimer">Scavenge Time: [timeLeft]</string>
+    <string name="TownOfUsMira.Role.BloodhoundTabTarget">Current Target: [player]</string>
 </resources>
