@@ -47,8 +47,9 @@ An extension mod for [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira)
   <a href="./docs/Charlatan.md"><img width="30%" src="./docs/assets/RoleHeaders/Charlatan.png" /></a>
   <a href="./docs/Hacker.md"><img width="30%" src="./docs/assets/RoleHeaders/Hacker.png" /></a>
   <a href="./docs/Injector.md"><img width="30%" src="./docs/assets/RoleHeaders/Injector.png" /></a>
-  <a href="./docs/Witch.md"><img width="30%" src="./docs/assets/RoleHeaders/Witch.png" /></a>
   <img src="./docs/assets/Groups/ImpKilling.png" align="center" />
+  <a href="./docs/Witch.md"><img width="30%" src="./docs/assets/RoleHeaders/Witch.png" /></a>
+  <img src="./docs/assets/Groups/ImpPower.png" align="center" />
   <a href="./docs/Wraith.md"><img width="30%" src="./docs/assets/RoleHeaders/Wraith.png" /></a>
   <img src="./docs/assets/Groups/NeutBenign.png" align="center" />
   <a href="./docs/Lawyer.md"><img width="30%" src="./docs/assets/RoleHeaders/Lawyer.png" /></a>
