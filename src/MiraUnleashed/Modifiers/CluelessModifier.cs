@@ -20,17 +20,17 @@ namespace MiraUnleashed.Modifiers;
 public sealed class CluelessModifier : UniversalGameModifier, IWikiDiscoverable
 {
     public override string ModifierName => MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless", "Clueless");
-    public override string IntroInfo => MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless.IntroBlurb";
+    public override string IntroInfo => MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless.IntroBlurb");
     public override LoadableAsset<Sprite> ModifierIcon => MiraUnleashedAssets.CluelessModifierIcon;
 
     public override string GetDescription()
     {
-        return MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless.TabDescription";
+        return MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless.TabDescription");
     }
 
     public string GetAdvancedDescription()
     {
-        return MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless.WikiDescription"
+        return MiraLocaleManager.Get("MiraUnleashed.Modifier.Clueless.WikiDescription")
                + MiscUtils.AppendOptionsText(GetType());
     }
 

@@ -40,7 +40,7 @@ public sealed class TrapperRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnle
         [
             new(
                 MiraLocaleManager.Get("MiraUnleashed.Role.TrapperTrap", "Trap"),
-                MiraLocaleManager.Get("MiraUnleashed.Role.TrapperTrap.WikiDescription",
+                MiraLocaleManager.Get("MiraUnleashed.Role.TrapperTrap.WikiDescription"),
                 TouCrewAssets.TrapSprite)
         ];
 

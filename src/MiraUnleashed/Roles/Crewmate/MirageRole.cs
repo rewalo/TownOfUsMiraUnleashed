@@ -34,7 +34,7 @@ public sealed class MirageRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnlea
         [
             new(
                 MiraLocaleManager.Get("MiraUnleashed.Role.MirageDecoy", "Decoy"),
-                MiraLocaleManager.Get("MiraUnleashed.Role.MirageDecoy.WikiDescription",
+                MiraLocaleManager.Get("MiraUnleashed.Role.MirageDecoy.WikiDescription"),
                 MiraUnleashedCrewAssets.DecoyButtonSprite)
         ];
 
