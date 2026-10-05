@@ -30,17 +30,24 @@ Manual smoke checks before a release. Requires at least two clients where noted.
 
 - [ ] Download locks equipment type and grants battery.
 - [ ] Jam blocks info systems but not emergency meetings.
+- [ ] Jam works when the Hacker is not the host, and the charge count drops for everyone.
+- [ ] Using all 3 jams leaves the button at 0 charges (it does not refill to max).
+- [ ] Jam sound cue respects the "Jam Sound Cue" option (Hacker Only / Everyone).
 - [ ] Kills grant jam charges up to the max.
 
 ## Injector
 
 - [ ] Inject applies a random effect after the delay.
+- [ ] The rolled effect is identical on the injector's client and a second client.
+- [ ] The victim sees the effect in the modifier panel with a countdown/remaining-time label.
 - [ ] Effect chances/duration options apply; positive effects toggle works.
 - [ ] Nausea shakes camera only when the local setting is enabled.
 
 ## Witch
 
 - [ ] Spell highlights the target in the next meeting and kills after N meetings.
+- [ ] A spellbound Bait victim dies at the end of the meeting without triggering a forced report or other kill modifiers.
+- [ ] Spell Resets Kill Cooldown only applies when the option is on; Spell Range multiplies cast range.
 - [ ] Witch dying/exiled/guessed saves all spellbound players.
 
 ## Wraith
@@ -68,6 +75,7 @@ Manual smoke checks before a release. Requires at least two clients where noted.
 
 - [ ] Always shown in Scavenger brown (#8B4513).
 - [ ] Eating bodies counts toward the win; scavenge arrows work when enabled.
+- [ ] Eating a body removes it on every client, including when the Scavenger is not the host.
 - [ ] Spawns normally with other neutrals disabled.
 - [ ] With "Cannot Spawn With Janitor" on and Janitor enabled, Scavenger never rolls.
 - [ ] Converts to the configured role when the win becomes impossible.
@@ -84,3 +92,4 @@ Manual smoke checks before a release. Requires at least two clients where noted.
 - [ ] Serial Killer / Scavenger keep their custom colours with "Use Crewmate Team Color" on.
 - [ ] Scavenger spawns with all other neutrals disabled.
 - [ ] Charlatan conceal/deceive state verified from a second client (body alpha, reduced report range, deceive report window).
+- [ ] Role icons appear in the in-game role text (e.g. the `<sprite>` icon next to the role name).

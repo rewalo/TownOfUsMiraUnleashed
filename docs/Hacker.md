@@ -32,7 +32,9 @@ The Hacker is an Impostor Support role that can download information from nearby
 | Max Jam Charges | 1 – 10 | 6 |
 | Jam Cooldown | 10 – 35 s | 25 s |
 | Jam Duration | 5 – 20 s | 15 s |
+| Jam Sound Cue | Hacker Only / Everyone | Hacker Only |
 
 ## Interactions & notes
 
 - Simple Mode disables Download/Device and leaves Jam as the only ability.
+- Jam charges are tracked by the host per Hacker, so the count on the button stays in sync for every client.

@@ -8,7 +8,7 @@
 
 ## Overview
 
-The Witch is an Impostor Killing role that can cast spells on other players. Spellbound players are highlighted in the next meeting and die after the configured amount of meetings. If the Witch dies, gets exiled, or is guessed, all spellbound players survive.
+The Witch is an Impostor Killing role that can cast spells on other players. Spellbound players are highlighted in the next meeting and die at the end of the meeting (with the nameplate death animation) after the configured amount of meetings. If the Witch dies, gets exiled, or is guessed, all spellbound players survive.
 
 ## Abilities
 
@@ -24,8 +24,11 @@ The Witch is an Impostor Killing role that can cast spells on other players. Spe
 | Witch Additional Cooldown | 0 – 30 s | 2.5 s |
 | Witch Spell Casting Duration | 0.5 – 5 s | 2 s |
 | Meetings Until Death | 1 – 5 | 1 |
+| Spell Range | 1 – 3 x | 1.5 x |
+| Spell Resets Kill Cooldown | On / Off | Off |
 
 ## Interactions & notes
 
 - The Witch also has a standard kill button.
 - Spellbound players are announced in chat at the meeting ("has been cursed!").
+- Spell deaths happen during vote processing like a meeting kill, so they do not trigger Bait, Frosty, or other kill-modifier reactions.

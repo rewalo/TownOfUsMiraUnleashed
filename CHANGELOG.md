@@ -19,6 +19,10 @@ For releases before 2.0.0, see the [old repository's release history](https://gi
 - TOU-Mira's Trapper is displayed as "Revealer" while this mod is loaded.
 - Lawyer private chat option moved into the Lawyer options group.
 - Charlatan conceal/deceive state is now fully networked via RPCs so all clients agree on body transparency, report ranges, and deceive windows.
+- Hacker "Jam Sound Cue" option controlling who hears the jam sound (Hacker Only / Everyone).
+- Witch options "Spell Range" and "Spell Resets Kill Cooldown".
+- Injector effects now show in the victim's modifier panel with icon, description and remaining duration, and the injection notification names the effect and its duration.
+- Role icons shown next to the role name in the in-game role text.
 - GitHub Actions CI (build, release, wiki sync).
 
 ### Changed
@@ -30,8 +34,12 @@ For releases before 2.0.0, see the [old repository's release history](https://gi
 ### Fixed
 
 - Scavenger could not spawn in normal games (the old `ISpawnChange`/`NoSpawn` logic made TOU treat it like Traitor).
+- Scavenger eating a body not removing it on non-host clients.
 - Charlatan conceal/deceive desync between clients.
 - Lawyer death strings using an unfilled `<player>` placeholder.
+- Hacker jam failing when the Hacker was not the host, and jam charges refilling after reaching 0.
+- Witch spell deaths triggering Bait/Frosty-style kill modifiers; spellbound players now die during vote processing with the nameplate animation.
+- Injector rolling a different effect on each client, and All Round / All Game effects expiring instantly.
 
 ### Removed
 
