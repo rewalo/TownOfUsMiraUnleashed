@@ -37,14 +37,6 @@ jobs:
       - name: Build
         run: dotnet build -c Release --no-restore -p:ContinuousIntegrationBuild=true "-p:VersionSuffix=${{ env.VERSION_SUFFIX }}"
 
-      - name: Package
-        shell: pwsh
-        run: |
-          $tag = "${{ github.ref_name }}"
-          mkdir out/BepInEx/plugins
-          Copy-Item src/MiraUnleashed/bin/Release/net6.0/MiraUnleashed.dll out/BepInEx/plugins/
-          Compress-Archive -Path out/* -DestinationPath "MiraUnleashed-$tag.zip"
-
       - name: Extract changelog section
         shell: pwsh
         run: |
@@ -65,8 +57,6 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           body_path: release-notes.md
-          files: |
-            src/MiraUnleashed/bin/Release/net6.0/MiraUnleashed.dll
-            MiraUnleashed-${{ github.ref_name }}.zip
+          files: src/MiraUnleashed/bin/Release/net6.0/MiraUnleashed.dll
           generate_release_notes: true
           prerelease: ${{ contains(github.ref_name, '-') }}
