@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For releases before 2.0.0, see the [old repository's release history](https://github.com/rewalo/TownOfUsMiraUnleashed/releases).
 
-## [2.0.1] - Unreleased
+## [2.0.1] - 2026-10-05
 
 ### Added
 
