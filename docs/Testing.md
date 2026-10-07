@@ -77,7 +77,6 @@ Manual smoke checks before a release. Requires at least two clients where noted.
 - [ ] Eating bodies counts toward the win; scavenge arrows work when enabled.
 - [ ] Eating a body removes it on every client, including when the Scavenger is not the host.
 - [ ] Spawns normally with other neutrals disabled.
-- [ ] With "Cannot Spawn With Janitor" on and Janitor enabled, Scavenger never rolls.
 - [ ] Converts to the configured role when the win becomes impossible.
 
 ## Modifiers
