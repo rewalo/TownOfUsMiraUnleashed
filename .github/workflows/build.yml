@@ -37,7 +37,9 @@ jobs:
           TouMiraSourcePath: ${{ github.workspace }}/TOU-Mira/
 
       - name: Build
-        run: dotnet build -c Release --no-restore -p:ContinuousIntegrationBuild=true
+        # -m:1 keeps the il2cpp interop generators of the referenced TOU-Mira projects from
+        # running in parallel; they share the unity-libs cache and race on a cold runner.
+        run: dotnet build -c Release --no-restore -m:1 -p:ContinuousIntegrationBuild=true
         env:
           TouMiraSourcePath: ${{ github.workspace }}/TOU-Mira/
 
