@@ -1,6 +1,5 @@
 using AmongUs.GameOptions;
 using Il2CppInterop.Runtime.Attributes;
-using MiraAPI.GameModes;
 using MiraAPI.GameOptions;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
@@ -14,6 +13,7 @@ using MiraUnleashed.Networking;
 using MiraUnleashed.Options.Roles.Neutral;
 using TownOfUs.Assets;
 using TownOfUs.Extensions;
+using TownOfUs.Interfaces;
 using TownOfUs.Modules;
 using TownOfUs.Modules.Components;
 using TownOfUs.Modules.TimeLord;
@@ -30,7 +30,7 @@ using Object = UnityEngine.Object;
 
 namespace MiraUnleashed.Roles.Neutral;
 
-public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnleashedRole, IWikiDiscoverable, IDoomable
+public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnleashedRole, IWikiDiscoverable, IDoomable, IExclusiveRole
 {
     public DoomableType DoomHintType => DoomableType.Fearmonger;
 
@@ -44,6 +44,10 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
     public RoleAlignment RoleAlignment => RoleAlignment.NeutralEvil;
 
     [HideFromIl2Cpp]
+    public IEnumerable<Type> ExclusiveWith =>
+        OptionGroupSingleton<ScavengerOptions>.Instance.CannotSpawnWithJanitor ? [typeof(JanitorRole)] : [];
+
+    [HideFromIl2Cpp]
     public int BodiesEaten { get; set; }
 
     public CustomRoleConfiguration Configuration => new(this)
@@ -53,27 +57,6 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
         IconTmp = TmpSpriteUtils.CreateSpriteAsset(MiraUnleashedAssets.ScavengerRoleIcon.LoadAsset(), "MiraUnleashed.Role.Neutral.Scavenger", 1.45f),
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>()
     };
-
-    public bool CanSpawnOnCurrentMode()
-    {
-        if (!Configuration.AssociatedGameMode.IsInstanceOfType(CustomGameModeManager.ActiveMode))
-        {
-            return false;
-        }
-
-        if (!OptionGroupSingleton<ScavengerOptions>.Instance.CannotSpawnWithJanitor)
-        {
-            return true;
-        }
-
-        var janitor = MiscUtils.AllInGameRoles.OfType<JanitorRole>().FirstOrDefault() as ICustomRole;
-        if (janitor is { } custom && custom.GetCount() > 0 && custom.GetChance() > 0)
-        {
-            return false;
-        }
-
-        return true;
-    }
 
     [HideFromIl2Cpp]
     public List<CustomButtonWikiDescription> Abilities

@@ -20,6 +20,7 @@ For releases before 2.0.0, see the [old repository's release history](https://gi
 ### Changed
 
 - Wiki home page redesigned as an icon table.
+- `Cannot Spawn With Janitor` now uses TOU-Mira's exclusive-role system: Scavenger and Janitor are resolved against each other per game instead of Scavenger being blocked whenever Janitor is enabled.
 
 ## [2.0.0] - 2026-10-05
 
