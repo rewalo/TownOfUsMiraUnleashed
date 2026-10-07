@@ -331,7 +331,6 @@ You can kill players in vents, but you'll lose the ability to vent after doing s
     <string name="MiraUnleashed.Options.Scavenger.EatDuration">Eat Duration</string>
     <string name="MiraUnleashed.Options.Scavenger.BodiesToWin">Number Of Bodies To Win</string>
     <string name="MiraUnleashed.Options.Scavenger.CanVent">Scavenger Can Vent</string>
-    <string name="MiraUnleashed.Options.Scavenger.CannotSpawnWithJanitor">Cannot Spawn With Janitor</string>
     <string name="MiraUnleashed.Options.Scavenger.ScavengeEnabled">Scavenge Enabled</string>
     <string name="MiraUnleashed.Options.Scavenger.ScavengeCooldown">Scavenge Cooldown</string>
     <string name="MiraUnleashed.Options.Scavenger.ScavengeDuration">Scavenge Duration</string>

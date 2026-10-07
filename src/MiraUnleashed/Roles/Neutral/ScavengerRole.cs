@@ -21,8 +21,8 @@ using TownOfUs.Modules.Wiki;
 using TownOfUs.Options;
 using TownOfUs.Options.Roles.Crewmate;
 using TownOfUs.Options.Roles.Neutral;
+using TownOfUs.Patches;
 using TownOfUs.Roles;
-using TownOfUs.Roles.Impostor;
 using TownOfUs.Roles.Neutral;
 using TownOfUs.Utilities;
 using UnityEngine;
@@ -44,8 +44,7 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
     public RoleAlignment RoleAlignment => RoleAlignment.NeutralEvil;
 
     [HideFromIl2Cpp]
-    public IEnumerable<Type> ExclusiveWith =>
-        OptionGroupSingleton<ScavengerOptions>.Instance.CannotSpawnWithJanitor ? [typeof(JanitorRole)] : [];
+    public IEnumerable<string> ExclusionBuckets => [RoleExclusionRegistry.Cleaning];
 
     [HideFromIl2Cpp]
     public int BodiesEaten { get; set; }
