@@ -4,7 +4,6 @@
 - [Installation](Installation)
 - [Configuration](Configuration)
 - [Building](Building)
-- [Testing](Testing)
 - [Voice Chat](Voice-Chat)
 
 **Crewmate**

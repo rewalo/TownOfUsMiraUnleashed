@@ -120,7 +120,7 @@ Optionally create `Directory.Build.local.props` (git-ignored) with an `<AmongUs>
 
 # Documentation
 
-Role and modifier details, options, and testing checklists live in [docs/](./docs) and are mirrored to the [GitHub Wiki](https://github.com/rewalo/TownOfUsMiraUnleashed/wiki).
+Role and modifier details and options live in [docs/](./docs) and are mirrored to the [GitHub Wiki](https://github.com/rewalo/TownOfUsMiraUnleashed/wiki).
 
 -----------------------
 

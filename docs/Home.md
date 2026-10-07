@@ -8,7 +8,6 @@ An extension mod for [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira)
 - [Configuration](Configuration)
 - [Voice Chat](Voice-Chat)
 - [Building from source](Building)
-- [Testing checklist](Testing)
 
 ## Contents
 
