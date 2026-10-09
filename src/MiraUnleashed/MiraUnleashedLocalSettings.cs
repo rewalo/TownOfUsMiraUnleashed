@@ -16,7 +16,7 @@ public class MiraUnleashedLocalSettings(ConfigFile config) : LocalSettingsTab(co
         TabIcon = MiraUnleashedImpAssets.InjectorRole,
     };
 
-    [LocalToggleSetting]
+    [LocalToggleSetting("MiraUnleashed.LocalSetting.EnableNauseaCameraShake")]
     public ConfigEntry<bool> EnableNauseaCameraShake { get; private set; } =
         config.Bind("Accessibility", "EnableNauseaCameraShake", true);
 }
