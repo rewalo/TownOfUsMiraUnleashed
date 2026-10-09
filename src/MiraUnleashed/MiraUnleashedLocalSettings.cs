@@ -16,7 +16,25 @@ public class MiraUnleashedLocalSettings(ConfigFile config) : LocalSettingsTab(co
         TabIcon = MiraUnleashedImpAssets.InjectorRole,
     };
 
-    [LocalToggleSetting]
+    [LocalToggleSetting("MiraUnleashed.LocalSetting.EnableNauseaCameraShake")]
     public ConfigEntry<bool> EnableNauseaCameraShake { get; private set; } =
         config.Bind("Accessibility", "EnableNauseaCameraShake", true);
+
+    [LocalEnumSetting("MiraUnleashed.LocalSetting.CluelessCensorType", names:
+    [
+        "MiraUnleashed.LocalSetting.CluelessCensorType.WhiteBars",
+        "MiraUnleashed.LocalSetting.CluelessCensorType.Asterisks",
+        "MiraUnleashed.LocalSetting.CluelessCensorType.QuestionMarks",
+        "MiraUnleashed.LocalSetting.CluelessCensorType.Remove",
+    ])]
+    public ConfigEntry<CluelessCensorType> CluelessCensorType { get; private set; } =
+        config.Bind("Modifier Visuals", "CluelessCensorType", MiraUnleashed.CluelessCensorType.Asterisks);
+}
+
+public enum CluelessCensorType
+{
+    WhiteBars,
+    Asterisks,
+    QuestionMarks,
+    Remove,
 }

@@ -1,10 +1,9 @@
 using System.Text.RegularExpressions;
 using HarmonyLib;
-using MiraAPI.GameOptions;
+using MiraAPI.LocalSettings;
 using MiraAPI.Modifiers;
 using Reactor.Utilities.Extensions;
 using MiraUnleashed.Modifiers;
-using MiraUnleashed.Options.Modifiers;
 using UnityEngine;
 
 namespace MiraUnleashed.Patches.Clueless;
@@ -75,6 +74,46 @@ public static class CluelessTaskGuidancePatches
         __instance.taskText.text = string.Join("\n", filtered);
     }
 
+    private static bool _taskPanelHidden;
+
+    [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
+    [HarmonyPostfix]
+    public static void HudManagerUpdatePostfix(HudManager __instance)
+    {
+        var panel = __instance.TaskPanel;
+        if (panel == null)
+        {
+            return;
+        }
+
+        var shouldHide = LocalIsClueless() &&
+                         LocalSettingsTabSingleton<MiraUnleashedLocalSettings>.Instance.CluelessCensorType.Value == CluelessCensorType.Remove;
+
+        if (shouldHide && panel.background.gameObject.activeSelf)
+        {
+            SetPanelVisualsActive(panel, false);
+            _taskPanelHidden = true;
+        }
+        else if (!shouldHide && _taskPanelHidden)
+        {
+            SetPanelVisualsActive(panel, true);
+            _taskPanelHidden = false;
+        }
+
+        var roleTab = MiraAPI.Patches.Roles.HudManagerPatches.RoleTab;
+        if (roleTab != null && !roleTab.background.gameObject.activeSelf)
+        {
+            SetPanelVisualsActive(roleTab, true);
+        }
+    }
+
+    private static void SetPanelVisualsActive(TaskPanelBehaviour panel, bool active)
+    {
+        panel.background.gameObject.SetActive(active);
+        panel.tab.gameObject.SetActive(active);
+        panel.taskText.gameObject.SetActive(active);
+    }
+
     private static string CensorTaskLine(string line)
     {
         if (string.IsNullOrWhiteSpace(line))
@@ -121,7 +160,7 @@ public static class CluelessTaskGuidancePatches
         }
         else
         {
-            var censorType = OptionGroupSingleton<CluelessModifierOptions>.Instance.CluelessCensorType.Value;
+            var censorType = LocalSettingsTabSingleton<MiraUnleashedLocalSettings>.Instance.CluelessCensorType.Value;
 
             switch (censorType)
             {
