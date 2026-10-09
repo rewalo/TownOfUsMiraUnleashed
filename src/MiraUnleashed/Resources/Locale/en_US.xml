@@ -1,6 +1,11 @@
 <resources>
 <!-- Local Settings -->
     <string name="MiraUnleashed.LocalSetting.EnableNauseaCameraShake">Enable Nausea Camera Shake</string>
+    <string name="MiraUnleashed.LocalSetting.CluelessCensorType">Clueless Censor Type</string>
+    <string name="MiraUnleashed.LocalSetting.CluelessCensorType.WhiteBars">White Bars</string>
+    <string name="MiraUnleashed.LocalSetting.CluelessCensorType.Asterisks">Asterisks</string>
+    <string name="MiraUnleashed.LocalSetting.CluelessCensorType.QuestionMarks">Question Marks</string>
+    <string name="MiraUnleashed.LocalSetting.CluelessCensorType.Remove">Remove</string>
 <!-- Plugin -->
     <string name="MiraUnleashed.OptionsTitle">Mira Unleashed</string>
     <string name="MiraUnleashed.Common.Unknown">Unknown</string>
@@ -267,11 +272,6 @@ They'll be highlighted in the next meeting and die after the configured amount o
 <!-- Clueless Options -->
     <string name="MiraUnleashed.Options.Clueless.Amount">Clueless Amount</string>
     <string name="MiraUnleashed.Options.Clueless.Chance">Clueless Chance</string>
-    <string name="MiraUnleashed.Options.Clueless.CensorType">Clueless Censor Type</string>
-    <string name="MiraUnleashed.Options.Clueless.CensorType.WhiteBars">White Bars</string>
-    <string name="MiraUnleashed.Options.Clueless.CensorType.Asterisks">Asterisks</string>
-    <string name="MiraUnleashed.Options.Clueless.CensorType.QuestionMarks">Question Marks</string>
-    <string name="MiraUnleashed.Options.Clueless.CensorType.Remove">Remove</string>
 
 <!-- Charlatan Role -->
     <string name="MiraUnleashed.Role.Charlatan">Charlatan</string>

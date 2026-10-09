@@ -11,6 +11,7 @@ Mira Unleashed adds a **Mira Unleashed** tab to the local (per-client) settings,
 | Setting | Effect |
 | --- | --- |
 | Nausea Camera Shake | When enabled, the Injector's Nausea effect shakes your camera. Disable if motion sensitive. |
+| Clueless Censor Type | How your own hidden task text is rendered when you are Clueless: White Bars, Asterisks, Question Marks, or Remove (hides the task panel entirely). Default Asterisks. |
 
 ## Config file
 
