@@ -17,7 +17,7 @@ You cannot see your task list, task markers, or task locations on the map. Tasks
 
 ## Local settings
 
-The censor style (White Bars / Asterisks / Question Marks / Remove) is chosen per-client in the Mira Unleashed local settings tab. Remove hides the task panel entirely.
+The censor style (White Bars / Asterisks / Question Marks / Remove) is chosen per-client in the Mira Unleashed local settings tab. Remove clears the task text.
 
 ## Interactions & notes
 
