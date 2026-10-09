@@ -11,6 +11,7 @@ For releases before 2.0.0, see the [old repository's release history](https://gi
 
 ### Added
 
+- Clueless and Spiteful now have TMP sprite icons like roles do.
 - Optional Perfect Comms voice chat integration — when Perfect Comms is installed, four host toggles appear in its host panel under the "Mira Unleashed" tab (all on by default):
   - **Wraith: Mute While Invisible** — an invisible Wraith cannot transmit voice until the Lantern invisibility ends.
   - **Hacker: Jam Disrupts Voice** — everyone's voice is muted during tasks while a Jam is active, like a comms sabotage.
@@ -19,8 +20,14 @@ For releases before 2.0.0, see the [old repository's release history](https://gi
 
 ### Changed
 
+- `Clueless Censor Type` is now a per-client local setting (Mira Unleashed tab) instead of a host option, and `Remove` now hides the whole task panel instead of only the task text.
 - Wiki home page redesigned as an icon table.
 - `Cannot Spawn With Janitor` now uses TOU-Mira's exclusive-role system: Scavenger and Janitor are resolved against each other per game instead of Scavenger being blocked whenever Janitor is enabled.
+
+### Fixed
+
+- The `Enable Nausea Camera Shake` local setting showed its raw key instead of its label.
+- Dev builds are now shown in red in the Reactor mod list like TOU-Mira.
 
 ## [2.0.0] - 2026-10-05
 
