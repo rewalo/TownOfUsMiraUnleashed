@@ -38,11 +38,16 @@ public partial class MiraUnleashedPlugin : BasePlugin, IMiraPlugin
 
     public Harmony Harmony { get; } = new(Id);
 
+    public static bool IsDevBuild => Version.Contains("dev", StringComparison.OrdinalIgnoreCase) ||
+                                     Version.Contains("ci", StringComparison.OrdinalIgnoreCase) ||
+                                     Version.Contains("beta", StringComparison.OrdinalIgnoreCase) ||
+                                     Version.Contains("prerelease", StringComparison.OrdinalIgnoreCase);
+
     public override void Load()
     {
         Instance = this;
 
-        ReactorCredits.Register("Mira Unleashed", Version, false, ReactorCredits.AlwaysShow);
+        ReactorCredits.Register("Mira Unleashed", Version, IsDevBuild, ReactorCredits.AlwaysShow);
         MiraLocaleManager.Register(Id);
         Harmony.PatchAll();
 
