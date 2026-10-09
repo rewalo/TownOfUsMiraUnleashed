@@ -37,7 +37,7 @@ public sealed class CluelessModifier : UniversalGameModifier, IWikiDiscoverable
 
     public override Color FreeplayFileColor => new Color32(180, 180, 180, 255);
     public override Color GeneralColor => FreeplayFileColor;
-    public override ModifierUiConfiguration Configuration => new(FreeplayFileColor);
+    public override ModifierUiConfiguration Configuration => new(FreeplayFileColor, TmpSpriteUtils.CreateSpriteAsset(MiraUnleashedAssets.CluelessModifierIcon.LoadAsset(), "MiraUnleashed.Modifier.Universal.Clueless", 1.45f));
 
     public override ModifierFaction FactionType => ModifierFaction.UniversalPassive;
 

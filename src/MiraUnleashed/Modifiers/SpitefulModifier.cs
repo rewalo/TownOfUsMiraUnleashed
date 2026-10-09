@@ -76,7 +76,7 @@ public sealed class SpitefulModifier : UniversalGameModifier, IWikiDiscoverable
 
     public override Color FreeplayFileColor => new Color32(255, 100, 0, 255);
     public override Color GeneralColor => FreeplayFileColor;
-    public override ModifierUiConfiguration Configuration => new(FreeplayFileColor);
+    public override ModifierUiConfiguration Configuration => new(FreeplayFileColor, TmpSpriteUtils.CreateSpriteAsset(MiraUnleashedAssets.SpitefulModifierIcon.LoadAsset(), "MiraUnleashed.Modifier.Universal.Spiteful", 1.45f));
 
     public override ModifierFaction FactionType => ModifierFaction.UniversalPassive;
 
