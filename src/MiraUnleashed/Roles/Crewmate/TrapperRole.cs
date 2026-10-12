@@ -127,6 +127,8 @@ public sealed class TrapperRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnle
             yield break;
         }
 
+        Events.Achievements.AchievementEvents.OnTrapperTrapTriggered(trapper, victim);
+
         var vent = Helpers.GetVentById(ventId);
         var ventTopPos = vent != null ? VentTrapSystem.GetVentTopPosition(vent) : (Vector2)victim.transform.position;
 

@@ -155,6 +155,8 @@ public sealed class MirageRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnlea
 
         MirageDecoySystem.TryRemoveDecoy(mirage.PlayerId, out _);
 
+        Events.Achievements.AchievementEvents.OnMirageDecoyTriggered(mirage, interactor);
+
         if (interactor != null && interactor.AmOwner)
         {
             Coroutines.Start(MiscUtils.CoFlash(MiraUnleashedColors.Mirage));

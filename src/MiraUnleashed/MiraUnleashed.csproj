@@ -18,6 +18,16 @@
                       ReferenceOutputAssembly="true" PrivateAssets="all" Private="false"
                       GlobalPropertiesToRemove="AmongUs"
                       AdditionalProperties="GeneratePackageOnBuild=false" />
+    <!-- TOU-Mira marks these PrivateAssets="all", so they don't flow transitively.
+         Reference the same submodule sources directly to get the exact API surface. -->
+    <ProjectReference Include="$(TouMiraSourcePath)GitSubmodules\MiraAPI\MiraAPI\MiraAPI.csproj"
+                      ReferenceOutputAssembly="true" PrivateAssets="all" Private="false"
+                      GlobalPropertiesToRemove="AmongUs"
+                      AdditionalProperties="GeneratePackageOnBuild=false" />
+    <ProjectReference Include="$(TouMiraSourcePath)GitSubmodules\Achievements-API\AchievementsAPI\AchievementsAPI.csproj"
+                      ReferenceOutputAssembly="true" PrivateAssets="all" Private="false"
+                      GlobalPropertiesToRemove="AmongUs"
+                      AdditionalProperties="GeneratePackageOnBuild=false" />
     <PackageReference Include="Reactor" Version="2.5.0-ci.371" />
     <PackageReference Include="PerfectComms.Api" Version="4.1.7.1" PrivateAssets="all" />
     <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.735" Private="false" ExcludeAssets="runtime;native" />

@@ -107,6 +107,8 @@ public static class ForestallerSystem
 
         ActiveForestallerPlayers[player.PlayerId] = player;
 
+        Events.Achievements.AchievementEvents.OnForestallerLockActivated(player);
+
         var revealTiming = OptionGroupSingleton<ForestallerOptions>.Instance?.RevealTiming ?? ForestallerRevealTiming.NextMeeting;
         if (revealTiming == ForestallerRevealTiming.NextMeeting)
         {

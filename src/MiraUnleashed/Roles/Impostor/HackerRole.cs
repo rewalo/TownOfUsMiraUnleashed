@@ -123,9 +123,10 @@ public sealed class HackerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnlea
 
         var localPlayer = PlayerControl.LocalPlayer;
         var isHacker = localPlayer != null && localPlayer.PlayerId == hackerId && localPlayer.Data?.Role is HackerRole;
-        if (isHacker)
+        if (isHacker && localPlayer != null)
         {
             CustomButtonSingleton<HackerJamButton>.Instance.OnJamStarted(durationSeconds);
+            Events.Achievements.AchievementEvents.OnHackerJamStarted(localPlayer);
         }
 
         var opts = OptionGroupSingleton<HackerOptions>.Instance;

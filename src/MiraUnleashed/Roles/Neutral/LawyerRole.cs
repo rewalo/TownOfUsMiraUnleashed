@@ -641,6 +641,8 @@ public sealed class LawyerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnleas
 
         lawyerRole.ObjectionsUsed++; lawyerRole.ObjectionsUsedThisMeeting++; lawyerRole.HasObjected = true;
 
+        Events.Achievements.AchievementEvents.OnLawyerObjectVotes(lawyer);
+
         TouAudio.PlaySound(MiraUnleashedAudio.ObjectionSound);
 
         var lawyerName = lawyer.Data.PlayerName;
@@ -891,6 +893,8 @@ public sealed class LawyerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnleas
         client.AddModifier<LawyerTargetModifier>(player.PlayerId);
 
         LawyerDuoTracker.SetClient(player.PlayerId, client.PlayerId);
+
+        Events.Achievements.AchievementEvents.OnLawyerClientAssigned(player);
 
         var lawyerRole = RoleManager.Instance.GetRole((RoleTypes)RoleId.Get<LawyerRole>());
         if (!player.HasModifier<LawyerRevealModifier>())

@@ -88,6 +88,8 @@ The `experimental` branch of this repo tracks TOU-Mira's experimental branch and
 
 Mira Unleashed also integrates with [Perfect Comms](https://github.com/artriy/Perfect-Comms) for optional proximity voice chat features — see the [Voice Chat](https://github.com/rewalo/TownOfUsMiraUnleashed/wiki/Voice-Chat) wiki page.
 
+If the [Achievements API](https://github.com/am-clonec/Achievements-API) mod is installed, Mira Unleashed registers achievement tabs covering its roles and modifiers. It is a soft dependency — the mod works normally without it.
+
 -----------------------
 
 # Building
@@ -95,8 +97,9 @@ Mira Unleashed also integrates with [Perfect Comms](https://github.com/artriy/Pe
 Requires the .NET 10 SDK (see `global.json`).
 
 1. Clone this repository.
-2. `dotnet restore`
-3. `dotnet build -c Release`
+2. On `experimental`: clone [TOU-Mira](https://github.com/AU-Avengers/TOU-Mira) (`experimental` branch, `--recurse-submodules`) next to this repo, or set the `TouMiraSourcePath` environment variable/property to it.
+3. `dotnet restore`
+4. `dotnet build -c Release`
 
 Optionally create `Directory.Build.local.props` (git-ignored) with an `<AmongUs>` property pointing at your Among Us install to auto-copy the built DLL to `BepInEx/plugins` after each build:
 

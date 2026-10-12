@@ -187,6 +187,8 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
         role.BodiesEaten++;
         ScavengerSystem.MarkBodyEaten(bodyId);
 
+        Events.Achievements.AchievementEvents.OnScavengerEat(scavenger);
+
         if (scavenger.AmOwner)
         {
             TouAudio.PlaySound(MiraUnleashedAudio.ScavengerEatSound);

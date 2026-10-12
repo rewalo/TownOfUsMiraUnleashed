@@ -106,6 +106,8 @@ public sealed class CharlatanRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUn
 
         CharlatanBodySystem.CompleteChannel(charlatan.PlayerId, bodyId);
 
+        Events.Achievements.AchievementEvents.OnCharlatanConcealComplete(charlatan);
+
         if (charlatan.AmOwner)
         {
             CustomButtonSingleton<CharlatanConcealButton>.Instance.OnConcealCompleted();
@@ -137,5 +139,7 @@ public sealed class CharlatanRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUn
         }
 
         CharlatanBodySystem.ActivateDeceive(charlatan.PlayerId, bodyId, duration);
+
+        Events.Achievements.AchievementEvents.OnCharlatanDeceive(charlatan);
     }
 }
