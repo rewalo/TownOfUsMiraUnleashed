@@ -22,6 +22,7 @@ namespace MiraUnleashed.Events.Achievements;
 /// </summary>
 public static class AchievementEvents
 {
+    private static MiraUnleashedAchievementsTab Tab => AchievementsTabSingleton<MiraUnleashedAchievementsTab>.Instance;
     private static readonly Dictionary<byte, int> InjectionsPerTarget = new();
     private static int _meetingsSeen;
     private static int _witchHexKillsThisMeeting;
@@ -48,12 +49,12 @@ public static class AchievementEvents
 
         if (local.Data?.Role is IMiraUnleashedRole)
         {
-            AchievementsTabSingleton<MuGeneralAchievementsTab>.Instance.Unleashed.Unlock();
+            Tab.Unleashed.Unlock();
         }
 
         if (local.HasModifier<SpitefulModifier>() && local.HasModifier<CluelessModifier>())
         {
-            AchievementsTabSingleton<MuGeneralAchievementsTab>.Instance.DoubleJeopardy.Unlock();
+            Tab.DoubleJeopardy.Unlock();
         }
     }
 
@@ -77,19 +78,19 @@ public static class AchievementEvents
         switch (local.Data?.Role)
         {
             case LawyerRole:
-                AchievementsTabSingleton<MuNeutralAchievementsTab>.Instance.CaseClosed.Unlock();
+                Tab.CaseClosed.Unlock();
                 break;
             case ScavengerRole:
-                AchievementsTabSingleton<MuNeutralAchievementsTab>.Instance.FullBelly.Unlock();
+                Tab.FullBelly.Unlock();
                 break;
             case SerialKillerRole:
-                AchievementsTabSingleton<MuNeutralAchievementsTab>.Instance.TheLastScene.Unlock();
+                Tab.TheLastScene.Unlock();
                 break;
         }
 
         if (local.HasModifier<CluelessModifier>())
         {
-            AchievementsTabSingleton<MuModifierAchievementsTab>.Instance.PureInstinct.Unlock();
+            Tab.PureInstinct.Unlock();
         }
     }
 
@@ -113,28 +114,28 @@ public static class AchievementEvents
         switch (source.Data?.Role)
         {
             case SerialKillerRole:
-                AchievementsTabSingleton<MuNeutralAchievementsTab>.Instance.SerialSeason.Increment(1);
+                Tab.SerialSeason.Increment(1);
                 if (GameHistory.KilledPlayers.Count <= 1)
                 {
-                    AchievementsTabSingleton<MuNeutralAchievementsTab>.Instance.ColdOpen.Unlock();
+                    Tab.ColdOpen.Unlock();
                 }
 
                 break;
             case WraithRole:
-                AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.FadeToBlack.Increment(1);
+                Tab.FadeToBlack.Increment(1);
                 if (source.HasModifier<WraithDashModifier>())
                 {
-                    AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.HitTheGroundScreaming.Unlock();
+                    Tab.HitTheGroundScreaming.Unlock();
                 }
 
                 if (source.HasModifier<WraithLanternInvisibilityModifier>())
                 {
-                    AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.LamplightLethality.Unlock();
+                    Tab.LamplightLethality.Unlock();
                 }
 
                 break;
             case HackerRole when HackerSystem.IsJammed:
-                AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.LowPingHighCrime.Unlock();
+                Tab.LowPingHighCrime.Unlock();
                 break;
         }
     }
@@ -148,8 +149,8 @@ public static class AchievementEvents
             return;
         }
 
-        AchievementsTabSingleton<MuModifierAchievementsTab>.Instance.WingIt.Unlock();
-        AchievementsTabSingleton<MuModifierAchievementsTab>.Instance.MuscleMemory.Increment(1);
+        Tab.WingIt.Unlock();
+        Tab.MuscleMemory.Increment(1);
     }
 
     // --- Role/system hook points (called directly from role RPCs and systems) ---
@@ -161,8 +162,8 @@ public static class AchievementEvents
             return;
         }
 
-        AchievementsTabSingleton<MuCrewmateAchievementsTab>.Instance.Gottem.Unlock();
-        AchievementsTabSingleton<MuCrewmateAchievementsTab>.Instance.CarnivalOfIllusions.Increment(1);
+        Tab.Gottem.Unlock();
+        Tab.CarnivalOfIllusions.Increment(1);
     }
 
     public static void OnTrapperTrapTriggered(PlayerControl trapper, PlayerControl? victim)
@@ -172,16 +173,16 @@ public static class AchievementEvents
             return;
         }
 
-        AchievementsTabSingleton<MuCrewmateAchievementsTab>.Instance.WelcomingCommittee.Unlock();
-        AchievementsTabSingleton<MuCrewmateAchievementsTab>.Instance.PestControl.Increment(1);
-        AchievementsTabSingleton<MuCrewmateAchievementsTab>.Instance.RedHanded.Increment(1);
+        Tab.WelcomingCommittee.Unlock();
+        Tab.PestControl.Increment(1);
+        Tab.RedHanded.Increment(1);
     }
 
     public static void OnCharlatanConcealComplete(PlayerControl charlatan)
     {
         if (charlatan.AmOwner)
         {
-            AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.BodyDouble.Unlock();
+            Tab.BodyDouble.Unlock();
         }
     }
 
@@ -189,7 +190,7 @@ public static class AchievementEvents
     {
         if (charlatan.AmOwner)
         {
-            AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.SmokeAndMirrors.Increment(1);
+            Tab.SmokeAndMirrors.Increment(1);
         }
     }
 
@@ -197,7 +198,7 @@ public static class AchievementEvents
     {
         if (hacker.AmOwner)
         {
-            AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.DdosAttack.Increment(1);
+            Tab.DdosAttack.Increment(1);
         }
     }
 
@@ -208,13 +209,13 @@ public static class AchievementEvents
             return;
         }
 
-        AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.Malpractice.Unlock();
-        AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.ClinicalTrial.Increment(1);
+        Tab.Malpractice.Unlock();
+        Tab.ClinicalTrial.Increment(1);
 
         InjectionsPerTarget[target.PlayerId] = InjectionsPerTarget.GetValueOrDefault(target.PlayerId) + 1;
         if (InjectionsPerTarget[target.PlayerId] == 2)
         {
-            AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.DoubleDose.Unlock();
+            Tab.DoubleDose.Unlock();
         }
     }
 
@@ -225,15 +226,15 @@ public static class AchievementEvents
             return;
         }
 
-        AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.HexMarksTheSpot.Unlock();
-        AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.BoilAndTrouble.Increment(1);
+        Tab.HexMarksTheSpot.Unlock();
+        Tab.BoilAndTrouble.Increment(1);
     }
 
     public static void OnWitchHexKill(PlayerControl witch)
     {
         if (witch.AmOwner && ++_witchHexKillsThisMeeting >= 2)
         {
-            AchievementsTabSingleton<MuImpostorAchievementsTab>.Instance.BubbleBubble.Unlock();
+            Tab.BubbleBubble.Unlock();
         }
     }
 
@@ -244,10 +245,10 @@ public static class AchievementEvents
             return;
         }
 
-        AchievementsTabSingleton<MuCrewmateAchievementsTab>.Instance.NothingLeftToSabotage.Unlock();
+        Tab.NothingLeftToSabotage.Unlock();
         if (_meetingsSeen == 0)
         {
-            AchievementsTabSingleton<MuCrewmateAchievementsTab>.Instance.SpeedrunLockdown.Unlock();
+            Tab.SpeedrunLockdown.Unlock();
         }
     }
 
@@ -258,15 +259,15 @@ public static class AchievementEvents
             return;
         }
 
-        AchievementsTabSingleton<MuNeutralAchievementsTab>.Instance.CleanPlateClub.Increment(1);
-        AchievementsTabSingleton<MuNeutralAchievementsTab>.Instance.BuffetRegular.Increment(1);
+        Tab.CleanPlateClub.Increment(1);
+        Tab.BuffetRegular.Increment(1);
     }
 
     public static void OnLawyerClientAssigned(PlayerControl lawyer)
     {
         if (lawyer.AmOwner)
         {
-            AchievementsTabSingleton<MuNeutralAchievementsTab>.Instance.CourtAppointed.Unlock();
+            Tab.CourtAppointed.Unlock();
         }
     }
 
@@ -274,7 +275,7 @@ public static class AchievementEvents
     {
         if (lawyer.AmOwner && ++_lawyerObjectionsThisMeeting >= 2)
         {
-            AchievementsTabSingleton<MuNeutralAchievementsTab>.Instance.ObjectionOverruled.Unlock();
+            Tab.ObjectionOverruled.Unlock();
         }
     }
 
@@ -282,7 +283,7 @@ public static class AchievementEvents
     {
         if (voter.AmOwner)
         {
-            AchievementsTabSingleton<MuModifierAchievementsTab>.Instance.PyrrhicVote.Unlock();
+            Tab.PyrrhicVote.Unlock();
         }
     }
 
@@ -290,7 +291,7 @@ public static class AchievementEvents
     {
         if (exiled.AmOwner && cursedVoterCount > 1)
         {
-            AchievementsTabSingleton<MuModifierAchievementsTab>.Instance.MiseryLovesCompany.Unlock();
+            Tab.MiseryLovesCompany.Unlock();
         }
     }
 }

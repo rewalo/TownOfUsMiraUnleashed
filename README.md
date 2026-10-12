@@ -88,7 +88,7 @@ The `experimental` branch of this repo tracks TOU-Mira's experimental branch and
 
 Mira Unleashed also integrates with [Perfect Comms](https://github.com/artriy/Perfect-Comms) for optional proximity voice chat features — see the [Voice Chat](https://github.com/rewalo/TownOfUsMiraUnleashed/wiki/Voice-Chat) wiki page.
 
-Mira Unleashed adds achievement tabs for its roles and modifiers via the [Achievements API](https://github.com/am-clonec/Achievements-API), which TOU-Mira experimental already requires.
+Mira Unleashed adds an achievements tab for its roles and modifiers via the [Achievements API](https://github.com/am-clonec/Achievements-API), which TOU-Mira experimental already requires.
 
 -----------------------
 
