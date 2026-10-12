@@ -111,6 +111,10 @@ Optionally create `Directory.Build.local.props` (git-ignored) with an `<AmongUs>
 </Project>
 ```
 
+## Dev menu
+
+Dev builds (version suffix `dev`/`ci`/`beta`/`prerelease`) include an in-game developer menu toggled with F8 for viewing, unlocking and resetting Mira Unleashed achievements locally. It does not touch gameplay or the network and is absent from release builds.
+
 -----------------------
 
 # Branches
