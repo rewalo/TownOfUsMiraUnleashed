@@ -161,11 +161,8 @@ public static class AchievementEvents
             return;
         }
 
+        AchievementsIntegration.Unlock(MuAchievements.Gottem);
         AchievementsIntegration.Increment(MuAchievements.CarnivalOfIllusions);
-        if (GameHistory.KilledPlayers.Any(k => k.KillerId == interactor.PlayerId))
-        {
-            AchievementsIntegration.Unlock(MuAchievements.Gottem);
-        }
     }
 
     public static void OnTrapperTrapTriggered(PlayerControl trapper, PlayerControl? victim)
@@ -177,10 +174,7 @@ public static class AchievementEvents
 
         AchievementsIntegration.Unlock(MuAchievements.WelcomingCommittee);
         AchievementsIntegration.Increment(MuAchievements.PestControl);
-        if (GameHistory.KilledPlayers.Any(k => k.KillerId == victim.PlayerId))
-        {
-            AchievementsIntegration.Unlock(MuAchievements.RedHanded);
-        }
+        AchievementsIntegration.Increment(MuAchievements.RedHanded);
     }
 
     public static void OnCharlatanConcealComplete(PlayerControl charlatan)

@@ -131,7 +131,7 @@ internal static class MuAchievements
             MuAchievementTab.Crewmate, () => Load(MiraUnleashedAssets.ForestallerRoleIcon), Rarity: 1),
 
         // Crewmate - Mirage
-        new(Gottem, "Catch a killer interacting with your decoy as Mirage.", MuAchievementTab.Crewmate,
+        new(Gottem, "Catch someone interacting with your decoy as Mirage.", MuAchievementTab.Crewmate,
             () => Load(MiraUnleashedCrewAssets.DecoyButtonSprite)),
         new(CarnivalOfIllusions, "Have your decoys triggered 3 times in a single game.", MuAchievementTab.Crewmate,
             () => Load(MiraUnleashedAssets.MirageRoleIcon), 3, MuAchievementPersistence.ThroughoutRounds),
@@ -141,8 +141,8 @@ internal static class MuAchievements
             () => Load(MiraUnleashedAssets.TrapperRoleIcon)),
         new(PestControl, "Snare 5 players in your vent traps.", MuAchievementTab.Crewmate,
             () => Load(MiraUnleashedAssets.TrapperRoleIcon), 5),
-        new(RedHanded, "Snare a player who has already killed this game.", MuAchievementTab.Crewmate,
-            () => Load(MiraUnleashedAssets.TrapperRoleIcon), Rarity: 1),
+        new(RedHanded, "Snare 2 players in your vent traps in a single game.", MuAchievementTab.Crewmate,
+            () => Load(MiraUnleashedAssets.TrapperRoleIcon), 2, MuAchievementPersistence.ThroughoutRounds, Rarity: 1),
 
         // Impostor - Charlatan
         new(BodyDouble, "Fully conceal a body as Charlatan.", MuAchievementTab.Impostor,
