@@ -148,4 +148,17 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
 
     public MuBaseAchievement PureInstinct { get; set; } = new("Pure Instinct",
         "Win a game as a Clueless player.", MiraUnleashedAssets.CluelessModifierIcon, 2, true);
+
+    // Bad luck
+    public MuBaseAchievement UnluckyRole { get; set; } = new("Unlucky (Role)",
+        "Get assigned the worst role in the game.", TouRoleIcons.Oracle, 0, true);
+
+    public MuBaseAchievement UnluckyModifier { get; set; } = new("Unlucky (Modifier)",
+        "Get assigned the worst modifier in the game.", TouModifierIcons.Crewpostor, 0, true);
+
+    public MuBaseAchievement CursedRole { get; set; } = new("Cursed (Role)",
+        "Get assigned a role that should never have existed.", TouRoleIcons.Pestilence, 2, true);
+
+    public MuBaseAchievement CursedModifier { get; set; } = new("Cursed (Modifier)",
+        "Get assigned the most despicable modifier in the game.", TouModifierIcons.Bait, 2, true);
 }

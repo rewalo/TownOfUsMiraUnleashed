@@ -87,7 +87,7 @@ public static class CluelessTaskGuidancePatches
         }
 
         var shouldHide = LocalIsClueless() &&
-                         LocalSettingsTabSingleton<MiraUnleashedLocalSettings>.Instance.CluelessCensorType.Value == CluelessCensorType.Remove;
+                         LocalSettingsTabSingleton<MiraUnleashedLocalSettings>.Instance.CluelessCensorType.Value == CluelessCensorType.RemoveTab;
 
         if (shouldHide && panel.background.gameObject.activeSelf)
         {
@@ -173,7 +173,8 @@ public static class CluelessTaskGuidancePatches
                 case CluelessCensorType.QuestionMarks:
                     censoredContent = new string('?', contentLength);
                     break;
-                case CluelessCensorType.Remove:
+                case CluelessCensorType.RemoveText:
+                case CluelessCensorType.RemoveTab:
                     return string.Empty;
                 default:
                     censoredContent = new string('?', contentLength);

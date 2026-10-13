@@ -1,11 +1,13 @@
 <resources>
 <!-- Local Settings -->
     <string name="MiraUnleashed.LocalSetting.EnableNauseaCameraShake">Enable Nausea Camera Shake</string>
+    <string name="MiraUnleashed.LocalSetting.EnableUnluckyAchievements">Enable "Unlucky" Achievements</string>
     <string name="MiraUnleashed.LocalSetting.CluelessCensorType">Clueless Censor Type</string>
     <string name="MiraUnleashed.LocalSetting.CluelessCensorType.WhiteBars">White Bars</string>
     <string name="MiraUnleashed.LocalSetting.CluelessCensorType.Asterisks">Asterisks</string>
     <string name="MiraUnleashed.LocalSetting.CluelessCensorType.QuestionMarks">Question Marks</string>
-    <string name="MiraUnleashed.LocalSetting.CluelessCensorType.Remove">Remove</string>
+    <string name="MiraUnleashed.LocalSetting.CluelessCensorType.RemoveText">Remove Text</string>
+    <string name="MiraUnleashed.LocalSetting.CluelessCensorType.RemoveTab">Remove Tab</string>
 <!-- Plugin -->
     <string name="MiraUnleashed.OptionsTitle">Mira Unleashed</string>
     <string name="MiraUnleashed.Common.Unknown">Unknown</string>

@@ -3,6 +3,7 @@ using MiraAPI.Events;
 using MiraAPI.Events.Vanilla.Gameplay;
 using MiraAPI.Events.Vanilla.Meeting;
 using MiraAPI.Events.Vanilla.Player;
+using MiraAPI.LocalSettings;
 using MiraAPI.Modifiers;
 using MiraUnleashed.Achievements;
 using MiraUnleashed.Modifiers;
@@ -10,8 +11,17 @@ using MiraUnleashed.Modules;
 using MiraUnleashed.Roles;
 using MiraUnleashed.Roles.Impostor;
 using MiraUnleashed.Roles.Neutral;
+using TownOfUs.Modifiers;
+using TownOfUs.Modifiers.Game.Alliance;
+using TownOfUs.Modifiers.Game.Assailant;
+using TownOfUs.Modifiers.Game.Crewmate;
+using TownOfUs.Modifiers.Game.Impostor;
 using TownOfUs.Modules;
+using TownOfUs.Roles.Crewmate;
+using TownOfUs.Roles.Impostor;
+using TownOfUs.Roles.Neutral;
 using TownOfUs.Utilities;
+using ScavengerRole = MiraUnleashed.Roles.Neutral.ScavengerRole;
 
 namespace MiraUnleashed.Events.Achievements;
 
@@ -55,6 +65,56 @@ public static class AchievementEvents
         if (local.HasModifier<SpitefulModifier>() && local.HasModifier<CluelessModifier>())
         {
             Tab.DoubleJeopardy.Unlock();
+        }
+
+        CheckBadLuckAchievements(local);
+    }
+
+    private static void CheckBadLuckAchievements(PlayerControl local)
+    {
+        var unluckyEnabled = LocalSettingsTabSingleton<MiraUnleashedLocalSettings>.Instance.EnableUnluckyAchievements.Value;
+
+        switch (local.Data?.Role)
+        {
+            case AurialRole or LookoutRole or MysticRole or SeerRole or DeputyRole or HunterRole or OfficerRole
+                or VeteranRole or VigilanteRole or ClericRole or MirrorcasterRole or WardenRole or OracleRole
+                or BarkeeperRole or ImitatorRole or EclipsalRole or BootleggerRole or MercenaryRole or FairyRole
+                or SurvivorRole or DoomsayerRole:
+                if (unluckyEnabled)
+                {
+                    Tab.UnluckyRole.Unlock();
+                }
+
+                break;
+            case AmbusherRole or BomberRole or WarlockRole or SpellslingerRole or HerbalistRole or PestilenceRole
+                or WerewolfRole or PlaguebearerRole or VampireRole or ChefRole or InquisitorRole:
+                Tab.CursedRole.Unlock();
+                break;
+        }
+
+        foreach (var modifier in local.GetModifiers<TouBaseGameModifier>())
+        {
+            if (modifier.HideOnUi)
+            {
+                continue;
+            }
+
+            switch (modifier)
+            {
+                case BaitModifier:
+                    Tab.CursedModifier.Unlock();
+                    break;
+                case LoverModifier or AssassinModifier or CluelessModifier or SpitefulModifier
+                    or DeadlyQuotaModifier:
+                    break;
+                default:
+                    if (unluckyEnabled)
+                    {
+                        Tab.UnluckyModifier.Unlock();
+                    }
+
+                    break;
+            }
         }
     }
 

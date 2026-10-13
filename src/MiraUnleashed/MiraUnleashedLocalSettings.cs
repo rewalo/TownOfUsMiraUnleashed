@@ -20,12 +20,17 @@ public class MiraUnleashedLocalSettings(ConfigFile config) : LocalSettingsTab(co
     public ConfigEntry<bool> EnableNauseaCameraShake { get; private set; } =
         config.Bind("Accessibility", "EnableNauseaCameraShake", true);
 
+    [LocalToggleSetting("MiraUnleashed.LocalSetting.EnableUnluckyAchievements")]
+    public ConfigEntry<bool> EnableUnluckyAchievements { get; private set; } =
+        config.Bind("Achievements", "EnableUnluckyAchievements", true);
+
     [LocalEnumSetting("MiraUnleashed.LocalSetting.CluelessCensorType", names:
     [
         "MiraUnleashed.LocalSetting.CluelessCensorType.WhiteBars",
         "MiraUnleashed.LocalSetting.CluelessCensorType.Asterisks",
         "MiraUnleashed.LocalSetting.CluelessCensorType.QuestionMarks",
-        "MiraUnleashed.LocalSetting.CluelessCensorType.Remove",
+        "MiraUnleashed.LocalSetting.CluelessCensorType.RemoveText",
+        "MiraUnleashed.LocalSetting.CluelessCensorType.RemoveTab",
     ])]
     public ConfigEntry<CluelessCensorType> CluelessCensorType { get; private set; } =
         config.Bind("Modifier Visuals", "CluelessCensorType", MiraUnleashed.CluelessCensorType.Asterisks);
@@ -36,5 +41,6 @@ public enum CluelessCensorType
     WhiteBars,
     Asterisks,
     QuestionMarks,
-    Remove,
+    RemoveText,
+    RemoveTab,
 }

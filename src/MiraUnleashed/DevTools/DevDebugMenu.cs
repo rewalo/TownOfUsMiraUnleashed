@@ -17,7 +17,7 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
 
     private readonly HashSet<string> _loggedErrors = new();
     private readonly Dictionary<Type, List<(PropertyInfo Prop, BaseAchievement Ach)>> _achievementCache = new();
-    private Rect _windowRect = new(0, 0, 520, 560);
+    private Rect _windowRect = new(0, 0, 820, 820);
     private Vector2 _scroll;
     private string? _error;
 
@@ -25,13 +25,18 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
     private bool _loggedOpen;
     private bool _positioned;
     private bool _dragging;
+    private bool _resizing;
     private Vector2 _dragOffset;
+    private const float MinWidth = 360;
+    private const float MinHeight = 240;
+    private const float ResizeGrip = 22;
 
     private int _achievementsTabIndex = -1;
 
     private GUIStyle? _titleStyle;
     private GUIStyle? _descStyle;
     private GUIStyle? _errorStyle;
+    private GUIStyle? _gripStyle;
 
     /// <summary>
     /// Installs the debug menu. No-op in release builds and if already installed.
@@ -64,6 +69,7 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
         if (!_visible)
         {
             _dragging = false;
+            _resizing = false;
             return;
         }
 
@@ -71,16 +77,25 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
         var gx = m.x;
         var gy = Screen.height - m.y;
         var titleBar = new Rect(_windowRect.x, _windowRect.y, _windowRect.width, 28);
+        var grip = new Rect(_windowRect.xMax - ResizeGrip, _windowRect.yMax - ResizeGrip, ResizeGrip, ResizeGrip);
 
-        if (Input.GetMouseButtonDown(0) && titleBar.Contains(new Vector2(gx, gy)))
+        if (Input.GetMouseButtonDown(0))
         {
-            _dragging = true;
-            _dragOffset = new Vector2(gx - _windowRect.x, gy - _windowRect.y);
+            if (grip.Contains(new Vector2(gx, gy)))
+            {
+                _resizing = true;
+            }
+            else if (titleBar.Contains(new Vector2(gx, gy)))
+            {
+                _dragging = true;
+                _dragOffset = new Vector2(gx - _windowRect.x, gy - _windowRect.y);
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             _dragging = false;
+            _resizing = false;
         }
 
         if (_dragging && Input.GetMouseButton(0))
@@ -88,10 +103,18 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
             _windowRect.x = Mathf.Clamp(gx - _dragOffset.x, 40 - _windowRect.width, Screen.width - 40);
             _windowRect.y = Mathf.Clamp(gy - _dragOffset.y, 0, Screen.height - 40);
         }
+
+        if (_resizing && Input.GetMouseButton(0))
+        {
+            _windowRect.width = Mathf.Clamp(gx - _windowRect.x, MinWidth, Screen.width - _windowRect.x);
+            _windowRect.height = Mathf.Clamp(gy - _windowRect.y, MinHeight, Screen.height - _windowRect.y);
+        }
     }
 
     private void CenterWindow()
     {
+        _windowRect.width = Mathf.Min(_windowRect.width, Screen.width - 40);
+        _windowRect.height = Mathf.Min(_windowRect.height, Screen.height - 40);
         _windowRect.x = (Screen.width - _windowRect.width) / 2;
         _windowRect.y = (Screen.height - _windowRect.height) / 2;
         _positioned = true;
@@ -112,6 +135,7 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
             wordWrap = true,
             normal = { textColor = Color.red },
         };
+        _gripStyle ??= new GUIStyle(GUI.skin.label) { alignment = TextAnchor.LowerRight, fontSize = 14 };
 
         if (!_positioned)
         {
@@ -122,7 +146,7 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
         try
         {
             GUILayout.BeginHorizontal(GUILayout.Height(28));
-            GUILayout.Label("Mira Unleashed Dev Menu (F8) — drag here", _titleStyle);
+            GUILayout.Label("Mira Unleashed Dev Menu (F8) — drag here, resize at corner", _titleStyle);
             if (GUILayout.Button("Reset position", GUILayout.Width(100)))
             {
                 CenterWindow();
@@ -167,6 +191,12 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
         finally
         {
             GUILayout.EndArea();
+        }
+
+        if (_visible)
+        {
+            GUI.Label(new Rect(_windowRect.xMax - ResizeGrip, _windowRect.yMax - ResizeGrip, ResizeGrip, ResizeGrip), "◢",
+                _gripStyle);
         }
     }
 
