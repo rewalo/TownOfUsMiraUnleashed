@@ -11,7 +11,7 @@ public class MuBaseAchievement : BaseAchievement
 {
     public MuBaseAchievement(string name, string description, LoadableAsset<Sprite> icon, int rarity = 0,
         bool hidden = false)
-        : base(name, description, rarity, hidden, true, typeof(MiraUnleashedPlugin).Assembly)
+        : base(name, description, rarity, hidden, false, typeof(MiraUnleashedPlugin).Assembly)
     {
         MiraIcon = icon;
     }

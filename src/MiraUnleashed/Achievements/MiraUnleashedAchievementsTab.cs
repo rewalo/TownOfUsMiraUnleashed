@@ -8,8 +8,15 @@ namespace MiraUnleashed.Achievements;
 
 public sealed class MiraUnleashedAchievementsTab : AchievementsTab
 {
+    private const string Crew = AchievementCategories.Crewmate;
+    private const string Imp = AchievementCategories.Impostor;
+    private const string Neut = AchievementCategories.Neutral;
+
     /// <inheritdoc/>
     public override string Name => "Mira Unleashed";
+
+    /// <inheritdoc/>
+    public override string CategoryId => AchievementCategories.General;
 
     /// <inheritdoc/>
     public override Color GetTabColor() => MiraUnleashedColors.Trapper;
@@ -28,108 +35,108 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
     // Forestaller
     public MuBaseAchievement NothingLeftToSabotage { get; set; } = new("Nothing Left to Sabotage",
         "Complete all tasks as Forestaller and lock evildoers out of the sabotage menu.",
-        MiraUnleashedAssets.ForestallerRoleIcon);
+        MiraUnleashedAssets.ForestallerRoleIcon) { Category = Crew };
 
     public MuBaseAchievement SpeedrunLockdown { get; set; } = new("Speedrun Lockdown",
         "Activate the Forestaller lock before the first meeting of the game.",
-        MiraUnleashedAssets.ForestallerRoleIcon, 1);
+        MiraUnleashedAssets.ForestallerRoleIcon, 1) { Category = Crew };
 
     // Mirage
     public MuBaseAchievement Gottem { get; set; } = new("Gottem!",
-        "Catch someone interacting with your decoy as Mirage.", MiraUnleashedCrewAssets.DecoyButtonSprite);
+        "Catch someone interacting with your decoy as Mirage.", MiraUnleashedCrewAssets.DecoyButtonSprite) { Category = Crew };
 
     public CountAchievement CarnivalOfIllusions { get; set; } = new MuCountAchievement("Carnival of Illusions",
         "Have your decoys triggered 3 times in a single game.", MiraUnleashedAssets.MirageRoleIcon, 3,
-        AchPersistence.ThroughoutRounds);
+        AchPersistence.ThroughoutRounds) { Category = Crew };
 
     // Trapper
     public MuBaseAchievement WelcomingCommittee { get; set; } = new("The Welcoming Committee",
-        "Snare someone in one of your vent traps as Trapper.", MiraUnleashedAssets.TrapperRoleIcon);
+        "Snare someone in one of your vent traps as Trapper.", MiraUnleashedAssets.TrapperRoleIcon) { Category = Crew };
 
     public CountAchievement PestControl { get; set; } = new MuCountAchievement("Pest Control",
-        "Snare 5 players in your vent traps.", MiraUnleashedAssets.TrapperRoleIcon, 5);
+        "Snare 5 players in your vent traps.", MiraUnleashedAssets.TrapperRoleIcon, 5) { Category = Crew };
 
     public CountAchievement RedHanded { get; set; } = new MuCountAchievement("Red Handed",
         "Snare 2 players in your vent traps in a single game.", MiraUnleashedAssets.TrapperRoleIcon, 2,
-        AchPersistence.ThroughoutRounds, 1);
+        AchPersistence.ThroughoutRounds, 1) { Category = Crew };
 
     // Charlatan
     public MuBaseAchievement BodyDouble { get; set; } = new("Body Double",
-        "Fully conceal a body as Charlatan.", MiraUnleashedImpAssets.ConcealButtonSprite);
+        "Fully conceal a body as Charlatan.", MiraUnleashedImpAssets.ConcealButtonSprite) { Category = Imp };
 
     public CountAchievement SmokeAndMirrors { get; set; } = new MuCountAchievement("Smoke and Mirrors",
         "Deceive 3 bodies as Charlatan in a single game.", MiraUnleashedImpAssets.DeceiveButtonSprite, 3,
-        AchPersistence.ThroughoutRounds);
+        AchPersistence.ThroughoutRounds) { Category = Imp };
 
     // Hacker
     public CountAchievement DdosAttack { get; set; } = new MuCountAchievement("DDoS Attack",
         "Jam players 3 times as Hacker in a single game.", MiraUnleashedImpAssets.HackerJamButtonSprite, 3,
-        AchPersistence.ThroughoutRounds);
+        AchPersistence.ThroughoutRounds) { Category = Imp };
 
     public MuBaseAchievement LowPingHighCrime { get; set; } = new("Low Ping, High Crime",
-        "Kill a player while your jam is active.", MiraUnleashedImpAssets.HackerRole, 1);
+        "Kill a player while your jam is active.", MiraUnleashedImpAssets.HackerRole, 1) { Category = Imp };
 
     // Injector
     public MuBaseAchievement Malpractice { get; set; } = new("Malpractice",
-        "Inject a player as Injector.", MiraUnleashedImpAssets.InjectorInjectButtonSprite);
+        "Inject a player as Injector.", MiraUnleashedImpAssets.InjectorInjectButtonSprite) { Category = Imp };
 
     public MuBaseAchievement DoubleDose { get; set; } = new("Double Dose",
-        "Inject the same player twice in one game.", MiraUnleashedImpAssets.InjectorRole, 1);
+        "Inject the same player twice in one game.", MiraUnleashedImpAssets.InjectorRole, 1) { Category = Imp };
 
     public CountAchievement ClinicalTrial { get; set; } = new MuCountAchievement("Clinical Trial",
         "Inject 5 players in a single game.", MiraUnleashedImpAssets.InjectorInjectButtonSprite, 5,
-        AchPersistence.ThroughoutRounds);
+        AchPersistence.ThroughoutRounds) { Category = Imp };
 
     // Witch
     public MuBaseAchievement HexMarksTheSpot { get; set; } = new("Hex Marks the Spot",
-        "Place a spell on a player as Witch.", MiraUnleashedImpAssets.SpellButtonSprite);
+        "Place a spell on a player as Witch.", MiraUnleashedImpAssets.SpellButtonSprite) { Category = Imp };
 
     public CountAchievement BoilAndTrouble { get; set; } = new MuCountAchievement("Boil and Trouble",
-        "Spell 10 players as Witch.", MiraUnleashedImpAssets.SpellButtonSprite, 10);
+        "Spell 10 players as Witch.", MiraUnleashedImpAssets.SpellButtonSprite, 10) { Category = Imp };
 
     public MuBaseAchievement BubbleBubble { get; set; } = new("Bubble, Bubble",
-        "Kill 2 players with your hexes in a single meeting.", MiraUnleashedAssets.HexedSprite, 2, true);
+        "Kill 2 players with your hexes in a single meeting.", MiraUnleashedAssets.HexedSprite, 2, true) { Category = Imp };
 
     // Wraith
     public MuBaseAchievement HitTheGroundScreaming { get; set; } = new("Hit the Ground Screaming",
-        "Kill a player while dashing as Wraith.", TouImpAssets.SprintSprite, 1);
+        "Kill a player while dashing as Wraith.", TouImpAssets.SprintSprite, 1) { Category = Imp };
 
     public MuBaseAchievement LamplightLethality { get; set; } = new("Lamplight Lethality",
-        "Kill a player while invisible next to your lantern.", MiraUnleashedImpAssets.LanternButtonSprite, 2, true);
+        "Kill a player while invisible next to your lantern.", MiraUnleashedImpAssets.LanternButtonSprite, 2, true) { Category = Imp };
 
     public CountAchievement FadeToBlack { get; set; } = new MuCountAchievement("Fade to Black",
-        "Kill 5 players as Wraith.", MiraUnleashedImpAssets.WraithRole, 5);
+        "Kill 5 players as Wraith.", MiraUnleashedImpAssets.WraithRole, 5) { Category = Imp };
 
     // Lawyer
     public MuBaseAchievement CourtAppointed { get; set; } = new("Court Appointed",
-        "Get assigned a client as Lawyer.", TouRoleIcons.Lawyer);
+        "Get assigned a client as Lawyer.", TouRoleIcons.Lawyer) { Category = Neut };
 
     public MuBaseAchievement ObjectionOverruled { get; set; } = new("Objection Overruled",
-        "Object to the votes 2 times in a single meeting.", MiraUnleashedAssets.ObjectionButtonSprite, 1);
+        "Object to the votes 2 times in a single meeting.", MiraUnleashedAssets.ObjectionButtonSprite, 1) { Category = Neut };
 
     public MuBaseAchievement CaseClosed { get; set; } = new("Case Closed",
-        "Win a game as the Lawyer.", MiraUnleashedAssets.ObjectionButtonSprite, 3, true);
+        "Win a game as the Lawyer.", MiraUnleashedAssets.ObjectionButtonSprite, 3, true) { Category = Neut };
 
     // Scavenger
     public CountAchievement CleanPlateClub { get; set; } = new MuCountAchievement("Clean Plate Club",
         "Eat 3 bodies in a single game as Scavenger.", MiraUnleashedAssets.ScavengerEatButtonSprite, 3,
-        AchPersistence.ThroughoutRounds);
+        AchPersistence.ThroughoutRounds) { Category = Neut };
 
     public CountAchievement BuffetRegular { get; set; } = new MuCountAchievement("Buffet Regular",
-        "Eat 10 bodies as Scavenger.", MiraUnleashedAssets.ScavengerRoleIcon, 10);
+        "Eat 10 bodies as Scavenger.", MiraUnleashedAssets.ScavengerRoleIcon, 10) { Category = Neut };
 
     public MuBaseAchievement FullBelly { get; set; } = new("Full Belly",
-        "Win a game as the Scavenger.", MiraUnleashedAssets.ScavengerRoleIcon, 1);
+        "Win a game as the Scavenger.", MiraUnleashedAssets.ScavengerRoleIcon, 1) { Category = Neut };
 
     // Serial Killer
     public MuBaseAchievement ColdOpen { get; set; } = new("Cold Open",
-        "Claim the first kill of the game as Serial Killer.", TouRoleIcons.SerialKiller);
+        "Claim the first kill of the game as Serial Killer.", TouRoleIcons.SerialKiller) { Category = Neut };
 
     public CountAchievement SerialSeason { get; set; } = new MuCountAchievement("Serial Season",
-        "Kill 10 players as Serial Killer.", TouRoleIcons.SerialKiller, 10);
+        "Kill 10 players as Serial Killer.", TouRoleIcons.SerialKiller, 10) { Category = Neut };
 
     public MuBaseAchievement TheLastScene { get; set; } = new("The Last Scene",
-        "Win a game as the Serial Killer.", TouRoleIcons.SerialKiller, 2, true);
+        "Win a game as the Serial Killer.", TouRoleIcons.SerialKiller, 2, true) { Category = Neut };
 
     // Spiteful
     public MuBaseAchievement PyrrhicVote { get; set; } = new("Pyrrhic Vote",
