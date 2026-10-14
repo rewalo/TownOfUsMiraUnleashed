@@ -13,7 +13,7 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
     private const string Neut = AchievementCategories.Neutral;
 
     /// <inheritdoc/>
-    public override string Name => "Mira Unleashed";
+    public override StringNames Name => MiraLocaleManager.GetOrCreateLocaleString("MiraUnleashed.Achievements.Tab");
 
     /// <inheritdoc/>
     public override string CategoryId => AchievementCategories.General;

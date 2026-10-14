@@ -219,7 +219,7 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
         GUILayout.BeginHorizontal();
         for (var i = 0; i < tabs.Count; i++)
         {
-            if (GUILayout.Toggle(_achievementsTabIndex == i, tabs[i].Name, GUI.skin.button))
+            if (GUILayout.Toggle(_achievementsTabIndex == i, AchievementsStrings.GetText(tabs[i].Name), GUI.skin.button))
             {
                 _achievementsTabIndex = i;
             }
@@ -279,7 +279,7 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
 
     private void DrawAchievementRow(BaseAchievement ach)
     {
-        var name = ach.Name + (ach.Hidden ? " (hidden)" : string.Empty);
+        var name = ach.GetName() + (ach.Hidden ? " (hidden)" : string.Empty);
         if (ach is CountAchievement count)
         {
             name += $"  [{count.CurrentValue}/{count.RequiredValue}]";
@@ -289,7 +289,7 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
         GUILayout.Label(ach.Unlocked ? "[x]" : "[ ]", GUILayout.Width(30));
         GUILayout.Label(name);
         GUILayout.EndHorizontal();
-        GUILayout.Label(ach.Description, _descStyle);
+        GUILayout.Label(ach.GetDescription(), _descStyle);
 
         GUILayout.BeginHorizontal();
         GUI.enabled = !ach.Unlocked;
