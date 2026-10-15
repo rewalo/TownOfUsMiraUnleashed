@@ -120,6 +120,8 @@ public sealed class WraithRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnlea
             PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(pos);
         }
 
+        Events.Achievements.AchievementEvents.OnWraithLanternReturned(wraith);
+
         var invisDuration = OptionGroupSingleton<WraithOptions>.Instance.InvisibleDuration.Value;
         if (invisDuration > 0f && !wraith.HasDied())
         {

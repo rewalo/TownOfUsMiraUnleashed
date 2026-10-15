@@ -1,9 +1,10 @@
+using System.Linq;
 using AchievementsAPI.API;
 using MiraAPI.Events;
 using MiraAPI.Events.Vanilla.Gameplay;
 using MiraAPI.Events.Vanilla.Meeting;
 using MiraAPI.Events.Vanilla.Player;
-using MiraAPI.LocalSettings;
+using MiraAPI.GameEnd;
 using MiraAPI.Modifiers;
 using MiraUnleashed.Achievements;
 using MiraUnleashed.Modifiers;
@@ -11,17 +12,12 @@ using MiraUnleashed.Modules;
 using MiraUnleashed.Roles;
 using MiraUnleashed.Roles.Impostor;
 using MiraUnleashed.Roles.Neutral;
-using TownOfUs.Modifiers;
-using TownOfUs.Modifiers.Game.Alliance;
-using TownOfUs.Modifiers.Game.Assailant;
-using TownOfUs.Modifiers.Game.Crewmate;
-using TownOfUs.Modifiers.Game.Impostor;
+using TownOfUs.Events.TouEvents;
+using TownOfUs.GameOver;
+using TownOfUs.Modifiers.Impostor;
 using TownOfUs.Modules;
-using TownOfUs.Roles.Crewmate;
-using TownOfUs.Roles.Impostor;
-using TownOfUs.Roles.Neutral;
-using TownOfUs.Utilities;
-using ScavengerRole = MiraUnleashed.Roles.Neutral.ScavengerRole;
+using TownOfUs.Modules.Components;
+using UnityEngine;
 
 namespace MiraUnleashed.Events.Achievements;
 
@@ -36,11 +32,19 @@ public static class AchievementEvents
     private static readonly Dictionary<byte, int> InjectionsPerTarget = new();
     private static int _meetingsSeen;
     private static int _witchHexKillsThisMeeting;
-    private static int _lawyerObjectionsThisMeeting;
+    private static int _scavengerEatsThisRound;
+    private static int _serialKillerKillsThisRound;
+    private static float _wraithLastLanternReturn;
+
+    // Hidden-information achievements unlock immediately (with a deferred toast) but are
+    // tracked here so a Time Lord rewind or host abort can reset them before the toast shows.
+    private static readonly HashSet<BaseAchievement> _tentativeThisRound = new();
 
     [RegisterEvent]
     public static void RoundStartEventHandler(RoundStartEvent @event)
     {
+        _tentativeThisRound.Clear();
+
         if (!@event.TriggeredByIntro)
         {
             return;
@@ -49,7 +53,9 @@ public static class AchievementEvents
         InjectionsPerTarget.Clear();
         _meetingsSeen = 0;
         _witchHexKillsThisMeeting = 0;
-        _lawyerObjectionsThisMeeting = 0;
+        _scavengerEatsThisRound = 0;
+        _serialKillerKillsThisRound = 0;
+        _wraithLastLanternReturn = -1000f;
 
         var local = PlayerControl.LocalPlayer;
         if (local == null)
@@ -66,100 +72,69 @@ public static class AchievementEvents
         {
             Tab.DoubleJeopardy.Unlock();
         }
-
-        CheckBadLuckAchievements(local);
     }
 
-    private static void CheckBadLuckAchievements(PlayerControl local)
+    private static void UnlockTentative(BaseAchievement achievement)
     {
-        var unluckyEnabled = LocalSettingsTabSingleton<MiraUnleashedLocalSettings>.Instance.EnableUnluckyAchievements.Value;
-
-        switch (local.Data?.Role)
+        if (achievement.Unlocked)
         {
-            case AurialRole or LookoutRole or MysticRole or SeerRole or DeputyRole or HunterRole or OfficerRole
-                or VeteranRole or VigilanteRole or ClericRole or MirrorcasterRole or WardenRole or OracleRole
-                or BarkeeperRole or ImitatorRole or EclipsalRole or BootleggerRole or MercenaryRole or FairyRole
-                or SurvivorRole or DoomsayerRole:
-                if (unluckyEnabled)
-                {
-                    Tab.UnluckyRole.Unlock();
-                }
-
-                break;
-            case AmbusherRole or BomberRole or WarlockRole or SpellslingerRole or HerbalistRole or PestilenceRole
-                or WerewolfRole or PlaguebearerRole or VampireRole or ChefRole or InquisitorRole:
-                Tab.CursedRole.Unlock();
-                break;
+            return;
         }
 
-        foreach (var modifier in local.GetModifiers<TouBaseGameModifier>())
+        achievement.Unlock();
+        _tentativeThisRound.Add(achievement);
+    }
+
+    private static void ResetTentative()
+    {
+        foreach (var achievement in _tentativeThisRound)
         {
-            if (modifier.HideOnUi)
-            {
-                continue;
-            }
-
-            switch (modifier)
-            {
-                case BaitModifier:
-                    Tab.CursedModifier.Unlock();
-                    break;
-                case LoverModifier or AssassinModifier or CluelessModifier or SpitefulModifier
-                    or DeadlyQuotaModifier:
-                    break;
-                default:
-                    if (unluckyEnabled)
-                    {
-                        Tab.UnluckyModifier.Unlock();
-                    }
-
-                    break;
-            }
+            achievement.Reset();
         }
+
+        _tentativeThisRound.Clear();
     }
 
     [RegisterEvent]
     public static void StartMeetingEventHandler(StartMeetingEvent @event)
     {
+        _tentativeThisRound.Clear();
         _meetingsSeen++;
         _witchHexKillsThisMeeting = 0;
-        _lawyerObjectionsThisMeeting = 0;
+        _scavengerEatsThisRound = 0;
+        _serialKillerKillsThisRound = 0;
     }
 
+    /// <summary>
+    /// Resets achievements that would be mooted by a Time Lord rewind.
+    /// </summary>
     [RegisterEvent]
-    public static void GameEndEventHandler(GameEndEvent @event)
+    public static void TouAbilityEventHandler(TouAbilityEvent @event)
     {
-        var local = PlayerControl.LocalPlayer;
-        if (local == null || !LocalPlayerWon())
+        if (@event.AbilityType != AbilityType.TimeLordRewind)
         {
             return;
         }
 
-        switch (local.Data?.Role)
-        {
-            case LawyerRole:
-                Tab.CaseClosed.Unlock();
-                break;
-            case ScavengerRole:
-                Tab.FullBelly.Unlock();
-                break;
-            case SerialKillerRole:
-                Tab.TheLastScene.Unlock();
-                break;
-        }
+        // Rewinding can undo the deaths/tasks/votes that earned these, so drop them.
+        ResetTentative();
 
-        if (local.HasModifier<CluelessModifier>())
-        {
-            Tab.PureInstinct.Unlock();
-        }
+        // Round-local kill/eat counts are also invalidated by a rewind.
+        _scavengerEatsThisRound = 0;
+        _serialKillerKillsThisRound = 0;
+        _witchHexKillsThisMeeting = 0;
     }
 
-    private static bool LocalPlayerWon()
+    /// <summary>
+    /// A host abort means the game never really concluded, so tentative unlocks are rolled back.
+    /// </summary>
+    [RegisterEvent]
+    public static void BeforeGameEndEventHandler(BeforeGameEndEvent @event)
     {
-        var local = PlayerControl.LocalPlayer;
-        return local != null
-               && EndGameResult.CachedWinners.ToArray()
-                   .Any(w => w.PlayerName == local.Data?.PlayerName);
+        if (CustomGameOver.Instance is HostGameOver)
+        {
+            ResetTentative();
+        }
     }
 
     [RegisterEvent]
@@ -180,6 +155,12 @@ public static class AchievementEvents
                     Tab.ColdOpen.Unlock();
                 }
 
+                _serialKillerKillsThisRound++;
+                if (_serialKillerKillsThisRound >= 3)
+                {
+                    Tab.Massacre.Unlock();
+                }
+
                 break;
             case WraithRole:
                 Tab.FadeToBlack.Increment(1);
@@ -193,6 +174,11 @@ public static class AchievementEvents
                     Tab.LamplightLethality.Unlock();
                 }
 
+                if (Time.time - _wraithLastLanternReturn <= 3f)
+                {
+                    Tab.LanternGuided.Unlock();
+                }
+
                 break;
             case HackerRole when HackerSystem.IsJammed:
                 Tab.LowPingHighCrime.Unlock();
@@ -204,13 +190,32 @@ public static class AchievementEvents
     public static void CompleteTaskEvent(CompleteTaskEvent @event)
     {
         var player = @event.Player;
-        if (player == null || !player.AmOwner || !player.HasModifier<CluelessModifier>())
+        if (player == null || !player.AmOwner)
         {
             return;
         }
 
-        Tab.WingIt.Unlock();
-        Tab.MuscleMemory.Increment(1);
+        if (player.HasModifier<CluelessModifier>())
+        {
+            Tab.WingIt.Unlock();
+            Tab.MuscleMemory.Increment(1);
+
+            if (HasCompletedAllTasks(player))
+            {
+                Tab.CluelessCompletionist.Unlock();
+            }
+        }
+    }
+
+    private static bool HasCompletedAllTasks(PlayerControl player)
+    {
+        if (player?.Data?.Tasks == null)
+        {
+            return false;
+        }
+
+        var tasks = player.Data.Tasks.ToArray();
+        return tasks.Length > 0 && tasks.All(t => t.Complete);
     }
 
     // --- Role/system hook points (called directly from role RPCs and systems) ---
@@ -224,6 +229,11 @@ public static class AchievementEvents
 
         Tab.Gottem.Unlock();
         Tab.CarnivalOfIllusions.Increment(1);
+
+        if (interactor.HasModifier<MorphlingMorphModifier>())
+        {
+            UnlockTentative(Tab.MirrorMatch);
+        }
     }
 
     public static void OnTrapperTrapTriggered(PlayerControl trapper, PlayerControl? victim)
@@ -277,6 +287,11 @@ public static class AchievementEvents
         {
             Tab.DoubleDose.Unlock();
         }
+
+        if (InjectionsPerTarget[target.PlayerId] == 3)
+        {
+            Tab.TripleThreat.Unlock();
+        }
     }
 
     public static void OnWitchSpell(PlayerControl witch)
@@ -286,15 +301,22 @@ public static class AchievementEvents
             return;
         }
 
-        Tab.HexMarksTheSpot.Unlock();
-        Tab.BoilAndTrouble.Increment(1);
+        Tab.MarkedForDeath.Unlock();
+        Tab.PracticedHand.Increment(1);
+
+        var currentCurses = PlayerControl.AllPlayerControls.ToArray()
+            .Count(p => p != null && p.HasModifier<WitchSpellboundModifier>());
+        if (currentCurses >= 5)
+        {
+            Tab.FullCoven.Unlock();
+        }
     }
 
     public static void OnWitchHexKill(PlayerControl witch)
     {
         if (witch.AmOwner && ++_witchHexKillsThisMeeting >= 2)
         {
-            Tab.BubbleBubble.Unlock();
+            Tab.TwinSacrifice.Unlock();
         }
     }
 
@@ -310,6 +332,11 @@ public static class AchievementEvents
         {
             Tab.SpeedrunLockdown.Unlock();
         }
+
+        if (HexBombSabotageSystem.Instance is { Stage: HexBombStage.Countdown })
+        {
+            Tab.UnderPressure.Unlock();
+        }
     }
 
     public static void OnScavengerEat(PlayerControl scavenger)
@@ -321,6 +348,12 @@ public static class AchievementEvents
 
         Tab.CleanPlateClub.Increment(1);
         Tab.BuffetRegular.Increment(1);
+
+        _scavengerEatsThisRound++;
+        if (_scavengerEatsThisRound >= 3)
+        {
+            Tab.BottomlessPit.Unlock();
+        }
     }
 
     public static void OnLawyerClientAssigned(PlayerControl lawyer)
@@ -331,11 +364,19 @@ public static class AchievementEvents
         }
     }
 
-    public static void OnLawyerObjectVotes(PlayerControl lawyer)
+    public static void OnLawyerObjectVotes(PlayerControl lawyer, bool clientHadVotes)
     {
-        if (lawyer.AmOwner && ++_lawyerObjectionsThisMeeting >= 2)
+        if (lawyer.AmOwner && clientHadVotes)
         {
-            Tab.ObjectionOverruled.Unlock();
+            Tab.ObjectionSustained.Unlock();
+        }
+    }
+
+    public static void OnWraithLanternReturned(PlayerControl wraith)
+    {
+        if (wraith.AmOwner)
+        {
+            _wraithLastLanternReturn = Time.time;
         }
     }
 
@@ -347,11 +388,24 @@ public static class AchievementEvents
         }
     }
 
-    public static void OnSpitefulEjected(PlayerControl exiled, int cursedVoterCount)
+    public static void OnSpitefulEjected(PlayerControl exiled, int cursedVoterCount, int totalVoters)
     {
-        if (exiled.AmOwner && cursedVoterCount > 1)
+        if (!exiled.AmOwner)
+        {
+            return;
+        }
+
+        if (cursedVoterCount >= 2)
         {
             Tab.MiseryLovesCompany.Unlock();
+        }
+
+        // The exiled player does not curse themselves, so a "full house" means everyone
+        // else who voted for them was cursed.
+        var nonSelfVoters = Mathf.Max(0, totalVoters - 1);
+        if (cursedVoterCount > 0 && cursedVoterCount >= nonSelfVoters)
+        {
+            Tab.PartingGift.Unlock();
         }
     }
 }

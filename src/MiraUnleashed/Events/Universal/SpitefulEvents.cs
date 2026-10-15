@@ -181,7 +181,7 @@ public static class SpitefulEvents
             && MiscUtils.PlayerById(voterId) is { } candidate
             && !candidate.HasDied()
             && !candidate.HasModifier<SpitefulEffectModifier>());
-        Achievements.AchievementEvents.OnSpitefulEjected(exiled, cursedVoterCount);
+        Achievements.AchievementEvents.OnSpitefulEjected(exiled, cursedVoterCount, voters.Count);
 
         foreach (var voterId in voters.ToList())
         {

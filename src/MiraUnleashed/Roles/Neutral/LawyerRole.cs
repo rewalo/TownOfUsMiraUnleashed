@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Text.RegularExpressions;
 using AmongUs.GameOptions;
 using Il2CppInterop.Runtime.Attributes;
@@ -641,7 +642,11 @@ public sealed class LawyerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnleas
 
         lawyerRole.ObjectionsUsed++; lawyerRole.ObjectionsUsedThisMeeting++; lawyerRole.HasObjected = true;
 
-        Events.Achievements.AchievementEvents.OnLawyerObjectVotes(lawyer);
+        var client = lawyerRole.Client;
+        var meetingHud = MeetingHud.Instance;
+        var clientHadVotes = client != null && meetingHud != null && meetingHud.playerStates.Any(pva =>
+            pva.VotedForId == client.PlayerId && !pva.AmDead);
+        Events.Achievements.AchievementEvents.OnLawyerObjectVotes(lawyer, clientHadVotes);
 
         TouAudio.PlaySound(MiraUnleashedAudio.ObjectionSound);
 

@@ -20,10 +20,6 @@ public class MiraUnleashedLocalSettings(ConfigFile config) : LocalSettingsTab(co
     public ConfigEntry<bool> EnableNauseaCameraShake { get; private set; } =
         config.Bind("Accessibility", "EnableNauseaCameraShake", true);
 
-    [LocalToggleSetting("MiraUnleashed.LocalSetting.EnableUnluckyAchievements")]
-    public ConfigEntry<bool> EnableUnluckyAchievements { get; private set; } =
-        config.Bind("Achievements", "EnableUnluckyAchievements", true);
-
     [LocalEnumSetting("MiraUnleashed.LocalSetting.CluelessCensorType", names:
     [
         "MiraUnleashed.LocalSetting.CluelessCensorType.WhiteBars",
