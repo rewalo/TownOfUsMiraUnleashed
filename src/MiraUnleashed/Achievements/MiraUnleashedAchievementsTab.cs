@@ -54,6 +54,13 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
         Category = Crew
     };
 
+    public MuBaseAchievement EleventhHour { get; set; } = new("Eleventh Hour",
+        "Activate the Forestaller lock while a critical sabotage is counting down.",
+        MiraUnleashedAssets.ForestallerRoleIcon, 2)
+    {
+        Category = Crew
+    };
+
     // Mirage
     public MuBaseAchievement Gottem { get; set; } = new("Gottem!",
         "Catch someone interacting with your decoy as Mirage.", MiraUnleashedCrewAssets.DecoyButtonSprite)
@@ -97,6 +104,20 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
         Category = Crew
     };
 
+    public MuBaseAchievement CaughtInTheAct { get; set; } = new("Caught in the Act",
+        "Snare a player who was invisible when they entered your trapped vent.",
+        MiraUnleashedAssets.TrapperRoleIcon, 2)
+    {
+        Category = Crew,
+        ToastTiming = AchToastTiming.OnGameEnd
+    };
+
+    public MuBaseAchievement CaughtAndConvicted { get; set; } = new("Caught and Convicted",
+        "Have a player you snared get ejected in the very next meeting.", MiraUnleashedAssets.TrapperRoleIcon, 1)
+    {
+        Category = Crew
+    };
+
     // Charlatan
     public MuBaseAchievement BodyDouble { get; set; } = new("Body Double",
         "Fully conceal a body as Charlatan.", MiraUnleashedImpAssets.ConcealButtonSprite)
@@ -111,6 +132,13 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
         Category = Imp
     };
 
+    public MuBaseAchievement Framed { get; set; } = new("Framed",
+        "Deceive-report a body and have a different player ejected in that meeting.",
+        MiraUnleashedImpAssets.DeceiveButtonSprite, 2)
+    {
+        Category = Imp
+    };
+
     // Hacker
     public CountAchievement DdosAttack { get; set; } = new MuCountAchievement("DDoS Attack",
         "Jam players 3 times as Hacker in a single game.", MiraUnleashedImpAssets.HackerJamButtonSprite, 3,
@@ -121,6 +149,18 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
 
     public MuBaseAchievement LowPingHighCrime { get; set; } = new("Low Ping, High Crime",
         "Kill a player while your jam is active.", MiraUnleashedImpAssets.HackerRole, 1)
+    {
+        Category = Imp
+    };
+
+    public MuBaseAchievement Blackout { get; set; } = new("Blackout",
+        "Activate Jam while lights are sabotaged.", MiraUnleashedImpAssets.HackerJamButtonSprite, 1)
+    {
+        Category = Imp
+    };
+
+    public MuBaseAchievement BackdoorAccess { get; set; } = new("Backdoor Access",
+        "Activate Jam while a Forestaller has locked out sabotages.", MiraUnleashedImpAssets.HackerRole, 2)
     {
         Category = Imp
     };
@@ -147,6 +187,19 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
 
     public MuBaseAchievement TripleThreat { get; set; } = new("Triple Threat",
         "Inject the same player three times in one game.", MiraUnleashedImpAssets.InjectorRole, 2)
+    {
+        Category = Imp
+    };
+
+    public MuBaseAchievement BadMedicine { get; set; } = new("Bad Medicine",
+        "Inject a player who is under a Witch's spell.", MiraUnleashedImpAssets.InjectorInjectButtonSprite, 1)
+    {
+        Category = Imp
+    };
+
+    public MuBaseAchievement LabRat { get; set; } = new("Lab Rat",
+        "Have a player you injected get killed by a teammate before the next meeting.",
+        MiraUnleashedImpAssets.InjectorRole, 1)
     {
         Category = Imp
     };
@@ -179,6 +232,13 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
         "Have 5 players under your spell at the same time.", MiraUnleashedAssets.HexedSprite, 2)
     {
         Category = Imp
+    };
+
+    public MuBaseAchievement DoubleHex { get; set; } = new("Double Hex",
+        "Cast a spell on a player already hexed by a Spellslinger.", MiraUnleashedAssets.HexedSprite, 2)
+    {
+        Category = Imp,
+        ToastTiming = AchToastTiming.OnGameEnd
     };
 
     // Wraith
@@ -223,6 +283,12 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
         ToastTiming = AchToastTiming.OnMeetingEnd
     };
 
+    public MuBaseAchievement DevilsAdvocate { get; set; } = new("Devil's Advocate",
+        "Win as Lawyer while your client is an Impostor or Neutral Killer.", TouRoleIcons.Lawyer, 2)
+    {
+        Category = Neut
+    };
+
     // Scavenger
     public CountAchievement CleanPlateClub { get; set; } = new MuCountAchievement("Clean Plate Club",
         "Eat 3 bodies in a single game as Scavenger.", MiraUnleashedAssets.ScavengerEatButtonSprite, 3,
@@ -244,6 +310,12 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
         Category = Neut
     };
 
+    public MuBaseAchievement FastFood { get; set; } = new("Fast Food",
+        "Eat a body within 10 seconds of the kill.", MiraUnleashedAssets.ScavengerEatButtonSprite, 1)
+    {
+        Category = Neut
+    };
+
     // Serial Killer
     public MuBaseAchievement ColdOpen { get; set; } = new("Cold Open",
         "Claim the first kill of the game as Serial Killer.", TouRoleIcons.SerialKiller)
@@ -261,6 +333,12 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
 
     public MuBaseAchievement Massacre { get; set; } = new("Massacre",
         "Kill 3 players as Serial Killer in a single round.", TouRoleIcons.SerialKiller, 2)
+    {
+        Category = Neut
+    };
+
+    public MuBaseAchievement SnakeInThePipes { get; set; } = new("Snake in the Pipes",
+        "Kill a player inside a vent as Serial Killer.", TouRoleIcons.SerialKiller, 1)
     {
         Category = Neut
     };
@@ -287,4 +365,17 @@ public sealed class MiraUnleashedAchievementsTab : AchievementsTab
     public MuBaseAchievement CluelessCompletionist { get; set; } = new("Clueless Completionist",
         "Complete all tasks as a Clueless player in a single game.",
         MiraUnleashedAssets.CluelessModifierIcon, 2);
+
+    public MuBaseAchievement BurnTheWitch { get; set; } = new("Burn the Witch",
+        "While under a Witch's spell, vote out the Witch and live to tell about it.",
+        MiraUnleashedAssets.HexedSprite, 1)
+    {
+        ToastTiming = AchToastTiming.OnMeetingEnd
+    };
+
+    public MuBaseAchievement BlindJustice { get; set; } = new("Blind Justice",
+        "Vote out an Impostor or Neutral Killer while Clueless.", MiraUnleashedAssets.CluelessModifierIcon, 1)
+    {
+        ToastTiming = AchToastTiming.OnGameEnd
+    };
 }

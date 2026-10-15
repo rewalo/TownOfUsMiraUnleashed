@@ -6,6 +6,7 @@ using MiraAPI.Events.Vanilla.Meeting;
 using MiraAPI.Events.Vanilla.Player;
 using MiraAPI.GameEnd;
 using MiraAPI.Modifiers;
+using MiraAPI.Utilities;
 using MiraUnleashed.Achievements;
 using MiraUnleashed.Modifiers;
 using MiraUnleashed.Modules;
@@ -14,9 +15,12 @@ using MiraUnleashed.Roles.Impostor;
 using MiraUnleashed.Roles.Neutral;
 using TownOfUs.Events.TouEvents;
 using TownOfUs.GameOver;
+using TownOfUs.Modifiers;
 using TownOfUs.Modifiers.Impostor;
 using TownOfUs.Modules;
 using TownOfUs.Modules.Components;
+using TownOfUs.Roles;
+using TownOfUs.Utilities;
 using UnityEngine;
 
 namespace MiraUnleashed.Events.Achievements;
@@ -35,6 +39,10 @@ public static class AchievementEvents
     private static int _scavengerEatsThisRound;
     private static int _serialKillerKillsThisRound;
     private static float _wraithLastLanternReturn;
+    private static readonly HashSet<byte> _snaredThisRound = new();
+    private static readonly HashSet<byte> _injectedThisRound = new();
+    private static readonly Dictionary<byte, float> _killTimes = new();
+    private static bool _charlatanDeceivedThisMeeting;
 
     // Hidden-information achievements unlock immediately (with a deferred toast) but are
     // tracked here so a Time Lord rewind or host abort can reset them before the toast shows.
@@ -56,6 +64,10 @@ public static class AchievementEvents
         _scavengerEatsThisRound = 0;
         _serialKillerKillsThisRound = 0;
         _wraithLastLanternReturn = -1000f;
+        _snaredThisRound.Clear();
+        _injectedThisRound.Clear();
+        _killTimes.Clear();
+        _charlatanDeceivedThisMeeting = false;
 
         var local = PlayerControl.LocalPlayer;
         if (local == null)
@@ -103,6 +115,71 @@ public static class AchievementEvents
         _witchHexKillsThisMeeting = 0;
         _scavengerEatsThisRound = 0;
         _serialKillerKillsThisRound = 0;
+        _injectedThisRound.Clear();
+    }
+
+    [RegisterEvent]
+    public static void EndMeetingEventHandler(EndMeetingEvent @event)
+    {
+        _snaredThisRound.Clear();
+        _charlatanDeceivedThisMeeting = false;
+    }
+
+    [RegisterEvent]
+    public static void EjectionEventHandler(EjectionEvent @event)
+    {
+        var exiled = @event.ExileController?.initData?.networkedPlayer?.Object;
+        var local = PlayerControl.LocalPlayer;
+        if (exiled == null || local == null)
+        {
+            return;
+        }
+
+        if (_snaredThisRound.Contains(exiled.PlayerId))
+        {
+            Tab.CaughtAndConvicted.Unlock();
+        }
+
+        if (_charlatanDeceivedThisMeeting && exiled != local)
+        {
+            Tab.Framed.Unlock();
+        }
+
+        if (!local.HasDied()
+            && local.GetModifiers<WitchSpellboundModifier>().Any(m => m.WitchId == exiled.PlayerId)
+            && local.GetVoteData().VotedFor(exiled.PlayerId))
+        {
+            Tab.BurnTheWitch.Unlock();
+        }
+
+        if (local.HasModifier<CluelessModifier>()
+            && local.GetVoteData().VotedFor(exiled.PlayerId)
+            && (exiled.IsImpostor() || exiled.Is(RoleAlignment.NeutralKilling)))
+        {
+            Tab.BlindJustice.Unlock();
+        }
+    }
+
+    [RegisterEvent]
+    public static void GameEndEventHandler(GameEndEvent @event)
+    {
+        var local = PlayerControl.LocalPlayer;
+        if (local?.Data?.Role is not LawyerRole lawyerRole || !LocalPlayerWon(local))
+        {
+            return;
+        }
+
+        var client = lawyerRole.Client;
+        if (client != null && (client.IsImpostor() || client.Is(RoleAlignment.NeutralKilling)))
+        {
+            Tab.DevilsAdvocate.Unlock();
+        }
+    }
+
+    private static bool LocalPlayerWon(PlayerControl local)
+    {
+        return EndGameResult.CachedWinners.ToArray()
+            .Any(w => w.PlayerName == local.Data?.PlayerName);
     }
 
     /// <summary>
@@ -138,10 +215,44 @@ public static class AchievementEvents
     }
 
     [RegisterEvent]
+    public static void BeforeMurderEventHandler(BeforeMurderEvent @event)
+    {
+        var killer = @event.Source;
+        var victim = @event.Target;
+        if (killer == null || victim == null || !killer.AmOwner || !killer.IsRole<SerialKillerRole>())
+        {
+            return;
+        }
+
+        if (SerialKillerVentKillSystem.TryGetVentKillTarget(killer.PlayerId, out var ventTarget)
+            && ventTarget != null && ventTarget.PlayerId == victim.PlayerId)
+        {
+            Tab.SnakeInThePipes.Unlock();
+        }
+    }
+
+    [RegisterEvent]
     public static void AfterMurderEventHandler(AfterMurderEvent @event)
     {
         var source = @event.Source;
-        if (source == null || !source.AmOwner || source == @event.Target)
+        var target = @event.Target;
+        if (source == null || target == null)
+        {
+            return;
+        }
+
+        _killTimes[target.PlayerId] = Time.time;
+
+        var local = PlayerControl.LocalPlayer;
+        if (_injectedThisRound.Contains(target.PlayerId)
+            && source != local
+            && source.IsImpostor()
+            && local?.Data?.Role is InjectorRole)
+        {
+            Tab.LabRat.Unlock();
+        }
+
+        if (!source.AmOwner || source == target)
         {
             return;
         }
@@ -246,6 +357,13 @@ public static class AchievementEvents
         Tab.WelcomingCommittee.Unlock();
         Tab.PestControl.Increment(1);
         Tab.RedHanded.Increment(1);
+
+        _snaredThisRound.Add(victim.PlayerId);
+
+        if (victim.GetModifiers<ConcealedModifier>().Any())
+        {
+            UnlockTentative(Tab.CaughtInTheAct);
+        }
     }
 
     public static void OnCharlatanConcealComplete(PlayerControl charlatan)
@@ -258,17 +376,34 @@ public static class AchievementEvents
 
     public static void OnCharlatanDeceive(PlayerControl charlatan)
     {
-        if (charlatan.AmOwner)
+        if (!charlatan.AmOwner)
         {
-            Tab.SmokeAndMirrors.Increment(1);
+            return;
         }
+
+        Tab.SmokeAndMirrors.Increment(1);
+        _charlatanDeceivedThisMeeting = true;
     }
 
     public static void OnHackerJamStarted(PlayerControl hacker)
     {
-        if (hacker.AmOwner)
+        if (!hacker.AmOwner)
         {
-            Tab.DdosAttack.Increment(1);
+            return;
+        }
+
+        Tab.DdosAttack.Increment(1);
+
+        if (ShipStatus.Instance != null
+            && ShipStatus.Instance.Systems.TryGetValue(SystemTypes.Electrical, out var lightsSystem)
+            && lightsSystem.TryCast<SwitchSystem>() is { IsActive: true })
+        {
+            Tab.Blackout.Unlock();
+        }
+
+        if (ForestallerSystem.AnyActiveForestallerAlive())
+        {
+            Tab.BackdoorAccess.Unlock();
         }
     }
 
@@ -282,6 +417,12 @@ public static class AchievementEvents
         Tab.Malpractice.Unlock();
         Tab.ClinicalTrial.Increment(1);
 
+        _injectedThisRound.Add(target.PlayerId);
+        if (target.HasModifier<WitchSpellboundModifier>())
+        {
+            Tab.BadMedicine.Unlock();
+        }
+
         InjectionsPerTarget[target.PlayerId] = InjectionsPerTarget.GetValueOrDefault(target.PlayerId) + 1;
         if (InjectionsPerTarget[target.PlayerId] == 2)
         {
@@ -294,7 +435,7 @@ public static class AchievementEvents
         }
     }
 
-    public static void OnWitchSpell(PlayerControl witch)
+    public static void OnWitchSpell(PlayerControl witch, PlayerControl? target)
     {
         if (!witch.AmOwner)
         {
@@ -303,6 +444,11 @@ public static class AchievementEvents
 
         Tab.MarkedForDeath.Unlock();
         Tab.PracticedHand.Increment(1);
+
+        if (target != null && target.HasModifier<SpellslingerHexedModifier>())
+        {
+            UnlockTentative(Tab.DoubleHex);
+        }
 
         var currentCurses = PlayerControl.AllPlayerControls.ToArray()
             .Count(p => p != null && p.HasModifier<WitchSpellboundModifier>());
@@ -337,9 +483,21 @@ public static class AchievementEvents
         {
             Tab.UnderPressure.Unlock();
         }
+
+        if (ShipStatus.Instance != null)
+        {
+            foreach (var system in ShipStatus.Instance.Systems.Values)
+            {
+                if (system.TryCast<ICriticalSabotage>() is { IsActive: true })
+                {
+                    Tab.EleventhHour.Unlock();
+                    break;
+                }
+            }
+        }
     }
 
-    public static void OnScavengerEat(PlayerControl scavenger)
+    public static void OnScavengerEat(PlayerControl scavenger, byte bodyId)
     {
         if (!scavenger.AmOwner)
         {
@@ -348,6 +506,11 @@ public static class AchievementEvents
 
         Tab.CleanPlateClub.Increment(1);
         Tab.BuffetRegular.Increment(1);
+
+        if (_killTimes.TryGetValue(bodyId, out var killTime) && Time.time - killTime <= 10f)
+        {
+            Tab.FastFood.Unlock();
+        }
 
         _scavengerEatsThisRound++;
         if (_scavengerEatsThisRound >= 3)

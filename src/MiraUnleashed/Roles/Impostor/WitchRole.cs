@@ -102,7 +102,7 @@ public sealed class WitchRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnleas
                 TouAudio.PlaySound(MiraUnleashedAudio.WitchLaugh);
             }
 
-            Events.Achievements.AchievementEvents.OnWitchSpell(witch);
+            Events.Achievements.AchievementEvents.OnWitchSpell(witch, target);
             QueueSpellNotification(target);
         }
     }

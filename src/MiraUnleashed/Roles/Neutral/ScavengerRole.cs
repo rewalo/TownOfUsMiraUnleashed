@@ -187,7 +187,7 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
         role.BodiesEaten++;
         ScavengerSystem.MarkBodyEaten(bodyId);
 
-        Events.Achievements.AchievementEvents.OnScavengerEat(scavenger);
+        Events.Achievements.AchievementEvents.OnScavengerEat(scavenger, bodyId);
 
         if (scavenger.AmOwner)
         {
