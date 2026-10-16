@@ -1,8 +1,7 @@
 using System.Reflection;
-using AchievementsAPI.API;
 using MiraUnleashed.Achievements;
-using TownOfUs.Modules;
 using Reactor.Utilities.Attributes;
+using TownOfUs.Achievements;
 using UnityEngine;
 
 namespace MiraUnleashed.DebugTools;
@@ -17,7 +16,6 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
     private static DevDebugMenu? _instance;
 
     private readonly HashSet<string> _loggedErrors = new();
-    private readonly Dictionary<Type, List<(PropertyInfo Prop, BaseAchievement Ach)>> _achievementCache = new();
     private Rect _windowRect = new(0, 0, 820, 820);
     private Vector2 _scroll;
     private string? _error;
@@ -31,8 +29,6 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
     private const float MinWidth = 360;
     private const float MinHeight = 240;
     private const float ResizeGrip = 22;
-
-    private int _achievementsTabIndex = -1;
 
     private GUIStyle? _titleStyle;
     private GUIStyle? _descStyle;
@@ -211,117 +207,70 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
             return;
         }
 
-        var tabs = AchievementsManager.Tabs;
-        if (tabs.Count == 0)
-        {
-            GUILayout.Label("No achievement tabs registered.");
-            return;
-        }
-
-        if (_achievementsTabIndex < 0 || _achievementsTabIndex >= tabs.Count)
-        {
-            _achievementsTabIndex = Math.Max(0, tabs.FindIndex(t => t is MiraUnleashedAchievementsTab));
-        }
-
-        GUILayout.BeginHorizontal();
-        for (var i = 0; i < tabs.Count; i++)
-        {
-            if (GUILayout.Toggle(_achievementsTabIndex == i, AchievementsStrings.GetText(tabs[i].Name), GUI.skin.button))
-            {
-                _achievementsTabIndex = i;
-            }
-        }
-
-        GUILayout.EndHorizontal();
-
-        var tab = tabs[_achievementsTabIndex];
-        var achievements = GetAchievements(tab);
-
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Unlock all"))
         {
-            foreach (var (_, ach) in achievements)
+            foreach (var spec in MuAchievements.All)
             {
-                ach.Unlock();
+                AchievementsAPIHelper.Unlock(spec);
             }
         }
 
         if (GUILayout.Button("Reset all"))
         {
-            foreach (var (_, ach) in achievements)
+            foreach (var spec in MuAchievements.All)
             {
-                ResetAchievement(ach);
+                AchievementsAPIHelper.Reset(spec);
             }
         }
 
         GUILayout.EndHorizontal();
 
-        foreach (var (_, ach) in achievements)
+        foreach (var spec in MuAchievements.All)
         {
-            DrawAchievementRow(ach);
+            DrawAchievementRow(spec);
         }
     }
 
-    private List<(PropertyInfo Prop, BaseAchievement Ach)> GetAchievements(AchievementsTab tab)
+    private void DrawAchievementRow(AchievementSpec spec)
     {
-        var type = tab.GetType();
-        if (_achievementCache.TryGetValue(type, out var cached))
+        var name = spec.Name + (spec.Hidden ? " (hidden)" : string.Empty);
+        if (spec.ProgressGoal > 0)
         {
-            return cached;
-        }
-
-        var list = new List<(PropertyInfo, BaseAchievement)>();
-        foreach (var prop in type.GetProperties()
-                     .Where(p => typeof(BaseAchievement).IsAssignableFrom(p.PropertyType)))
-        {
-            if (prop.GetValue(tab) is BaseAchievement ach)
-            {
-                list.Add((prop, ach));
-            }
-        }
-
-        _achievementCache[type] = list;
-        return list;
-    }
-
-    private void DrawAchievementRow(BaseAchievement ach)
-    {
-        var name = ach.GetName() + (ach.Hidden ? " (hidden)" : string.Empty);
-        if (ach is CountAchievement count)
-        {
-            name += $"  [{count.CurrentValue}/{count.RequiredValue}]";
+            var current = AchievementsAPIHelper.GetCurrentValue(spec);
+            name += $"  [{current}/{spec.ProgressGoal}]";
         }
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label(ach.Unlocked ? "[x]" : "[ ]", GUILayout.Width(30));
+        GUILayout.Label(AchievementsAPIHelper.IsUnlocked(spec) ? "[x]" : "[ ]", GUILayout.Width(30));
         GUILayout.Label(name);
         GUILayout.EndHorizontal();
-        GUILayout.Label(ach.GetDescription(), _descStyle);
+        GUILayout.Label(spec.Description, _descStyle);
 
         GUILayout.BeginHorizontal();
-        GUI.enabled = !ach.Unlocked;
+        GUI.enabled = !AchievementsAPIHelper.IsUnlocked(spec);
         if (GUILayout.Button("Unlock", GUILayout.Width(70)))
         {
-            ach.Unlock();
+            AchievementsAPIHelper.Unlock(spec);
         }
 
         GUI.enabled = true;
         if (GUILayout.Button("Reset", GUILayout.Width(60)))
         {
-            ResetAchievement(ach);
+            AchievementsAPIHelper.Reset(spec);
         }
 
-        if (ach is CountAchievement c)
+        if (spec.ProgressGoal > 0)
         {
             if (GUILayout.Button("+1", GUILayout.Width(40)))
             {
-                c.Increment(1);
+                AchievementsAPIHelper.Increment(spec, 1);
             }
 
-            GUI.enabled = c.CurrentValue > 0;
+            GUI.enabled = AchievementsAPIHelper.GetCurrentValue(spec) > 0;
             if (GUILayout.Button("-1", GUILayout.Width(40)))
             {
-                c.SetValue(Math.Max(0, c.CurrentValue - 1));
+                AchievementsAPIHelper.SetValue(spec, Mathf.Max(0, AchievementsAPIHelper.GetCurrentValue(spec) - 1));
             }
 
             GUI.enabled = true;
@@ -329,17 +278,5 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
 
         GUILayout.EndHorizontal();
         GUILayout.Space(6);
-    }
-
-    private static void ResetAchievement(BaseAchievement ach)
-    {
-        if (ach is CountAchievement count)
-        {
-            AchievementStorage.AchievementDataReset(count, 0, false);
-        }
-        else
-        {
-            AchievementStorage.AchievementDataReset(ach, false);
-        }
     }
 }

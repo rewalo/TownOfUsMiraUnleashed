@@ -1,5 +1,4 @@
 using System.Linq;
-using AchievementsAPI.API;
 using MiraAPI.Events;
 using MiraAPI.Events.Vanilla.Gameplay;
 using MiraAPI.Events.Vanilla.Meeting;
@@ -13,10 +12,12 @@ using MiraUnleashed.Modules;
 using MiraUnleashed.Roles;
 using MiraUnleashed.Roles.Impostor;
 using MiraUnleashed.Roles.Neutral;
+using TownOfUs.Achievements;
 using TownOfUs.Events.TouEvents;
 using TownOfUs.GameOver;
 using TownOfUs.Modifiers;
 using TownOfUs.Modifiers.Impostor;
+using TownOfUs.Modules;
 using TownOfUs.Modules.Components;
 using TownOfUs.Roles;
 using TownOfUs.Utilities;
@@ -25,13 +26,12 @@ using UnityEngine;
 namespace MiraUnleashed.Events.Achievements;
 
 /// <summary>
-/// Central hub for Mira Unleashed achievement triggers. Awards go through the
-/// Achievements API's tab singletons, which are populated when the API scans
-/// this assembly's <see cref="AchievementsTab"/> subclasses at load.
+/// Central hub for Mira Unleashed achievement triggers. Awards go through the shared
+/// <see cref="AchievementsAPIHelper"/>, which is a no-op when the Achievements API plugin
+/// is not installed.
 /// </summary>
 public static class AchievementEvents
 {
-    private static MiraUnleashedAchievementsTab Tab => AchievementsTabSingleton<MiraUnleashedAchievementsTab>.Instance;
     private static readonly Dictionary<byte, int> InjectionsPerTarget = new();
     private static int _meetingsSeen;
     private static int _witchHexKillsThisMeeting;
@@ -45,12 +45,12 @@ public static class AchievementEvents
 
     // Hidden-information achievements unlock immediately (with a deferred toast) but are
     // tracked here so a Time Lord rewind or host abort can reset them before the toast shows.
-    private static readonly HashSet<BaseAchievement> _tentativeThisRound = new();
+    private static readonly HashSet<AchievementSpec> _tentativeThisRound = new();
 
     [RegisterEvent]
     public static void RoundStartEventHandler(RoundStartEvent @event)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        if (!AchievementsAPIHelper.IsLoaded)
         {
             return;
         }
@@ -81,36 +81,36 @@ public static class AchievementEvents
 
         if (local.Data?.Role is IMiraUnleashedRole)
         {
-            Tab.Unleashed.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.Unleashed);
         }
 
         if (local.HasModifier<SpitefulModifier>() && local.HasModifier<CluelessModifier>())
         {
-            Tab.DoubleJeopardy.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.DoubleJeopardy);
         }
     }
 
-    private static void UnlockTentative(BaseAchievement achievement)
+    private static void UnlockTentative(AchievementSpec achievement)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || achievement.Unlocked)
+        if (!AchievementsAPIHelper.IsLoaded || AchievementsAPIHelper.IsUnlocked(achievement))
         {
             return;
         }
 
-        achievement.Unlock();
+        AchievementsAPIHelper.Unlock(achievement);
         _tentativeThisRound.Add(achievement);
     }
 
     private static void ResetTentative()
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        if (!AchievementsAPIHelper.IsLoaded)
         {
             return;
         }
 
         foreach (var achievement in _tentativeThisRound)
         {
-            achievement.Reset();
+            AchievementsAPIHelper.Reset(achievement);
         }
 
         _tentativeThisRound.Clear();
@@ -119,7 +119,7 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void StartMeetingEventHandler(StartMeetingEvent @event)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        if (!AchievementsAPIHelper.IsLoaded)
         {
             return;
         }
@@ -135,7 +135,7 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void EndMeetingEventHandler(EndMeetingEvent @event)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        if (!AchievementsAPIHelper.IsLoaded)
         {
             return;
         }
@@ -147,7 +147,7 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void EjectionEventHandler(EjectionEvent @event)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        if (!AchievementsAPIHelper.IsLoaded)
         {
             return;
         }
@@ -161,33 +161,33 @@ public static class AchievementEvents
 
         if (_snaredThisRound.Contains(exiled.PlayerId))
         {
-            Tab.CaughtAndConvicted.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.CaughtAndConvicted);
         }
 
         if (_charlatanDeceivedThisMeeting && exiled != local)
         {
-            Tab.Framed.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.Framed);
         }
 
         if (!local.HasDied()
             && local.GetModifiers<WitchSpellboundModifier>().Any(m => m.WitchId == exiled.PlayerId)
             && local.GetVoteData().VotedFor(exiled.PlayerId))
         {
-            Tab.BurnTheWitch.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.BurnTheWitch);
         }
 
         if (local.HasModifier<CluelessModifier>()
             && local.GetVoteData().VotedFor(exiled.PlayerId)
             && (exiled.IsImpostor() || exiled.Is(RoleAlignment.NeutralKilling)))
         {
-            Tab.BlindJustice.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.BlindJustice);
         }
     }
 
     [RegisterEvent]
     public static void GameEndEventHandler(GameEndEvent @event)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        if (!AchievementsAPIHelper.IsLoaded)
         {
             return;
         }
@@ -201,7 +201,7 @@ public static class AchievementEvents
         var client = lawyerRole.Client;
         if (client != null && (client.IsImpostor() || client.Is(RoleAlignment.NeutralKilling)))
         {
-            Tab.DevilsAdvocate.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.DevilsAdvocate);
         }
     }
 
@@ -217,7 +217,7 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void TouAbilityEventHandler(TouAbilityEvent @event)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || @event.AbilityType != AbilityType.TimeLordRewind)
+        if (!AchievementsAPIHelper.IsLoaded || @event.AbilityType != AbilityType.TimeLordRewind)
         {
             return;
         }
@@ -237,7 +237,7 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void BeforeGameEndEventHandler(BeforeGameEndEvent @event)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        if (!AchievementsAPIHelper.IsLoaded)
         {
             return;
         }
@@ -251,7 +251,7 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void BeforeMurderEventHandler(BeforeMurderEvent @event)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        if (!AchievementsAPIHelper.IsLoaded)
         {
             return;
         }
@@ -266,14 +266,14 @@ public static class AchievementEvents
         if (SerialKillerVentKillSystem.TryGetVentKillTarget(killer.PlayerId, out var ventTarget)
             && ventTarget != null && ventTarget.PlayerId == victim.PlayerId)
         {
-            Tab.SnakeInThePipes.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.SnakeInThePipes);
         }
     }
 
     [RegisterEvent]
     public static void AfterMurderEventHandler(AfterMurderEvent @event)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        if (!AchievementsAPIHelper.IsLoaded)
         {
             return;
         }
@@ -293,7 +293,7 @@ public static class AchievementEvents
             && source.IsImpostor()
             && local?.Data?.Role is InjectorRole)
         {
-            Tab.LabRat.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.LabRat);
         }
 
         if (!source.AmOwner || source == target)
@@ -304,39 +304,39 @@ public static class AchievementEvents
         switch (source.Data?.Role)
         {
             case SerialKillerRole:
-                Tab.SerialSeason.Increment(1);
-                if (TownOfUs.Modules.GameHistory.KilledPlayers.Count <= 1)
+                AchievementsAPIHelper.Increment(MuAchievements.SerialSeason, 1);
+                if (GameHistory.KilledPlayers.Count <= 1)
                 {
-                    Tab.ColdOpen.Unlock();
+                    AchievementsAPIHelper.Unlock(MuAchievements.ColdOpen);
                 }
 
                 _serialKillerKillsThisRound++;
                 if (_serialKillerKillsThisRound >= 3)
                 {
-                    Tab.Massacre.Unlock();
+                    AchievementsAPIHelper.Unlock(MuAchievements.Massacre);
                 }
 
                 break;
             case WraithRole:
-                Tab.FadeToBlack.Increment(1);
+                AchievementsAPIHelper.Increment(MuAchievements.FadeToBlack, 1);
                 if (source.HasModifier<WraithDashModifier>())
                 {
-                    Tab.HitTheGroundScreaming.Unlock();
+                    AchievementsAPIHelper.Unlock(MuAchievements.HitTheGroundScreaming);
                 }
 
                 if (source.HasModifier<WraithLanternInvisibilityModifier>())
                 {
-                    Tab.LamplightLethality.Unlock();
+                    AchievementsAPIHelper.Unlock(MuAchievements.LamplightLethality);
                 }
 
                 if (Time.time - _wraithLastLanternReturn <= 3f)
                 {
-                    Tab.LanternGuided.Unlock();
+                    AchievementsAPIHelper.Unlock(MuAchievements.LanternGuided);
                 }
 
                 break;
             case HackerRole when HackerSystem.IsJammed:
-                Tab.LowPingHighCrime.Unlock();
+                AchievementsAPIHelper.Unlock(MuAchievements.LowPingHighCrime);
                 break;
         }
     }
@@ -344,7 +344,7 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void CompleteTaskEvent(CompleteTaskEvent @event)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        if (!AchievementsAPIHelper.IsLoaded)
         {
             return;
         }
@@ -357,12 +357,12 @@ public static class AchievementEvents
 
         if (player.HasModifier<CluelessModifier>())
         {
-            Tab.WingIt.Unlock();
-            Tab.MuscleMemory.Increment(1);
+            AchievementsAPIHelper.Unlock(MuAchievements.WingIt);
+            AchievementsAPIHelper.Increment(MuAchievements.MuscleMemory, 1);
 
             if (HasCompletedAllTasks(player))
             {
-                Tab.CluelessCompletionist.Unlock();
+                AchievementsAPIHelper.Unlock(MuAchievements.CluelessCompletionist);
             }
         }
     }
@@ -382,159 +382,159 @@ public static class AchievementEvents
 
     public static void OnMirageDecoyTriggered(PlayerControl mirage, PlayerControl? interactor)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !mirage.AmOwner || interactor == null || interactor == mirage)
+        if (!AchievementsAPIHelper.IsLoaded || !mirage.AmOwner || interactor == null || interactor == mirage)
         {
             return;
         }
 
-        Tab.Gottem.Unlock();
-        Tab.CarnivalOfIllusions.Increment(1);
+        AchievementsAPIHelper.Unlock(MuAchievements.Gottem);
+        AchievementsAPIHelper.Increment(MuAchievements.CarnivalOfIllusions, 1);
 
         if (interactor.HasModifier<MorphlingMorphModifier>())
         {
-            UnlockTentative(Tab.MirrorMatch);
+            UnlockTentative(MuAchievements.MirrorMatch);
         }
     }
 
     public static void OnTrapperTrapTriggered(PlayerControl trapper, PlayerControl? victim)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !trapper.AmOwner || victim == null || victim == trapper)
+        if (!AchievementsAPIHelper.IsLoaded || !trapper.AmOwner || victim == null || victim == trapper)
         {
             return;
         }
 
-        Tab.WelcomingCommittee.Unlock();
-        Tab.PestControl.Increment(1);
-        Tab.RedHanded.Increment(1);
+        AchievementsAPIHelper.Unlock(MuAchievements.WelcomingCommittee);
+        AchievementsAPIHelper.Increment(MuAchievements.PestControl, 1);
+        AchievementsAPIHelper.Increment(MuAchievements.RedHanded, 1);
 
         _snaredThisRound.Add(victim.PlayerId);
 
         if (victim.GetModifiers<ConcealedModifier>().Any())
         {
-            UnlockTentative(Tab.CaughtInTheAct);
+            UnlockTentative(MuAchievements.CaughtInTheAct);
         }
     }
 
     public static void OnCharlatanConcealComplete(PlayerControl charlatan)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !charlatan.AmOwner)
+        if (!AchievementsAPIHelper.IsLoaded || !charlatan.AmOwner)
         {
             return;
         }
 
-        Tab.BodyDouble.Unlock();
+        AchievementsAPIHelper.Unlock(MuAchievements.BodyDouble);
     }
 
     public static void OnCharlatanDeceive(PlayerControl charlatan)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !charlatan.AmOwner)
+        if (!AchievementsAPIHelper.IsLoaded || !charlatan.AmOwner)
         {
             return;
         }
 
-        Tab.SmokeAndMirrors.Increment(1);
+        AchievementsAPIHelper.Increment(MuAchievements.SmokeAndMirrors, 1);
         _charlatanDeceivedThisMeeting = true;
     }
 
     public static void OnHackerJamStarted(PlayerControl hacker)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !hacker.AmOwner)
+        if (!AchievementsAPIHelper.IsLoaded || !hacker.AmOwner)
         {
             return;
         }
 
-        Tab.DdosAttack.Increment(1);
+        AchievementsAPIHelper.Increment(MuAchievements.DdosAttack, 1);
 
         if (ShipStatus.Instance != null
             && ShipStatus.Instance.Systems.TryGetValue(SystemTypes.Electrical, out var lightsSystem)
             && lightsSystem.TryCast<SwitchSystem>() is { IsActive: true })
         {
-            Tab.Blackout.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.Blackout);
         }
 
         if (ForestallerSystem.AnyActiveForestallerAlive())
         {
-            Tab.BackdoorAccess.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.BackdoorAccess);
         }
     }
 
     public static void OnInjectorInject(PlayerControl injector, PlayerControl target)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !injector.AmOwner || target == null)
+        if (!AchievementsAPIHelper.IsLoaded || !injector.AmOwner || target == null)
         {
             return;
         }
 
-        Tab.Malpractice.Unlock();
-        Tab.ClinicalTrial.Increment(1);
+        AchievementsAPIHelper.Unlock(MuAchievements.Malpractice);
+        AchievementsAPIHelper.Increment(MuAchievements.ClinicalTrial, 1);
 
         _injectedThisRound.Add(target.PlayerId);
         if (target.HasModifier<WitchSpellboundModifier>())
         {
-            Tab.BadMedicine.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.BadMedicine);
         }
 
         InjectionsPerTarget[target.PlayerId] = InjectionsPerTarget.GetValueOrDefault(target.PlayerId) + 1;
         if (InjectionsPerTarget[target.PlayerId] == 2)
         {
-            Tab.DoubleDose.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.DoubleDose);
         }
 
         if (InjectionsPerTarget[target.PlayerId] == 3)
         {
-            Tab.TripleThreat.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.TripleThreat);
         }
     }
 
     public static void OnWitchSpell(PlayerControl witch, PlayerControl? target)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !witch.AmOwner)
+        if (!AchievementsAPIHelper.IsLoaded || !witch.AmOwner)
         {
             return;
         }
 
-        Tab.MarkedForDeath.Unlock();
-        Tab.PracticedHand.Increment(1);
+        AchievementsAPIHelper.Unlock(MuAchievements.MarkedForDeath);
+        AchievementsAPIHelper.Increment(MuAchievements.PracticedHand, 1);
 
         if (target != null && target.HasModifier<SpellslingerHexedModifier>())
         {
-            UnlockTentative(Tab.DoubleHex);
+            UnlockTentative(MuAchievements.DoubleHex);
         }
 
         var currentCurses = PlayerControl.AllPlayerControls.ToArray()
             .Count(p => p != null && p.HasModifier<WitchSpellboundModifier>());
         if (currentCurses >= 5)
         {
-            Tab.FullCoven.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.FullCoven);
         }
     }
 
     public static void OnWitchHexKill(PlayerControl witch)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !witch.AmOwner || ++_witchHexKillsThisMeeting < 2)
+        if (!AchievementsAPIHelper.IsLoaded || !witch.AmOwner || ++_witchHexKillsThisMeeting < 2)
         {
             return;
         }
 
-        Tab.TwinSacrifice.Unlock();
+        AchievementsAPIHelper.Unlock(MuAchievements.TwinSacrifice);
     }
 
     public static void OnForestallerLockActivated(PlayerControl forestaller)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !forestaller.AmOwner)
+        if (!AchievementsAPIHelper.IsLoaded || !forestaller.AmOwner)
         {
             return;
         }
 
-        Tab.NothingLeftToSabotage.Unlock();
+        AchievementsAPIHelper.Unlock(MuAchievements.NothingLeftToSabotage);
         if (_meetingsSeen == 0)
         {
-            Tab.SpeedrunLockdown.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.SpeedrunLockdown);
         }
 
         if (HexBombSabotageSystem.Instance is { Stage: HexBombStage.Countdown })
         {
-            Tab.UnderPressure.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.UnderPressure);
         }
 
         if (ShipStatus.Instance != null)
@@ -543,7 +543,7 @@ public static class AchievementEvents
             {
                 if (system.TryCast<ICriticalSabotage>() is { IsActive: true })
                 {
-                    Tab.EleventhHour.Unlock();
+                    AchievementsAPIHelper.Unlock(MuAchievements.EleventhHour);
                     break;
                 }
             }
@@ -552,44 +552,44 @@ public static class AchievementEvents
 
     public static void OnScavengerEat(PlayerControl scavenger, byte bodyId)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !scavenger.AmOwner)
+        if (!AchievementsAPIHelper.IsLoaded || !scavenger.AmOwner)
         {
             return;
         }
 
-        Tab.CleanPlateClub.Increment(1);
-        Tab.BuffetRegular.Increment(1);
+        AchievementsAPIHelper.Increment(MuAchievements.CleanPlateClub, 1);
+        AchievementsAPIHelper.Increment(MuAchievements.BuffetRegular, 1);
 
         if (_killTimes.TryGetValue(bodyId, out var killTime) && Time.time - killTime <= 10f)
         {
-            Tab.FastFood.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.FastFood);
         }
 
         _scavengerEatsThisRound++;
         if (_scavengerEatsThisRound >= 3)
         {
-            Tab.BottomlessPit.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.BottomlessPit);
         }
     }
 
     public static void OnLawyerClientAssigned(PlayerControl lawyer)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !lawyer.AmOwner)
+        if (!AchievementsAPIHelper.IsLoaded || !lawyer.AmOwner)
         {
             return;
         }
 
-        Tab.CourtAppointed.Unlock();
+        AchievementsAPIHelper.Unlock(MuAchievements.CourtAppointed);
     }
 
     public static void OnLawyerObjectVotes(PlayerControl lawyer, bool clientHadVotes)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !lawyer.AmOwner || !clientHadVotes)
+        if (!AchievementsAPIHelper.IsLoaded || !lawyer.AmOwner || !clientHadVotes)
         {
             return;
         }
 
-        Tab.ObjectionSustained.Unlock();
+        AchievementsAPIHelper.Unlock(MuAchievements.ObjectionSustained);
     }
 
     public static void OnWraithLanternReturned(PlayerControl wraith)
@@ -603,24 +603,24 @@ public static class AchievementEvents
 
     public static void OnSpitefulCurseApplied(PlayerControl voter)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !voter.AmOwner)
+        if (!AchievementsAPIHelper.IsLoaded || !voter.AmOwner)
         {
             return;
         }
 
-        Tab.PyrrhicVote.Unlock();
+        AchievementsAPIHelper.Unlock(MuAchievements.PyrrhicVote);
     }
 
     public static void OnSpitefulEjected(PlayerControl exiled, int cursedVoterCount, int totalVoters)
     {
-        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !exiled.AmOwner)
+        if (!AchievementsAPIHelper.IsLoaded || !exiled.AmOwner)
         {
             return;
         }
 
         if (cursedVoterCount >= 2)
         {
-            Tab.MiseryLovesCompany.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.MiseryLovesCompany);
         }
 
         // The exiled player does not curse themselves, so a "full house" means everyone
@@ -628,7 +628,7 @@ public static class AchievementEvents
         var nonSelfVoters = Mathf.Max(0, totalVoters - 1);
         if (cursedVoterCount > 0 && cursedVoterCount >= nonSelfVoters)
         {
-            Tab.PartingGift.Unlock();
+            AchievementsAPIHelper.Unlock(MuAchievements.PartingGift);
         }
     }
 }

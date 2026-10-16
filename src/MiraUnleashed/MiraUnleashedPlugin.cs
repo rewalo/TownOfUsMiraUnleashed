@@ -5,6 +5,7 @@ using HarmonyLib;
 using MiraAPI;
 using MiraAPI.PluginLoading;
 using MiraAPI.Translation;
+using MiraUnleashed.Achievements;
 using MiraUnleashed.Patches.Lawyer;
 using MiraUnleashed.Patches.WinConditions;
 using Reactor;
@@ -12,6 +13,7 @@ using Reactor.Networking;
 using Reactor.Networking.Attributes;
 using Reactor.Utilities;
 using TownOfUs;
+using TownOfUs.Achievements;
 using TownOfUs.Patches;
 
 namespace MiraUnleashed;
@@ -22,7 +24,7 @@ namespace MiraUnleashed;
 [BepInDependency(MiraApiPlugin.Id)]
 [BepInDependency(TownOfUsPlugin.Id)]
 [BepInDependency("com.edgetel.perfectcomms", BepInDependency.DependencyFlags.SoftDependency)]
-[BepInDependency(AchievementsAPI.AchievementsAPIPlugin.Id, BepInDependency.DependencyFlags.SoftDependency)]
+[BepInDependency(AchievementsAPIHelper.PluginGuid, BepInDependency.DependencyFlags.SoftDependency)]
 [ReactorModFlags(ModFlags.RequireOnAllClients)]
 public partial class MiraUnleashedPlugin : BasePlugin, IMiraPlugin
 {
@@ -56,5 +58,6 @@ public partial class MiraUnleashedPlugin : BasePlugin, IMiraPlugin
         WinConditionRegistry.Register(new LawyerParityWinCondition());
         LawyerTeamChatRegistration.Register();
         Integrations.PerfectCommsIntegration.TryRegister();
+        AchievementsAPIHelper.RegisterMod(MuAchievementGroups.Tab, MuAchievements.All);
     }
 }
