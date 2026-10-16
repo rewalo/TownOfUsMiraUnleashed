@@ -7,6 +7,7 @@ An extension mod for [Town of Us: Mira](https://github.com/AU-Avengers/TOU-Mira)
 - [Installation](Installation)
 - [Configuration](Configuration)
 - [Voice Chat](Voice-Chat)
+- [Achievements](Achievements)
 - [Building from source](Building)
 
 ## Contents

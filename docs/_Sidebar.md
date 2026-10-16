@@ -5,6 +5,7 @@
 - [Configuration](Configuration)
 - [Building](Building)
 - [Voice Chat](Voice-Chat)
+- [Achievements](Achievements)
 
 **Crewmate**
 - [Forestaller](Forestaller)
