@@ -153,9 +153,12 @@ public sealed class MirageRole(IntPtr cppPtr) : CrewmateRole(cppPtr), IMiraUnlea
             TouAudio.PlaySound(MiraUnleashedAudio.DecoyDestroySound);
         }
 
+        var appearanceId = MirageDecoySystem.TryGetAppearanceId(mirage.PlayerId, out var appId)
+            ? appId
+            : (byte?)null;
         MirageDecoySystem.TryRemoveDecoy(mirage.PlayerId, out _);
 
-        Events.Achievements.AchievementEvents.OnMirageDecoyTriggered(mirage, interactor);
+        Events.Achievements.AchievementEvents.OnMirageDecoyTriggered(mirage, interactor, appearanceId);
 
         if (interactor != null && interactor.AmOwner)
         {

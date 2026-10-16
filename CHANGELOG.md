@@ -20,6 +20,10 @@ For releases before 2.0.0, see the [old repository's release history](https://gi
 
 ### Changed
 
+- Achievement set overhauled — now 58 achievements with role sub-icons.
+  - Removed: Nothing Left to Sabotage, Mirror Match, The Welcoming Committee, Red Handed, Caught in the Act, Caught and Convicted, Body Double, Malpractice, Bad Medicine, Lab Rat, Hit the Ground Screaming, Lamplight Lethality, Fade to Black, Lantern Guided, Court Appointed, Parting Gift, Blind Justice.
+  - Renamed: Low Ping, High Crime → Dead Air; Double Hex → And Make It Double (existing unlocks are preserved).
+  - Added: Jack of All Trades, Targeted, Floodgates, Stunt Double, Mistaken Identity, Revolving Door, Hot Pursuit, Nothing to See Here, The Way Mojang Intended, Placebo, Hopelessly Lost, Hit and Run, Airtight Alibi, Leave No Trace, Speed Demon, Overruled, Mistrial, Acquired Taste, Buzzer Beater, Friendly Fire.
 - `Clueless Censor Type` is now a per-client local setting (Mira Unleashed tab) instead of a host option, and `Remove` now hides the whole task panel instead of only the task text.
 - Wiki home page redesigned as an icon table.
 - `Cannot Spawn With Janitor` now uses TOU-Mira's exclusive-role system: Scavenger and Janitor are resolved against each other per game instead of Scavenger being blocked whenever Janitor is enabled.

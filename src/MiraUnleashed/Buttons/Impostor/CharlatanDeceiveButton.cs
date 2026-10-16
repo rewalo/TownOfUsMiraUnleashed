@@ -107,6 +107,8 @@ public sealed class CharlatanDeceiveButton : TownOfUsRoleButton<CharlatanRole, D
             return;
         }
 
+        Events.Achievements.AchievementEvents.OnCharlatanDeceiveReport(player, Target!);
+
         var bodyPlayer = MiscUtils.PlayerById(Target.ParentId);
         if (bodyPlayer != null)
         {

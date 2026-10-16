@@ -143,5 +143,10 @@ public sealed class WraithRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnlea
         }
 
         WraithLanternSystem.BreakLantern(wraith.PlayerId, pos);
+
+        if (wraith.AmOwner)
+        {
+            Events.Achievements.AchievementEvents.OnWraithLanternBroken(wraith);
+        }
     }
 }
