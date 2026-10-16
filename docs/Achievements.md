@@ -1,6 +1,6 @@
 # Achievements
 
-Mira Unleashed adds **55 achievements**, shown in their own **Mira Unleashed** tab of the Achievements browser. Progress for multi-step achievements is tracked automatically — some persist across rounds or even across sessions.
+Mira Unleashed adds **55 achievements**, shown in their own **Mira Unleashed** tab of the Achievements browser. Progress for multi-step achievements is tracked automatically, and some persist across rounds or even across sessions.
 
 Rarity tiers: **Common** -> **Rare** -> **Epic**.
 
@@ -11,7 +11,7 @@ Rarity tiers: **Common** -> **Rare** -> **Epic**.
 | Artwork | Achievement | Requirement | Rarity |
 | --- | --- | --- | --- |
 | <img src="assets/Achievements/Injector_Role_Icon.png" width="64"> | **Unleashed** | Get assigned a Mira Unleashed role. | Common |
-| ❓ | **???** | *Hidden achievement — unlock it to reveal its details.* | ??? |
+| ❓ | **???** | *Hidden achievement. Unlock it to reveal its details.* | ??? |
 
 ## Crewmate
 
@@ -139,6 +139,4 @@ Rarity tiers: **Common** -> **Rare** -> **Epic**.
 | <img src="assets/Achievements/Hexed.png" width="64"> | **Burn the Witch** | While under a Witch's spell, vote out the Witch and live to tell about it. | Rare |
 | <img src="assets/Achievements/Clueless_Modifier_Icon.png" width="64"> | **Blind Justice** | Vote out an Impostor or Neutral Killer while Clueless. | Rare |
 
----
 
-*The Lawyer and Serial Killer icons come from the base Town of Us: Mira mod, and Hit the Ground Screaming is shown with the Wraith role icon instead of its in-game sprint button artwork. The hidden achievement is not listed with its real name, artwork or requirement until unlocked.*
