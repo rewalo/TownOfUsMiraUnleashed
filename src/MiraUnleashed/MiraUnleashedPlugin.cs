@@ -22,7 +22,7 @@ namespace MiraUnleashed;
 [BepInDependency(MiraApiPlugin.Id)]
 [BepInDependency(TownOfUsPlugin.Id)]
 [BepInDependency("com.edgetel.perfectcomms", BepInDependency.DependencyFlags.SoftDependency)]
-[BepInDependency(AchievementsAPI.AchievementsAPIPlugin.Id)]
+[BepInDependency(AchievementsAPI.AchievementsAPIPlugin.Id, BepInDependency.DependencyFlags.SoftDependency)]
 [ReactorModFlags(ModFlags.RequireOnAllClients)]
 public partial class MiraUnleashedPlugin : BasePlugin, IMiraPlugin
 {

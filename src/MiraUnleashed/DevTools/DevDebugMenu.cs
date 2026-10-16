@@ -1,6 +1,7 @@
 using System.Reflection;
 using AchievementsAPI.API;
 using MiraUnleashed.Achievements;
+using TownOfUs.Modules;
 using Reactor.Utilities.Attributes;
 using UnityEngine;
 
@@ -204,6 +205,12 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
 
     private void DrawAchievementsTab()
     {
+        if (!AchievementsAPIHelper.IsLoaded)
+        {
+            GUILayout.Label("AchievementsAPI is not loaded.");
+            return;
+        }
+
         var tabs = AchievementsManager.Tabs;
         if (tabs.Count == 0)
         {

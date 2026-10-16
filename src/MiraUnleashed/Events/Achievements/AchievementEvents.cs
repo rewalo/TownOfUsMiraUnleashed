@@ -17,7 +17,6 @@ using TownOfUs.Events.TouEvents;
 using TownOfUs.GameOver;
 using TownOfUs.Modifiers;
 using TownOfUs.Modifiers.Impostor;
-using TownOfUs.Modules;
 using TownOfUs.Modules.Components;
 using TownOfUs.Roles;
 using TownOfUs.Utilities;
@@ -51,6 +50,11 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void RoundStartEventHandler(RoundStartEvent @event)
     {
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        {
+            return;
+        }
+
         _tentativeThisRound.Clear();
 
         if (!@event.TriggeredByIntro)
@@ -88,7 +92,7 @@ public static class AchievementEvents
 
     private static void UnlockTentative(BaseAchievement achievement)
     {
-        if (achievement.Unlocked)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || achievement.Unlocked)
         {
             return;
         }
@@ -99,6 +103,11 @@ public static class AchievementEvents
 
     private static void ResetTentative()
     {
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        {
+            return;
+        }
+
         foreach (var achievement in _tentativeThisRound)
         {
             achievement.Reset();
@@ -110,6 +119,11 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void StartMeetingEventHandler(StartMeetingEvent @event)
     {
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        {
+            return;
+        }
+
         _tentativeThisRound.Clear();
         _meetingsSeen++;
         _witchHexKillsThisMeeting = 0;
@@ -121,6 +135,11 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void EndMeetingEventHandler(EndMeetingEvent @event)
     {
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        {
+            return;
+        }
+
         _snaredThisRound.Clear();
         _charlatanDeceivedThisMeeting = false;
     }
@@ -128,6 +147,11 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void EjectionEventHandler(EjectionEvent @event)
     {
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        {
+            return;
+        }
+
         var exiled = @event.ExileController?.initData?.networkedPlayer?.Object;
         var local = PlayerControl.LocalPlayer;
         if (exiled == null || local == null)
@@ -163,6 +187,11 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void GameEndEventHandler(GameEndEvent @event)
     {
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        {
+            return;
+        }
+
         var local = PlayerControl.LocalPlayer;
         if (local?.Data?.Role is not LawyerRole lawyerRole || !LocalPlayerWon(local))
         {
@@ -188,7 +217,7 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void TouAbilityEventHandler(TouAbilityEvent @event)
     {
-        if (@event.AbilityType != AbilityType.TimeLordRewind)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || @event.AbilityType != AbilityType.TimeLordRewind)
         {
             return;
         }
@@ -208,6 +237,11 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void BeforeGameEndEventHandler(BeforeGameEndEvent @event)
     {
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        {
+            return;
+        }
+
         if (CustomGameOver.Instance is HostGameOver)
         {
             ResetTentative();
@@ -217,6 +251,11 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void BeforeMurderEventHandler(BeforeMurderEvent @event)
     {
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        {
+            return;
+        }
+
         var killer = @event.Source;
         var victim = @event.Target;
         if (killer == null || victim == null || !killer.AmOwner || !killer.IsRole<SerialKillerRole>())
@@ -234,6 +273,11 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void AfterMurderEventHandler(AfterMurderEvent @event)
     {
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        {
+            return;
+        }
+
         var source = @event.Source;
         var target = @event.Target;
         if (source == null || target == null)
@@ -261,7 +305,7 @@ public static class AchievementEvents
         {
             case SerialKillerRole:
                 Tab.SerialSeason.Increment(1);
-                if (GameHistory.KilledPlayers.Count <= 1)
+                if (TownOfUs.Modules.GameHistory.KilledPlayers.Count <= 1)
                 {
                     Tab.ColdOpen.Unlock();
                 }
@@ -300,6 +344,11 @@ public static class AchievementEvents
     [RegisterEvent]
     public static void CompleteTaskEvent(CompleteTaskEvent @event)
     {
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded)
+        {
+            return;
+        }
+
         var player = @event.Player;
         if (player == null || !player.AmOwner)
         {
@@ -333,7 +382,7 @@ public static class AchievementEvents
 
     public static void OnMirageDecoyTriggered(PlayerControl mirage, PlayerControl? interactor)
     {
-        if (!mirage.AmOwner || interactor == null || interactor == mirage)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !mirage.AmOwner || interactor == null || interactor == mirage)
         {
             return;
         }
@@ -349,7 +398,7 @@ public static class AchievementEvents
 
     public static void OnTrapperTrapTriggered(PlayerControl trapper, PlayerControl? victim)
     {
-        if (!trapper.AmOwner || victim == null || victim == trapper)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !trapper.AmOwner || victim == null || victim == trapper)
         {
             return;
         }
@@ -368,15 +417,17 @@ public static class AchievementEvents
 
     public static void OnCharlatanConcealComplete(PlayerControl charlatan)
     {
-        if (charlatan.AmOwner)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !charlatan.AmOwner)
         {
-            Tab.BodyDouble.Unlock();
+            return;
         }
+
+        Tab.BodyDouble.Unlock();
     }
 
     public static void OnCharlatanDeceive(PlayerControl charlatan)
     {
-        if (!charlatan.AmOwner)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !charlatan.AmOwner)
         {
             return;
         }
@@ -387,7 +438,7 @@ public static class AchievementEvents
 
     public static void OnHackerJamStarted(PlayerControl hacker)
     {
-        if (!hacker.AmOwner)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !hacker.AmOwner)
         {
             return;
         }
@@ -409,7 +460,7 @@ public static class AchievementEvents
 
     public static void OnInjectorInject(PlayerControl injector, PlayerControl target)
     {
-        if (!injector.AmOwner || target == null)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !injector.AmOwner || target == null)
         {
             return;
         }
@@ -437,7 +488,7 @@ public static class AchievementEvents
 
     public static void OnWitchSpell(PlayerControl witch, PlayerControl? target)
     {
-        if (!witch.AmOwner)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !witch.AmOwner)
         {
             return;
         }
@@ -460,15 +511,17 @@ public static class AchievementEvents
 
     public static void OnWitchHexKill(PlayerControl witch)
     {
-        if (witch.AmOwner && ++_witchHexKillsThisMeeting >= 2)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !witch.AmOwner || ++_witchHexKillsThisMeeting < 2)
         {
-            Tab.TwinSacrifice.Unlock();
+            return;
         }
+
+        Tab.TwinSacrifice.Unlock();
     }
 
     public static void OnForestallerLockActivated(PlayerControl forestaller)
     {
-        if (!forestaller.AmOwner)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !forestaller.AmOwner)
         {
             return;
         }
@@ -499,7 +552,7 @@ public static class AchievementEvents
 
     public static void OnScavengerEat(PlayerControl scavenger, byte bodyId)
     {
-        if (!scavenger.AmOwner)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !scavenger.AmOwner)
         {
             return;
         }
@@ -521,18 +574,22 @@ public static class AchievementEvents
 
     public static void OnLawyerClientAssigned(PlayerControl lawyer)
     {
-        if (lawyer.AmOwner)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !lawyer.AmOwner)
         {
-            Tab.CourtAppointed.Unlock();
+            return;
         }
+
+        Tab.CourtAppointed.Unlock();
     }
 
     public static void OnLawyerObjectVotes(PlayerControl lawyer, bool clientHadVotes)
     {
-        if (lawyer.AmOwner && clientHadVotes)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !lawyer.AmOwner || !clientHadVotes)
         {
-            Tab.ObjectionSustained.Unlock();
+            return;
         }
+
+        Tab.ObjectionSustained.Unlock();
     }
 
     public static void OnWraithLanternReturned(PlayerControl wraith)
@@ -543,17 +600,20 @@ public static class AchievementEvents
         }
     }
 
+
     public static void OnSpitefulCurseApplied(PlayerControl voter)
     {
-        if (voter.AmOwner)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !voter.AmOwner)
         {
-            Tab.PyrrhicVote.Unlock();
+            return;
         }
+
+        Tab.PyrrhicVote.Unlock();
     }
 
     public static void OnSpitefulEjected(PlayerControl exiled, int cursedVoterCount, int totalVoters)
     {
-        if (!exiled.AmOwner)
+        if (!TownOfUs.Modules.AchievementsAPIHelper.IsLoaded || !exiled.AmOwner)
         {
             return;
         }
