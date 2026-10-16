@@ -2,7 +2,7 @@
 
 Mira Unleashed adds **55 achievements**, shown in their own **Mira Unleashed** tab of the Achievements browser. Progress for multi-step achievements is tracked automatically — some persist across rounds or even across sessions.
 
-Rarity tiers: **Common** → **Rare** → **Epic**.
+Rarity tiers: **Common** -> **Rare** -> **Epic**.
 
 > One achievement is **hidden**: its name, artwork and requirement stay secret until you unlock it.
 
