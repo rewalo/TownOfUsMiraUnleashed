@@ -18,15 +18,29 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Checkout TOU-Mira experimental
+        uses: actions/checkout@v7
+        with:
+          repository: AU-Avengers/TOU-Mira
+          ref: experimental
+          submodules: recursive
+          path: TOU-Mira
+
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: global.json
 
       - name: Restore
         run: dotnet restore
+        env:
+          TouMiraSourcePath: ${{ github.workspace }}/TOU-Mira/
 
       - name: Build
-        run: dotnet build -c Release --no-restore -p:ContinuousIntegrationBuild=true
+        # -m:1 keeps the il2cpp interop generators of the referenced TOU-Mira projects from
+        # running in parallel; they share the unity-libs cache and race on a cold runner.
+        run: dotnet build -c Release --no-restore -m:1 -p:ContinuousIntegrationBuild=true
+        env:
+          TouMiraSourcePath: ${{ github.workspace }}/TOU-Mira/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7

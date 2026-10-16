@@ -88,6 +88,8 @@ The `experimental` branch of this repo tracks TOU-Mira's experimental branch and
 
 Mira Unleashed also integrates with [Perfect Comms](https://github.com/artriy/Perfect-Comms) for optional proximity voice chat features — see the [Voice Chat](https://github.com/rewalo/TownOfUsMiraUnleashed/wiki/Voice-Chat) wiki page.
 
+Mira Unleashed adds an achievements tab for its roles and modifiers via the [Achievements API](https://github.com/am-clonec/Achievements-API), which TOU-Mira experimental already requires.
+
 -----------------------
 
 # Building
@@ -95,8 +97,9 @@ Mira Unleashed also integrates with [Perfect Comms](https://github.com/artriy/Pe
 Requires the .NET 10 SDK (see `global.json`).
 
 1. Clone this repository.
-2. `dotnet restore`
-3. `dotnet build -c Release`
+2. On `experimental`: clone [TOU-Mira](https://github.com/AU-Avengers/TOU-Mira) (`experimental` branch, `--recurse-submodules`) next to this repo, or set the `TouMiraSourcePath` environment variable/property to it.
+3. `dotnet restore`
+4. `dotnet build -c Release`
 
 Optionally create `Directory.Build.local.props` (git-ignored) with an `<AmongUs>` property pointing at your Among Us install to auto-copy the built DLL to `BepInEx/plugins` after each build:
 
@@ -107,6 +110,10 @@ Optionally create `Directory.Build.local.props` (git-ignored) with an `<AmongUs>
   </PropertyGroup>
 </Project>
 ```
+
+## Dev menu
+
+Dev builds (version suffix `dev`/`ci`/`beta`/`prerelease`) include an in-game developer menu toggled with F8 for viewing, unlocking and resetting Mira Unleashed achievements locally. It does not touch gameplay or the network and is absent from release builds.
 
 -----------------------
 
@@ -120,7 +127,7 @@ Optionally create `Directory.Build.local.props` (git-ignored) with an `<AmongUs>
 
 # Documentation
 
-Role and modifier details, options, and testing checklists live in [docs/](./docs) and are mirrored to the [GitHub Wiki](https://github.com/rewalo/TownOfUsMiraUnleashed/wiki).
+Role and modifier details and options live in [docs/](./docs) and are mirrored to the [GitHub Wiki](https://github.com/rewalo/TownOfUsMiraUnleashed/wiki).
 
 -----------------------
 

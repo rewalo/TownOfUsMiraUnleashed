@@ -176,6 +176,13 @@ public static class SpitefulEvents
         var spitefulColor = (Color)new Color32(255, 100, 0, 255);
 
         var exiledName = exiled.Data.PlayerName;
+        var cursedVoterCount = voters.Count(voterId =>
+            voterId != exiled.PlayerId
+            && MiscUtils.PlayerById(voterId) is { } candidate
+            && !candidate.HasDied()
+            && !candidate.HasModifier<SpitefulEffectModifier>());
+        Achievements.AchievementEvents.OnSpitefulEjected(exiled, cursedVoterCount, voters.Count);
+
         foreach (var voterId in voters.ToList())
         {
             if (voterId == exiled.PlayerId)
@@ -210,6 +217,8 @@ public static class SpitefulEvents
         );
 
         voter.AddModifier(modifier);
+
+        Achievements.AchievementEvents.OnSpitefulCurseApplied(voter);
 
         while (MeetingHud.Instance != null || ExileController.Instance != null)
         {

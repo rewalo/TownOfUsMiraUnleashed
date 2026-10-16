@@ -7,6 +7,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities;
 using MiraUnleashed.Modifiers;
+using MiraUnleashed.Events.Achievements;
 using MiraUnleashed.Options.Roles.Impostor;
 using MiraUnleashed.Roles.Impostor;
 using TownOfUs.Modifiers;
@@ -129,6 +130,7 @@ public static class WitchEvents
                 didSucceed: !player.HasModifier<InvulnerabilityModifier>() && !player.HasModifier<GuardianAngelProtectModifier>(),
                 causeOfDeath: "Witch");
 
+            AchievementEvents.OnWitchHexKill(hexingWitch);
             WitchRole.RpcWitchClearSpellboundPlayer(PlayerControl.LocalPlayer, player.PlayerId);
         }
     }
