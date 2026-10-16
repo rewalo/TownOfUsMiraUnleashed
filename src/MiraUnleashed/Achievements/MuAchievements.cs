@@ -36,7 +36,8 @@ public static class MuAchievements
         AchievementPersistence persistence = AchievementPersistence.ThroughoutSessions,
         bool toastOnGameEnd = false, string? categoryOverride = null, string? idOverride = null,
         [CallerMemberName] string key = "")
-        => new(key, name, description, icon, subIcon, rarity, hidden, progressGoal, persistence, toastOnGameEnd);
+        => new(key, name, description, icon, subIcon, rarity, hidden, progressGoal, persistence,
+            toastOnGameEnd, categoryOverride, idOverride);
 
     // General
     public static readonly AchievementSpec Unleashed = Define("Unleashed",
