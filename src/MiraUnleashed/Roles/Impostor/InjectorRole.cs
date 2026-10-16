@@ -80,6 +80,6 @@ public sealed class InjectorRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnl
 
         InjectorEvents.ScheduleInjection(injector, target, (InjectorEffectType)effectType);
 
-        Events.Achievements.AchievementEvents.OnInjectorInject(injector, target);
+        Events.Achievements.AchievementEvents.OnInjectorInject(injector, target, (InjectorEffectType)effectType);
     }
 }

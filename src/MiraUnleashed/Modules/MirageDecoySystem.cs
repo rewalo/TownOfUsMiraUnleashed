@@ -10,6 +10,7 @@ public static class MirageDecoySystem
 {
     private sealed record ActiveDecoy(
         byte MirageId,
+        byte AppearanceId,
         FakePlayer Fake,
         Vector3 WorldPosition,
         float ExpiresAt,
@@ -146,6 +147,18 @@ public static class MirageDecoySystem
         return bestDist < float.MaxValue;
     }
 
+    public static bool TryGetAppearanceId(byte mirageId, out byte appearanceId)
+    {
+        if (ActiveByMirage.TryGetValue(mirageId, out var entry))
+        {
+            appearanceId = entry.AppearanceId;
+            return true;
+        }
+
+        appearanceId = default;
+        return false;
+    }
+
     public static bool TryGetActivePosition(byte mirageId, out Vector2 pos)
     {
         if (ActiveByMirage.TryGetValue(mirageId, out var entry))
@@ -205,6 +218,7 @@ public static class MirageDecoySystem
 
         ActiveByMirage[mirageId] = new ActiveDecoy(
             mirageId,
+            appearanceSource.PlayerId,
             fake,
             worldPos,
             float.PositiveInfinity,
@@ -241,7 +255,7 @@ public static class MirageDecoySystem
 
         var now = Time.time;
         var expiresAt = durationSeconds <= 0f ? float.PositiveInfinity : now + Mathf.Max(0.1f, durationSeconds);
-        ActiveByMirage[mirageId] = new ActiveDecoy(mirageId, fake, worldPos, expiresAt, IsVisible: true);
+        ActiveByMirage[mirageId] = new ActiveDecoy(mirageId, appearanceSource.PlayerId, fake, worldPos, expiresAt, IsVisible: true);
     }
 
     private static bool TryRevealExisting(byte mirageId, float durationSeconds)
