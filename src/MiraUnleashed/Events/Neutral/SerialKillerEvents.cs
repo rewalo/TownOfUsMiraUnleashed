@@ -133,6 +133,11 @@ public static class SerialKillerEvents
 
         if (killer.TryGetModifier<SerialKillerManiacModifier>(out var maniacMod))
         {
+            if (killer.AmOwner && maniacMod.TimerActive)
+            {
+                Achievements.AchievementEvents.OnSerialKillerManiacKill(killer, maniacMod.TimeRemaining);
+            }
+
             maniacMod.ResetOnKill();
         }
     }

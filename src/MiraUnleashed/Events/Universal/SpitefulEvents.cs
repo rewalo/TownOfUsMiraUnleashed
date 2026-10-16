@@ -181,7 +181,7 @@ public static class SpitefulEvents
             && MiscUtils.PlayerById(voterId) is { } candidate
             && !candidate.HasDied()
             && !candidate.HasModifier<SpitefulEffectModifier>());
-        Achievements.AchievementEvents.OnSpitefulEjected(exiled, cursedVoterCount, voters.Count);
+        Achievements.AchievementEvents.OnSpitefulEjected(exiled, cursedVoterCount);
 
         foreach (var voterId in voters.ToList())
         {
@@ -190,13 +190,13 @@ public static class SpitefulEvents
                 continue;
             }
 
-            Coroutines.Start(CoAddSpitefulModifier(voterId, effectType, durationType, rounds, impact, effectDescription, spitefulName, spitefulColor, exiledName));
+            Coroutines.Start(CoAddSpitefulModifier(voterId, exiled, effectType, durationType, rounds, impact, effectDescription, spitefulName, spitefulColor, exiledName));
         }
 
         SpitefulVoters.Remove(exiled.PlayerId);
     }
 
-    private static IEnumerator CoAddSpitefulModifier(byte voterId, SpitefulEffectType effectType, SpitefulDurationType durationType, int rounds, float impact, string effectDescription, string spitefulName, Color spitefulColor, string exiledPlayerName)
+    private static IEnumerator CoAddSpitefulModifier(byte voterId, PlayerControl exiled, SpitefulEffectType effectType, SpitefulDurationType durationType, int rounds, float impact, string effectDescription, string spitefulName, Color spitefulColor, string exiledPlayerName)
     {
         var voter = MiscUtils.PlayerById(voterId);
         if (voter == null || voter.HasDied() || voter.Data == null)
@@ -218,7 +218,7 @@ public static class SpitefulEvents
 
         voter.AddModifier(modifier);
 
-        Achievements.AchievementEvents.OnSpitefulCurseApplied(voter);
+        Achievements.AchievementEvents.OnSpitefulCurseApplied(voter, exiled);
 
         while (MeetingHud.Instance != null || ExileController.Instance != null)
         {

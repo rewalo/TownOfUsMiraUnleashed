@@ -899,8 +899,6 @@ public sealed class LawyerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnleas
 
         LawyerDuoTracker.SetClient(player.PlayerId, client.PlayerId);
 
-        Events.Achievements.AchievementEvents.OnLawyerClientAssigned(player);
-
         var lawyerRole = RoleManager.Instance.GetRole((RoleTypes)RoleId.Get<LawyerRole>());
         if (!player.HasModifier<LawyerRevealModifier>())
         {

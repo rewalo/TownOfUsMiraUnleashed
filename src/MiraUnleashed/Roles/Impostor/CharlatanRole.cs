@@ -106,7 +106,7 @@ public sealed class CharlatanRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUn
 
         CharlatanBodySystem.CompleteChannel(charlatan.PlayerId, bodyId);
 
-        Events.Achievements.AchievementEvents.OnCharlatanConcealComplete(charlatan);
+        Events.Achievements.AchievementEvents.OnCharlatanConcealComplete(charlatan, bodyId);
 
         if (charlatan.AmOwner)
         {
