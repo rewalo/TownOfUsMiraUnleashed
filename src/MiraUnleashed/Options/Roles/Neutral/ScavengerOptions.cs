@@ -23,9 +23,6 @@ public sealed class ScavengerOptions : AbstractOptionGroup<ScavengerRole>
     [ModdedToggleOption("MiraUnleashed.Options.Scavenger.CanVent")]
     public bool CanVent { get; set; } = false;
 
-    [ModdedToggleOption("MiraUnleashed.Options.Scavenger.CannotSpawnWithJanitor")]
-    public bool CannotSpawnWithJanitor { get; set; } = false;
-
     [ModdedToggleOption("MiraUnleashed.Options.Scavenger.ScavengeEnabled")]
     public bool ScavengeEnabled { get; set; } = false;
 

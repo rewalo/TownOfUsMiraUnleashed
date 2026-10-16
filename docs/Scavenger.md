@@ -33,5 +33,5 @@ The Scavenger is a Neutral Evil role whose goal is to eat a set amount of dead b
 
 ## Interactions & notes
 
-- **Cannot Spawn With Janitor** is new in 2.0.0 — when enabled, Scavenger will not roll in games where the Janitor is enabled (they compete for the same bodies).
+- **Cannot Spawn With Janitor** — when enabled, Scavenger and Janitor cannot roll in the same game (they compete for the same bodies). If both are enabled, a 100% role beats a lower-chance role; otherwise whichever passes its spawn roll wins, with ties decided randomly.
 - In 2.0.0 the Scavenger is a normal role roll; the old "spawn only when first roles die" behavior was removed because it prevented Scavenger from spawning at all.

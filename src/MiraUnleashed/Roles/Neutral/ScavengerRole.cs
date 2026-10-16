@@ -1,6 +1,5 @@
 using AmongUs.GameOptions;
 using Il2CppInterop.Runtime.Attributes;
-using MiraAPI.GameModes;
 using MiraAPI.GameOptions;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
@@ -14,6 +13,7 @@ using MiraUnleashed.Networking;
 using MiraUnleashed.Options.Roles.Neutral;
 using TownOfUs.Assets;
 using TownOfUs.Extensions;
+using TownOfUs.Interfaces;
 using TownOfUs.Modules;
 using TownOfUs.Modules.Components;
 using TownOfUs.Modules.TimeLord;
@@ -21,8 +21,8 @@ using TownOfUs.Modules.Wiki;
 using TownOfUs.Options;
 using TownOfUs.Options.Roles.Crewmate;
 using TownOfUs.Options.Roles.Neutral;
+using TownOfUs.Patches;
 using TownOfUs.Roles;
-using TownOfUs.Roles.Impostor;
 using TownOfUs.Roles.Neutral;
 using TownOfUs.Utilities;
 using UnityEngine;
@@ -30,7 +30,7 @@ using Object = UnityEngine.Object;
 
 namespace MiraUnleashed.Roles.Neutral;
 
-public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnleashedRole, IWikiDiscoverable, IDoomable
+public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnleashedRole, IWikiDiscoverable, IDoomable, IExclusiveRole
 {
     public DoomableType DoomHintType => DoomableType.Fearmonger;
 
@@ -44,6 +44,9 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
     public RoleAlignment RoleAlignment => RoleAlignment.NeutralEvil;
 
     [HideFromIl2Cpp]
+    public IEnumerable<string> ExclusionBuckets => [RoleExclusionRegistry.Cleaning];
+
+    [HideFromIl2Cpp]
     public int BodiesEaten { get; set; }
 
     public CustomRoleConfiguration Configuration => new(this)
@@ -53,27 +56,6 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
         IconTmp = TmpSpriteUtils.CreateSpriteAsset(MiraUnleashedAssets.ScavengerRoleIcon.LoadAsset(), "MiraUnleashed.Role.Neutral.Scavenger", 1.45f),
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>()
     };
-
-    public bool CanSpawnOnCurrentMode()
-    {
-        if (!Configuration.AssociatedGameMode.IsInstanceOfType(CustomGameModeManager.ActiveMode))
-        {
-            return false;
-        }
-
-        if (!OptionGroupSingleton<ScavengerOptions>.Instance.CannotSpawnWithJanitor)
-        {
-            return true;
-        }
-
-        var janitor = MiscUtils.AllInGameRoles.OfType<JanitorRole>().FirstOrDefault() as ICustomRole;
-        if (janitor is { } custom && custom.GetCount() > 0 && custom.GetChance() > 0)
-        {
-            return false;
-        }
-
-        return true;
-    }
 
     [HideFromIl2Cpp]
     public List<CustomButtonWikiDescription> Abilities
@@ -93,6 +75,34 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
             {
                 abilities.Add(new(
                     MiraLocaleManager.Get("MiraUnleashed.Role.ScavengerScavenge", "Scavenge"),
+                    MiraLocaleManager.Get("MiraUnleashed.Role.ScavengerScavenge.WikiDescription"),
+                    MiraUnleashedAssets.ScavengerScavengeButtonSprite));
+            }
+
+            return abilities;
+        }
+    }
+
+    [HideFromIl2Cpp]
+    public List<AdvancedWikiAbilityDescription> WikiAbilities
+    {
+        get
+        {
+            var abilities = new List<AdvancedWikiAbilityDescription>
+            {
+                new(
+                    MiraLocaleManager.Get("MiraUnleashed.Role.ScavengerEat", "Eat"),
+                    MiraLocaleManager.Get("MiraApi.AbilityType.Interaction"),
+                    MiraLocaleManager.Get("MiraUnleashed.Role.ScavengerEat.WikiDescription"),
+                    MiraUnleashedAssets.ScavengerEatButtonSprite)
+            };
+
+            var options = OptionGroupSingleton<ScavengerOptions>.Instance;
+            if (options.ScavengeEnabled && options.ScavengeDuration.Value > 0f)
+            {
+                abilities.Add(new(
+                    MiraLocaleManager.Get("MiraUnleashed.Role.ScavengerScavenge", "Scavenge"),
+                    MiraLocaleManager.Get("MiraApi.AbilityType.Basic"),
                     MiraLocaleManager.Get("MiraUnleashed.Role.ScavengerScavenge.WikiDescription"),
                     MiraUnleashedAssets.ScavengerScavengeButtonSprite));
             }
@@ -176,6 +186,8 @@ public sealed class ScavengerRole(IntPtr cppPtr) : NeutralRole(cppPtr), IMiraUnl
 
         role.BodiesEaten++;
         ScavengerSystem.MarkBodyEaten(bodyId);
+
+        Events.Achievements.AchievementEvents.OnScavengerEat(scavenger, bodyId);
 
         if (scavenger.AmOwner)
         {

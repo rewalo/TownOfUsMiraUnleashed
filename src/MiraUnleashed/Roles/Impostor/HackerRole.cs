@@ -57,6 +57,26 @@ public sealed class HackerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnlea
                 MiraUnleashedImpAssets.HackerJamButtonSprite)
         ];
 
+    [HideFromIl2Cpp]
+    public List<AdvancedWikiAbilityDescription> WikiAbilities =>
+        [
+            new(
+                MiraLocaleManager.Get("MiraUnleashed.Role.HackerDownload", "Download"),
+                MiraLocaleManager.Get("MiraApi.AbilityType.Interaction"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.HackerDownload.WikiDescription"),
+                MiraUnleashedImpAssets.HackerDownloadButtonSprite),
+            new(
+                MiraLocaleManager.Get("MiraUnleashed.Role.HackerDevice", "Device"),
+                MiraLocaleManager.Get("MiraApi.AbilityType.Menu"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.HackerDevice.WikiDescription"),
+                MiraUnleashedImpAssets.HackerDeviceGenericSprite),
+            new(
+                MiraLocaleManager.Get("MiraUnleashed.Role.HackerJam", "Jam"),
+                MiraLocaleManager.Get("MiraApi.AbilityType.Indirect"),
+                MiraLocaleManager.Get("MiraUnleashed.Role.HackerJam.WikiDescription"),
+                MiraUnleashedImpAssets.HackerJamButtonSprite)
+        ];
+
     public override void Initialize(PlayerControl player)
     {
         RoleBehaviourStubs.Initialize(this, player);
@@ -103,9 +123,10 @@ public sealed class HackerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), IMiraUnlea
 
         var localPlayer = PlayerControl.LocalPlayer;
         var isHacker = localPlayer != null && localPlayer.PlayerId == hackerId && localPlayer.Data?.Role is HackerRole;
-        if (isHacker)
+        if (isHacker && localPlayer != null)
         {
             CustomButtonSingleton<HackerJamButton>.Instance.OnJamStarted(durationSeconds);
+            Events.Achievements.AchievementEvents.OnHackerJamStarted(localPlayer);
         }
 
         var opts = OptionGroupSingleton<HackerOptions>.Instance;
