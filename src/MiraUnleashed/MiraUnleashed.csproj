@@ -13,20 +13,21 @@
     <!-- Builds against a local TOU-Mira experimental checkout. MiraAPI and AchievementsAPI come
          transitively as project references. Private=false keeps referenced DLLs out of our output;
          GlobalPropertiesToRemove=AmongUs prevents TOU-Mira's own Copy target from overwriting the
-         installed TownOfUsMira.dll in the plugins folder. -->
+         installed TownOfUsMira.dll in the plugins folder; VersionSuffix is removed so a release
+         build's empty suffix does not turn TOU-Mira's version into "1.7.3-". -->
     <ProjectReference Include="$(TouMiraSourcePath)TownOfUs\TownOfUsMira.csproj"
                       ReferenceOutputAssembly="true" PrivateAssets="all" Private="false"
-                      GlobalPropertiesToRemove="AmongUs"
+                      GlobalPropertiesToRemove="AmongUs;VersionSuffix"
                       AdditionalProperties="GeneratePackageOnBuild=false" />
     <!-- TOU-Mira marks these PrivateAssets="all", so they don't flow transitively.
          Reference the same submodule sources directly to get the exact API surface. -->
     <ProjectReference Include="$(TouMiraSourcePath)GitSubmodules\MiraAPI\MiraAPI\MiraAPI.csproj"
                       ReferenceOutputAssembly="true" PrivateAssets="all" Private="false"
-                      GlobalPropertiesToRemove="AmongUs"
+                      GlobalPropertiesToRemove="AmongUs;VersionSuffix"
                       AdditionalProperties="GeneratePackageOnBuild=false" />
     <ProjectReference Include="$(TouMiraSourcePath)GitSubmodules\Achievements-API\AchievementsAPI\AchievementsAPI.csproj"
                       ReferenceOutputAssembly="true" PrivateAssets="all" Private="false"
-                      GlobalPropertiesToRemove="AmongUs"
+                      GlobalPropertiesToRemove="AmongUs;VersionSuffix"
                       AdditionalProperties="GeneratePackageOnBuild=false" />
     <PackageReference Include="Reactor" Version="2.5.0-ci.371" />
     <PackageReference Include="PerfectComms.Api" Version="4.1.7.1" PrivateAssets="all" />
