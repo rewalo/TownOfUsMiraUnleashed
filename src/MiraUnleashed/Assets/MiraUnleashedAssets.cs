@@ -8,6 +8,9 @@ public static class MiraUnleashedAssets
     public static LoadableAsset<Sprite> HexedSprite { get; } = new LoadableResourceAsset("MiraUnleashed.Resources.Hexed.png");
     public static LoadableAsset<Sprite> ObjectionButtonSprite { get; } = new LoadableResourceAsset("MiraUnleashed.Resources.Buttons.Object.png");
     public static LoadableAsset<Sprite> ObjectionAnimationSprite { get; } = new LoadableResourceAsset("MiraUnleashed.Resources.Objection!.png");
+    public static LoadableAsset<Sprite> OverruledAchievementSprite { get; } = new LoadableResourceAsset("MiraUnleashed.Resources.Achievements.Overruled.png");
+    public static LoadableAsset<Sprite> DevilsAdvocateAchievementSprite { get; } = new LoadableResourceAsset("MiraUnleashed.Resources.Achievements.DevilsAdvocate.png");
+    public static LoadableAsset<Sprite> SpeedrunLockdownAchievementSprite { get; } = new LoadableResourceAsset("MiraUnleashed.Resources.Achievements.SpeedrunLockdown.png");
     public static LoadableAsset<Sprite> LanternSprite { get; } = new LoadableResourceAsset("MiraUnleashed.Resources.Lantern.png");
     public static LoadableAsset<Sprite> BrokenLanternSprite { get; } = new LoadableResourceAsset("MiraUnleashed.Resources.BrokenLantern.png");
     public static LoadableAsset<Sprite> DollPlainSprite { get; } = new LoadableResourceAsset("MiraUnleashed.Resources.Doll_Plain.png");
