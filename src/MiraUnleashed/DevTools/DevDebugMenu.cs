@@ -1,5 +1,5 @@
+using System.Collections;
 using System.Reflection;
-using MiraUnleashed.Achievements;
 using Reactor.Utilities.Attributes;
 using TownOfUs.Achievements;
 using UnityEngine;
@@ -35,6 +35,8 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
     private GUIStyle? _errorStyle;
     private GUIStyle? _gripStyle;
 
+    private List<ReflectedMod>? _reflectedTabs;
+
     /// <summary>
     /// Installs the debug menu. No-op in release builds and if already installed.
     /// </summary>
@@ -56,6 +58,11 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
         if (Input.GetKeyDown(KeyCode.F8))
         {
             _visible = !_visible;
+            if (!_visible)
+            {
+                _reflectedTabs = null;
+            }
+
             if (_visible && !_loggedOpen)
             {
                 _loggedOpen = true;
@@ -152,6 +159,7 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
             if (GUILayout.Button("Close", GUILayout.Width(60)))
             {
                 _visible = false;
+                _reflectedTabs = null;
             }
 
             GUILayout.EndHorizontal();
@@ -199,6 +207,31 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
 
     // --- Achievements ---
 
+    /// <summary>
+    /// Snapshot of an AchievementsAPI category used by the dev menu list.
+    /// </summary>
+    private sealed record ReflectedCategory(string Id, string Name, List<ReflectedAchievement> Achievements);
+
+    /// <summary>
+    /// Snapshot of an AchievementsAPI mod used by the dev menu list.
+    /// </summary>
+    private sealed record ReflectedMod(string Name, List<ReflectedCategory> Categories);
+
+    /// <summary>
+    /// Snapshot of an AchievementsAPI achievement used by the dev menu list.
+    /// </summary>
+    private sealed record ReflectedAchievement(
+        object Instance,
+        string Id,
+        string Name,
+        string Description,
+        string CategoryId,
+        bool IsUnlocked,
+        bool IsHidden,
+        bool IsCount,
+        int CurrentValue,
+        int RequiredValue);
+
     private void DrawAchievementsTab()
     {
         if (!AchievementsAPIHelper.IsLoaded)
@@ -207,70 +240,91 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
             return;
         }
 
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Unlock all"))
+        if (!AllModsAchievements.IsAvailable)
         {
-            foreach (var spec in MuAchievements.All)
-            {
-                AchievementsAPIHelper.Unlock(spec);
-            }
+            GUILayout.Label("Unable to reflect AchievementsAPI state.");
+            return;
         }
 
-        if (GUILayout.Button("Reset all"))
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Unlock all mods"))
         {
-            foreach (var spec in MuAchievements.All)
-            {
-                AchievementsAPIHelper.Reset(spec);
-            }
+            AllModsAchievements.UnlockAll();
+            _reflectedTabs = null;
+        }
+
+        if (GUILayout.Button("Reset all mods"))
+        {
+            AllModsAchievements.ResetAll();
+            _reflectedTabs = null;
+        }
+
+        if (GUILayout.Button("Refresh list", GUILayout.Width(90)))
+        {
+            _reflectedTabs = null;
         }
 
         GUILayout.EndHorizontal();
+        GUILayout.Label("Lists achievements from every loaded mod, grouped by mod then category.", _descStyle);
 
-        foreach (var spec in MuAchievements.All)
+        _reflectedTabs ??= AllModsAchievements.GetMods().ToList();
+
+        foreach (var mod in _reflectedTabs)
         {
-            DrawAchievementRow(spec);
+            GUILayout.Label(mod.Name, _titleStyle);
+            foreach (var category in mod.Categories)
+            {
+                GUILayout.Label($"  {category.Name}", _descStyle);
+                foreach (var achievement in category.Achievements)
+                {
+                    DrawReflectedAchievementRow(achievement);
+                }
+            }
         }
     }
 
-    private void DrawAchievementRow(AchievementSpec spec)
+    private void DrawReflectedAchievementRow(ReflectedAchievement achievement)
     {
-        var name = spec.Name + (spec.Hidden ? " (hidden)" : string.Empty);
-        if (spec.ProgressGoal > 0)
+        var name = achievement.Name + (achievement.IsHidden ? " (hidden)" : string.Empty);
+        if (achievement.IsCount)
         {
-            var current = AchievementsAPIHelper.GetCurrentValue(spec);
-            name += $"  [{current}/{spec.ProgressGoal}]";
+            name += $"  [{achievement.CurrentValue}/{achievement.RequiredValue}]";
         }
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label(AchievementsAPIHelper.IsUnlocked(spec) ? "[x]" : "[ ]", GUILayout.Width(30));
+        GUILayout.Label(achievement.IsUnlocked ? "[x]" : "[ ]", GUILayout.Width(30));
         GUILayout.Label(name);
         GUILayout.EndHorizontal();
-        GUILayout.Label(spec.Description, _descStyle);
+        GUILayout.Label(achievement.Description, _descStyle);
 
         GUILayout.BeginHorizontal();
-        GUI.enabled = !AchievementsAPIHelper.IsUnlocked(spec);
+        GUI.enabled = !achievement.IsUnlocked;
         if (GUILayout.Button("Unlock", GUILayout.Width(70)))
         {
-            AchievementsAPIHelper.Unlock(spec);
+            AllModsAchievements.Unlock(achievement);
+            _reflectedTabs = null;
         }
 
         GUI.enabled = true;
         if (GUILayout.Button("Reset", GUILayout.Width(60)))
         {
-            AchievementsAPIHelper.Reset(spec);
+            AllModsAchievements.Reset(achievement);
+            _reflectedTabs = null;
         }
 
-        if (spec.ProgressGoal > 0)
+        if (achievement.IsCount)
         {
             if (GUILayout.Button("+1", GUILayout.Width(40)))
             {
-                AchievementsAPIHelper.Increment(spec, 1);
+                AllModsAchievements.Increment(achievement, 1);
+                _reflectedTabs = null;
             }
 
-            GUI.enabled = AchievementsAPIHelper.GetCurrentValue(spec) > 0;
+            GUI.enabled = achievement.CurrentValue > 0;
             if (GUILayout.Button("-1", GUILayout.Width(40)))
             {
-                AchievementsAPIHelper.SetValue(spec, Mathf.Max(0, AchievementsAPIHelper.GetCurrentValue(spec) - 1));
+                AllModsAchievements.SetValue(achievement, Mathf.Max(0, achievement.CurrentValue - 1));
+                _reflectedTabs = null;
             }
 
             GUI.enabled = true;
@@ -278,5 +332,291 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
 
         GUILayout.EndHorizontal();
         GUILayout.Space(6);
+    }
+
+    /// <summary>
+    /// Reflection bridge to AchievementsAPI. Lets the dev menu list, lock and unlock every
+    /// registered achievement from every loaded mod without MiraUnleashed taking a compile-time
+    /// dependency on AchievementsAPI types outside of dev-only code.
+    /// </summary>
+    private static class AllModsAchievements
+    {
+        private const string AchievementsApiAssemblyName = "AchievementsAPI";
+
+        private static readonly FieldInfo? TabsField;
+        private static readonly MethodInfo? GetTextMethod;
+        private static readonly PropertyInfo? TabNameProperty;
+        private static readonly PropertyInfo? TabModNameProperty;
+        private static readonly PropertyInfo? TabCategoryIdProperty;
+        private static readonly MethodInfo? TabGetAchievementsMethod;
+        private static readonly PropertyInfo? AchievementNameProperty;
+        private static readonly PropertyInfo? AchievementDescriptionProperty;
+        private static readonly FieldInfo? AchievementUnlockedField;
+        private static readonly FieldInfo? AchievementHiddenField;
+        private static readonly FieldInfo? AchievementIdField;
+        private static readonly FieldInfo? AchievementCategoryField;
+        private static readonly Type? CountAchievementType;
+        private static readonly FieldInfo? CountCurrentValueField;
+        private static readonly FieldInfo? CountRequiredValueField;
+        private static readonly MethodInfo? UnlockMethod;
+        private static readonly MethodInfo? ResetMethod;
+        private static readonly MethodInfo? SaveMethod;
+        private static readonly MethodInfo? CountIncrementMethod;
+        private static readonly MethodInfo? CountSetValueMethod;
+
+        static AllModsAchievements()
+        {
+            var assembly = AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault(a => a.GetName().Name == AchievementsApiAssemblyName);
+            if (assembly == null)
+            {
+                return;
+            }
+
+            var managerType = assembly.GetType("AchievementsAPI.API.AchievementsManager");
+            var storageType = assembly.GetType("AchievementsAPI.API.AchievementStorage");
+            var baseAchievementType = assembly.GetType("AchievementsAPI.API.BaseAchievement");
+            var achievementsStringsType = assembly.GetType("AchievementsAPI.API.AchievementsStrings");
+            var achievementsTabType = assembly.GetType("AchievementsAPI.API.AchievementsTab");
+            CountAchievementType = assembly.GetType("AchievementsAPI.API.CountAchievement");
+
+            TabsField = managerType?.GetField("Tabs", BindingFlags.Public | BindingFlags.Static);
+            SaveMethod = storageType?.GetMethod("Save", BindingFlags.Public | BindingFlags.Static);
+            GetTextMethod = achievementsStringsType?.GetMethod("GetText", BindingFlags.Public | BindingFlags.Static);
+            TabNameProperty = achievementsTabType?.GetProperty("Name", BindingFlags.Public | BindingFlags.Instance);
+            TabModNameProperty = achievementsTabType?.GetProperty("ModName", BindingFlags.Public | BindingFlags.Instance);
+            TabCategoryIdProperty = achievementsTabType?.GetProperty("CategoryId", BindingFlags.Public | BindingFlags.Instance);
+            TabGetAchievementsMethod = achievementsTabType?.GetMethod("GetAchievements", BindingFlags.Public | BindingFlags.Instance);
+            AchievementNameProperty = baseAchievementType?.GetProperty("Name", BindingFlags.Public | BindingFlags.Instance);
+            AchievementDescriptionProperty = baseAchievementType?.GetProperty("Description", BindingFlags.Public | BindingFlags.Instance);
+            AchievementUnlockedField = baseAchievementType?.GetField("Unlocked", BindingFlags.Public | BindingFlags.Instance);
+            AchievementHiddenField = baseAchievementType?.GetField("Hidden", BindingFlags.Public | BindingFlags.Instance);
+            AchievementIdField = baseAchievementType?.GetField("Id", BindingFlags.Public | BindingFlags.Instance);
+            AchievementCategoryField = baseAchievementType?.GetField("Category", BindingFlags.Public | BindingFlags.Instance);
+            CountCurrentValueField = CountAchievementType?.GetField("CurrentValue", BindingFlags.Public | BindingFlags.Instance);
+            CountRequiredValueField = CountAchievementType?.GetField("RequiredValue", BindingFlags.Public | BindingFlags.Instance);
+
+            UnlockMethod = baseAchievementType?.GetMethod(
+                "Unlock",
+                BindingFlags.Public | BindingFlags.Instance,
+                null,
+                new[] { typeof(bool), typeof(bool) },
+                null);
+            ResetMethod = baseAchievementType?.GetMethod(
+                "Reset",
+                BindingFlags.Public | BindingFlags.Instance,
+                null,
+                new[] { typeof(bool) },
+                null);
+            CountIncrementMethod = CountAchievementType?.GetMethod(
+                "Increment",
+                BindingFlags.Public | BindingFlags.Instance,
+                null,
+                new[] { typeof(int), typeof(bool) },
+                null);
+            CountSetValueMethod = CountAchievementType?.GetMethod(
+                "SetValue",
+                BindingFlags.Public | BindingFlags.Instance,
+                null,
+                new[] { typeof(int), typeof(bool) },
+                null);
+        }
+
+        public static bool IsAvailable =>
+            UnlockMethod != null &&
+            ResetMethod != null &&
+            TabsField != null &&
+            TabGetAchievementsMethod != null &&
+            AchievementNameProperty != null &&
+            AchievementUnlockedField != null;
+
+        public static IEnumerable<ReflectedMod> GetMods()
+        {
+            if (TabsField == null) yield break;
+
+            var tabs = TabsField.GetValue(null) as IEnumerable;
+            if (tabs == null) yield break;
+
+            var mods = new Dictionary<string, ReflectedMod>();
+            foreach (var tab in tabs)
+            {
+                if (tab == null) continue;
+
+                var modName = GetString(TabModNameProperty?.GetValue(tab)) ?? "Unknown mod";
+                var tabCategoryId = TabCategoryIdProperty?.GetValue(tab) as string ?? "general";
+
+                if (!mods.TryGetValue(modName, out var mod))
+                {
+                    mod = new ReflectedMod(modName, new List<ReflectedCategory>());
+                    mods[modName] = mod;
+                }
+
+                var achList = TabGetAchievementsMethod?.Invoke(tab, null) as IEnumerable;
+                if (achList == null) continue;
+
+                foreach (var ach in achList)
+                {
+                    if (ach == null) continue;
+
+                    var achievement = ReflectAchievement(ach, tabCategoryId);
+                    var category = mod.Categories.FirstOrDefault(c => c.Id == achievement.CategoryId);
+                    if (category == null)
+                    {
+                        category = new ReflectedCategory(achievement.CategoryId, FormatCategoryName(achievement.CategoryId), new List<ReflectedAchievement>());
+                        mod.Categories.Add(category);
+                    }
+
+                    category.Achievements.Add(achievement);
+                }
+            }
+
+            foreach (var mod in mods.Values.OrderBy(m => m.Name))
+            {
+                mod.Categories.Sort((a, b) => string.Compare(a.Id, b.Id, StringComparison.OrdinalIgnoreCase));
+                yield return mod;
+            }
+        }
+
+        private static string FormatCategoryName(string categoryId)
+        {
+            if (string.IsNullOrWhiteSpace(categoryId))
+            {
+                return "General";
+            }
+
+            return char.ToUpperInvariant(categoryId[0]) + categoryId[1..];
+        }
+
+        public static void UnlockAll()
+        {
+            if (UnlockMethod == null) return;
+
+            foreach (var mod in GetMods())
+            {
+                foreach (var category in mod.Categories)
+                {
+                    foreach (var achievement in category.Achievements)
+                    {
+                        try
+                        {
+                            UnlockMethod.Invoke(achievement.Instance, new object[] { false, true });
+                        }
+                        catch (Exception ex)
+                        {
+                            Error($"Failed to unlock achievement {achievement.Id}: {ex.Message}");
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void ResetAll()
+        {
+            if (ResetMethod == null) return;
+
+            foreach (var mod in GetMods())
+            {
+                foreach (var category in mod.Categories)
+                {
+                    foreach (var achievement in category.Achievements)
+                    {
+                        try
+                        {
+                            ResetMethod.Invoke(achievement.Instance, new object[] { false });
+                        }
+                        catch (Exception ex)
+                        {
+                            Error($"Failed to reset achievement {achievement.Id}: {ex.Message}");
+                        }
+                    }
+                }
+            }
+
+            try
+            {
+                SaveMethod?.Invoke(null, null);
+            }
+            catch (Exception ex)
+            {
+                Error($"Failed to save achievements: {ex.Message}");
+            }
+        }
+
+        public static void Unlock(ReflectedAchievement achievement)
+        {
+            try
+            {
+                UnlockMethod?.Invoke(achievement.Instance, new object[] { false, true });
+            }
+            catch (Exception ex)
+            {
+                Error($"Failed to unlock achievement {achievement.Id}: {ex.Message}");
+            }
+        }
+
+        public static void Reset(ReflectedAchievement achievement)
+        {
+            try
+            {
+                ResetMethod?.Invoke(achievement.Instance, new object[] { true });
+            }
+            catch (Exception ex)
+            {
+                Error($"Failed to reset achievement {achievement.Id}: {ex.Message}");
+            }
+        }
+
+        public static void Increment(ReflectedAchievement achievement, int amount)
+        {
+            try
+            {
+                CountIncrementMethod?.Invoke(achievement.Instance, new object[] { amount, true });
+            }
+            catch (Exception ex)
+            {
+                Error($"Failed to increment achievement {achievement.Id}: {ex.Message}");
+            }
+        }
+
+        public static void SetValue(ReflectedAchievement achievement, int value)
+        {
+            try
+            {
+                CountSetValueMethod?.Invoke(achievement.Instance, new object[] { value, true });
+            }
+            catch (Exception ex)
+            {
+                Error($"Failed to set achievement {achievement.Id} value: {ex.Message}");
+            }
+        }
+
+        private static ReflectedAchievement ReflectAchievement(object instance, string tabCategoryId)
+        {
+            var type = instance.GetType();
+            var isCount = CountAchievementType != null &&
+                          (type == CountAchievementType || type.IsSubclassOf(CountAchievementType));
+            var name = GetString(AchievementNameProperty?.GetValue(instance)) ?? "???";
+            var description = GetString(AchievementDescriptionProperty?.GetValue(instance)) ?? string.Empty;
+            var id = AchievementIdField?.GetValue(instance) as string ?? string.Empty;
+            var category = AchievementCategoryField?.GetValue(instance) as string ?? tabCategoryId;
+            var unlocked = AchievementUnlockedField?.GetValue(instance) is true;
+            var hidden = AchievementHiddenField?.GetValue(instance) is true;
+
+            var current = 0;
+            var required = 0;
+            if (isCount)
+            {
+                current = CountCurrentValueField?.GetValue(instance) as int? ?? 0;
+                required = CountRequiredValueField?.GetValue(instance) as int? ?? 0;
+            }
+
+            return new ReflectedAchievement(instance, id, name, description, category, unlocked, hidden, isCount, current, required);
+        }
+
+        private static string? GetString(object? stringNamesValue)
+        {
+            if (stringNamesValue == null) return null;
+            return GetTextMethod?.Invoke(null, new[] { stringNamesValue }) as string;
+        }
     }
 }
