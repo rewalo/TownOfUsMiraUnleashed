@@ -79,6 +79,7 @@ Click a role for its abilities, options and interactions, or browse the [wiki](h
 
 | Mira Unleashed | Town of Us: Mira | MiraAPI | Reactor |
 | --- | --- | --- | --- |
+| 2.0.2 | 1.7.3 | 0.5.0 | 2.5.0 |
 | 2.0.1 | 1.7.3 | 0.5.0 | 2.5.0 |
 | 2.0.0 | 1.7.3 | 0.5.0 | 2.5.0 |
 

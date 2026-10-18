@@ -18,11 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Checkout TOU-Mira experimental
+      - name: Checkout TOU-Mira
         uses: actions/checkout@v7
         with:
           repository: AU-Avengers/TOU-Mira
-          ref: experimental
+          ref: dev
           submodules: recursive
           path: TOU-Mira
 

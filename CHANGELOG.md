@@ -7,31 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For releases before 2.0.0, see the [old repository's release history](https://github.com/rewalo/TownOfUsMiraUnleashed/releases).
 
-## [2.0.1] - 2026-10-05
+## [2.0.2] - 2026-10-18
 
 ### Added
 
+- Achievements. 59 of them across every role and modifier, each with its role or modifier icon in the achievements menu. Needs [Achievements API 2.0.0](https://github.com/am-clonec/AchievementsAPI/releases/tag/v2.0.0) or newer installed; without it the mod works as before, just with no achievements.
 - Clueless and Spiteful now have TMP sprite icons like roles do.
-- Optional Perfect Comms voice chat integration — when Perfect Comms is installed, four host toggles appear in its host panel under the "Mira Unleashed" tab (all on by default):
-  - **Wraith: Mute While Invisible** — an invisible Wraith cannot transmit voice until the Lantern invisibility ends.
-  - **Hacker: Jam Disrupts Voice** — everyone's voice is muted during tasks while a Jam is active, like a comms sabotage.
-  - **Injector: Muffle Injected Hearing** — muffles incoming voice during tasks for players injected with Low Vision, Very Low Vision, Confusion or Nausea.
-  - **Team Radio - Lawyer** — a private managed Team Radio channel between a Lawyer and their client when Team Radio is on.
 
 ### Changed
 
-- Achievement set overhauled — now 58 achievements with role sub-icons.
-  - Removed: Nothing Left to Sabotage, Mirror Match, The Welcoming Committee, Red Handed, Caught in the Act, Caught and Convicted, Body Double, Malpractice, Bad Medicine, Lab Rat, Hit the Ground Screaming, Lamplight Lethality, Fade to Black, Lantern Guided, Court Appointed, Parting Gift, Blind Justice.
-  - Renamed: Low Ping, High Crime → Dead Air; Double Hex → And Make It Double (existing unlocks are preserved).
-  - Added: Jack of All Trades, Targeted, Floodgates, Stunt Double, Mistaken Identity, Revolving Door, Hot Pursuit, Nothing to See Here, The Way Mojang Intended, Placebo, Hopelessly Lost, Hit and Run, Airtight Alibi, Leave No Trace, Speed Demon, Overruled, Mistrial, Acquired Taste, Buzzer Beater, Friendly Fire.
 - `Clueless Censor Type` is now a per-client local setting (Mira Unleashed tab) instead of a host option, and `Remove` now hides the whole task panel instead of only the task text.
-- Wiki home page redesigned as an icon table.
-- `Cannot Spawn With Janitor` now uses TOU-Mira's exclusive-role system: Scavenger and Janitor are resolved against each other per game instead of Scavenger being blocked whenever Janitor is enabled.
+- `Cannot Spawn With Janitor` now uses TOU-Mira's exclusive-role system, so Scavenger and Janitor are resolved against each other per game instead of Scavenger being blocked whenever Janitor is enabled.
 
 ### Fixed
 
 - The `Enable Nausea Camera Shake` local setting showed its raw key instead of its label.
-- Dev builds are now shown in red in the Reactor mod list like TOU-Mira.
+- Dev builds now show in red in the Reactor mod list like TOU-Mira.
+
+## [2.0.1] - 2026-10-05
+
+### Added
+
+- Optional Perfect Comms voice chat integration. When Perfect Comms is installed, four host toggles appear in its host panel under the "Mira Unleashed" tab (all on by default):
+  - **Wraith: Mute While Invisible**: an invisible Wraith cannot transmit voice until the Lantern invisibility ends.
+  - **Hacker: Jam Disrupts Voice**: everyone's voice is muted during tasks while a Jam is active, like a comms sabotage.
+  - **Injector: Muffle Injected Hearing**: muffles incoming voice during tasks for players injected with Low Vision, Very Low Vision, Confusion or Nausea.
+  - **Team Radio - Lawyer**: a private managed Team Radio channel between a Lawyer and their client when Team Radio is on.
+
+### Changed
+
+- Wiki home page redesigned as an icon table.
 
 ## [2.0.0] - 2026-10-05
 
