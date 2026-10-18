@@ -204,6 +204,16 @@ public static class AchievementEvents
             return;
         }
 
+        if (_forestallerLockArmed)
+        {
+            if (exiled == local)
+            {
+                AchievementsAPIHelper.Unlock(MuAchievements.Targeted);
+            }
+
+            _forestallerLockArmed = false;
+        }
+
         if (exiled == local && _localLockActive)
         {
             _forestallerDeathTime = Time.time;
@@ -509,8 +519,8 @@ public static class AchievementEvents
             var body = Helpers.GetBodyById(target.PlayerId);
             if (body != null)
             {
-                var localRoom = RoomHelpers.GetRoomName(local.GetTruePosition());
-                var bodyRoom = RoomHelpers.GetRoomName(body.TruePosition);
+                var localRoom = MiscUtils.GetRoomName(local.GetTruePosition());
+                var bodyRoom = MiscUtils.GetRoomName(body.TruePosition);
                 if (localRoom != null && bodyRoom != null && localRoom != bodyRoom)
                 {
                     UnlockTentative(MuAchievements.AirtightAlibi);
@@ -597,8 +607,8 @@ public static class AchievementEvents
             return;
         }
 
-        var charlatanRoom = RoomHelpers.GetRoomName(charlatan.GetTruePosition());
-        var bodyRoom = RoomHelpers.GetRoomName(body.TruePosition);
+        var charlatanRoom = MiscUtils.GetRoomName(charlatan.GetTruePosition());
+        var bodyRoom = MiscUtils.GetRoomName(body.TruePosition);
         if (charlatanRoom != null && bodyRoom != null && charlatanRoom != bodyRoom)
         {
             AchievementsAPIHelper.Unlock(MuAchievements.TheWayMojangIntended);
@@ -675,7 +685,7 @@ public static class AchievementEvents
         }
 
         var currentCurses = PlayerControl.AllPlayerControls.ToArray()
-            .Count(p => p != null && p.HasModifier<WitchSpellboundModifier>());
+            .Count(p => p != null && p.GetModifiers<WitchSpellboundModifier>().Any(m => m.WitchId == witch.PlayerId));
         if (currentCurses >= 5)
         {
             AchievementsAPIHelper.Unlock(MuAchievements.FullCoven);
