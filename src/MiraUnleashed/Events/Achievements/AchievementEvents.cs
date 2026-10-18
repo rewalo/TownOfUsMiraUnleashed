@@ -123,9 +123,7 @@ public static class AchievementEvents
             if (playedCount == MuAchievements.JackOfAllTrades.ProgressGoal
                 && !AchievementsAPIHelper.IsUnlocked(MuAchievements.JackOfAllTrades))
             {
-                AchievementsAPIHelper.Unlock(MuAchievements.JackOfAllTrades);
-                // Manually enqueue toast for hidden achievement at game end
-                AchievementsAPIBridge.UnlockWithToast(MuAchievements.JackOfAllTrades, AchToastTiming.OnGameEnd);
+                AchievementsAPIHelper.UnlockWithToast(MuAchievements.JackOfAllTrades, AchToastTiming.OnGameEnd);
             }
 
             // Store progress silently: SetValue's UI path would toast progress for a hidden achievement.
