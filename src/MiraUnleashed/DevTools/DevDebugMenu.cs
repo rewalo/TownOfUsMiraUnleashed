@@ -616,6 +616,7 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
         private static string? GetString(object? stringNamesValue)
         {
             if (stringNamesValue == null) return null;
+            if (stringNamesValue is string str) return str;
             return GetTextMethod?.Invoke(null, new[] { stringNamesValue }) as string;
         }
     }

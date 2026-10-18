@@ -1,4 +1,5 @@
 using System.Linq;
+using AchievementsAPI.API;
 using MiraAPI.Events;
 using MiraAPI.Events.Vanilla.Gameplay;
 using MiraAPI.Events.Vanilla.Meeting;
@@ -119,10 +120,12 @@ public static class AchievementEvents
             AchievementsAPIHelper.Unlock(MuAchievements.Unleashed);
 
             var playedCount = MuAchievementStorage.AddPlayedRole(miraRole.GetType().FullName!);
-            if (playedCount >= MuAchievements.JackOfAllTrades.ProgressGoal
+            if (playedCount == MuAchievements.JackOfAllTrades.ProgressGoal
                 && !AchievementsAPIHelper.IsUnlocked(MuAchievements.JackOfAllTrades))
             {
                 AchievementsAPIHelper.Unlock(MuAchievements.JackOfAllTrades);
+                // Manually enqueue toast for hidden achievement at game end
+                AchievementsAPIBridge.UnlockWithToast(MuAchievements.JackOfAllTrades, AchToastTiming.OnGameEnd);
             }
 
             // Store progress silently: SetValue's UI path would toast progress for a hidden achievement.
