@@ -546,7 +546,7 @@ public sealed class DevDebugMenu(nint cppPtr) : MonoBehaviour(cppPtr)
         {
             try
             {
-                UnlockMethod?.Invoke(achievement.Instance, new object[] { false, true });
+                UnlockMethod?.Invoke(achievement.Instance, new object[] { true, true });
             }
             catch (Exception ex)
             {
