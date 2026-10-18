@@ -87,7 +87,7 @@ public static class MuAchievements
         subIcon: MiraUnleashedAssets.MirageRoleIcon, subIconTooltip: "MiraUnleashed.Role.Mirage", rarity: 1, categoryOverride: "crewmate", tags: new[] { "Mirage", "Decoy", "Attack" });
     public static readonly AchievementSpec MistakenIdentity = Define("Mistaken Identity",
         "Catch a player attacking a decoy that looks like them.", MiraUnleashedAssets.MirageRoleIcon,
-        subIcon: MiraUnleashedAssets.MirageRoleIcon, subIconTooltip: "MiraUnleashed.Role.Mirage", rarity: 2, categoryOverride: "crewmate", tags: new[] { "Mirage", "Decoy", "Attack" });
+        subIcon: MiraUnleashedAssets.MirageRoleIcon, subIconTooltip: "MiraUnleashed.Role.Mirage", rarity: 2, toastOnGameEnd: true, categoryOverride: "crewmate", tags: new[] { "Mirage", "Decoy", "Attack" });
 
     // Trapper
     public static readonly AchievementSpec PestControl = Define("Pest Control",
@@ -96,7 +96,7 @@ public static class MuAchievements
         persistence: AchievementPersistence.ThroughoutSessions, rarity: 1, categoryOverride: "crewmate", tags: new[] { "Trapper", "Vent", "Multi" });
     public static readonly AchievementSpec RevolvingDoor = Define("Revolving Door",
         "Snare the same player twice in one game.", MiraUnleashedAssets.TrapperRoleIcon,
-        subIcon: MiraUnleashedAssets.TrapperRoleIcon, subIconTooltip: "MiraUnleashed.Role.Trapper", rarity: 1, categoryOverride: "crewmate", tags: new[] { "Trapper", "Vent" });
+        subIcon: MiraUnleashedAssets.TrapperRoleIcon, subIconTooltip: "MiraUnleashed.Role.Trapper", rarity: 1, toastOnGameEnd: true, categoryOverride: "crewmate", tags: new[] { "Trapper", "Vent" });
     public static readonly AchievementSpec HotPursuit = Define("Hot Pursuit",
         "Snare a player within 10 seconds of them killing someone.", MiraUnleashedAssets.TrapperRoleIcon,
         subIcon: MiraUnleashedAssets.TrapperRoleIcon, subIconTooltip: "MiraUnleashed.Role.Trapper", rarity: 2, toastOnGameEnd: true,
@@ -134,12 +134,12 @@ public static class MuAchievements
         subIcon: MiraUnleashedImpAssets.HackerRole, subIconTooltip: "MiraUnleashed.Role.Hacker", rarity: 1, categoryOverride: "impostor", tags: new[] { "Hacker", "Jam", "Sabotage" });
     public static readonly AchievementSpec BackdoorAccess = Define("Backdoor Access",
         "Activate Jam while a Forestaller has locked out sabotages.", MiraUnleashedImpAssets.HackerRole,
-        subIcon: MiraUnleashedImpAssets.HackerRole, subIconTooltip: "MiraUnleashed.Role.Hacker", rarity: 2, categoryOverride: "impostor", tags: new[] { "Hacker", "Jam", "Sabotage", "Forestaller" });
+        subIcon: MiraUnleashedImpAssets.HackerRole, subIconTooltip: "MiraUnleashed.Role.Hacker", rarity: 2, toastOnGameEnd: true, categoryOverride: "impostor", tags: new[] { "Hacker", "Jam", "Sabotage", "Forestaller" });
 
     // Injector
     public static readonly AchievementSpec Placebo = Define("Placebo",
         "Inject a player with a positive effect.", MiraUnleashedImpAssets.InjectorInjectButtonSprite,
-        subIcon: MiraUnleashedImpAssets.InjectorRole, subIconTooltip: "MiraUnleashed.Role.Injector", categoryOverride: "impostor", tags: new[] { "Injector", "Inject" });
+        subIcon: MiraUnleashedImpAssets.InjectorRole, subIconTooltip: "MiraUnleashed.Role.Injector", toastOnGameEnd: true, categoryOverride: "impostor", tags: new[] { "Injector", "Inject" });
     public static readonly AchievementSpec DoubleDose = Define("Double Dose",
         "Inject the same player twice in one game.", MiraUnleashedImpAssets.InjectorRole,
         subIcon: MiraUnleashedImpAssets.InjectorRole, subIconTooltip: "MiraUnleashed.Role.Injector", rarity: 1, categoryOverride: "impostor", tags: new[] { "Injector", "Inject" });
@@ -152,7 +152,7 @@ public static class MuAchievements
         subIcon: MiraUnleashedImpAssets.InjectorRole, subIconTooltip: "MiraUnleashed.Role.Injector", rarity: 2, categoryOverride: "impostor", tags: new[] { "Injector", "Inject" });
     public static readonly AchievementSpec HopelesslyLost = Define("Hopelessly Lost",
         "Inject a Clueless player with Confusion.", MiraUnleashedImpAssets.InjectorInjectButtonSprite,
-        subIcon: MiraUnleashedImpAssets.InjectorRole, subIconTooltip: "MiraUnleashed.Role.Injector", rarity: 1, categoryOverride: "impostor", tags: new[] { "Injector", "Inject", "Clueless" });
+        subIcon: MiraUnleashedImpAssets.InjectorRole, subIconTooltip: "MiraUnleashed.Role.Injector", rarity: 1, toastOnGameEnd: true, categoryOverride: "impostor", tags: new[] { "Injector", "Inject", "Clueless" });
 
     // Witch
     public static readonly AchievementSpec MarkedForDeath = Define("Marked for Death",
@@ -225,7 +225,7 @@ public static class MuAchievements
         subIcon: MiraUnleashedAssets.ScavengerRoleIcon, subIconTooltip: "MiraUnleashed.Role.Scavenger", rarity: 2, categoryOverride: "neutral", tags: new[] { "Scavenger", "Eat", "Body", "Multi" });
     public static readonly AchievementSpec FastFood = Define("Fast Food",
         "Eat a body within 10 seconds of the kill.", MiraUnleashedAssets.ScavengerEatButtonSprite,
-        subIcon: MiraUnleashedAssets.ScavengerRoleIcon, subIconTooltip: "MiraUnleashed.Role.Scavenger", rarity: 1, categoryOverride: "neutral", tags: new[] { "Scavenger", "Eat", "Body" });
+        subIcon: MiraUnleashedAssets.ScavengerRoleIcon, subIconTooltip: "MiraUnleashed.Role.Scavenger", rarity: 1, toastOnGameEnd: true, categoryOverride: "neutral", tags: new[] { "Scavenger", "Eat", "Body" });
     public static readonly AchievementSpec AcquiredTaste = Define("Acquired Taste",
         "Eat a body that a Charlatan concealed.", MiraUnleashedAssets.ScavengerEatButtonSprite,
         subIcon: MiraUnleashedAssets.ScavengerRoleIcon, subIconTooltip: "MiraUnleashed.Role.Scavenger", rarity: 1, categoryOverride: "neutral", tags: new[] { "Scavenger", "Eat", "Body", "Charlatan" });
